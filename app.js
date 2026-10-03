@@ -44,14 +44,24 @@ function load(k, fallback){ try { const v = localStorage.getItem(STORE + k); ret
 function save(k, v){ try { localStorage.setItem(STORE + k, JSON.stringify(v)); } catch(e){} }
 
 /* ---------- Sprache: Deutsch oder Englisch ---------- */
+// Fehlt data_en.js (z. B. nicht hochgeladen oder alte Version im Zwischenspeicher), läuft das Spiel trotzdem auf Deutsch.
+const EN = {
+  term: typeof TERM_EN !== "undefined" ? TERM_EN : null,
+  compass: typeof COMPASS_EN !== "undefined" ? COMPASS_EN : [],
+  higher: typeof HIGHER_EN !== "undefined" ? HIGHER_EN : [],
+  outliers: typeof OUTLIERS_EN !== "undefined" ? OUTLIERS_EN : [],
+  trivia: typeof TRIVIA_EN !== "undefined" ? TRIVIA_EN : [],
+  detective: typeof DETECTIVE_EN !== "undefined" ? DETECTIVE_EN : []
+};
 let LANG = (() => {
+  if (!EN.term) return "de";
   try { const q = new URLSearchParams(location.search).get("lang"); if (q === "de" || q === "en") { save("lang", q); return q; } } catch(e){}
   const stored = load("lang", null); if (stored === "de" || stored === "en") return stored;
   const prefs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"]);
   return String(prefs[0] || "en").toLowerCase().startsWith("de") ? "de" : "en";
 })();
 const L = (de, en) => LANG === "en" ? en : de;          // Text in beiden Sprachen
-const N = s => (LANG === "en" && TERM_EN[s]) ? TERM_EN[s] : s;   // Namen und Begriffe
+const N = s => (LANG === "en" && EN.term && EN.term[s]) ? EN.term[s] : s;   // Namen und Begriffe
 const LOCALE = () => LANG === "en" ? "en-US" : "de-DE";
 const CONT_EN = {EU:"Europe", AS:"Asia", AF:"Africa", NA:"North and Central America", SA:"South America", OC:"Oceania"};
 const contName = c => LANG === "en" ? CONT_EN[c] : CONT_NAME[c];
@@ -60,7 +70,7 @@ function applyLang(){
   document.title = L("Orbis – das tägliche Geografie-Rätsel", "Orbis – the daily geography puzzle");
 }
 function setLang(l){
-  if (l === LANG) return;
+  if (l === LANG || !EN.term) return;
   LANG = l; save("lang", l); applyLang();
   Track.event("sprache-gewechselt-" + l);
   renderHome();
@@ -155,7 +165,7 @@ const GEN = {
   compass(rng, ctx){
     const item = cycle("compass", COMPASS, rng, ctx);
     const [dir, a, la, loa, b, lb, lob] = item;
-    const why = L(item[7], COMPASS_EN[COMPASS.indexOf(item)]);
+    const why = L(item[7], EN.compass[COMPASS.indexOf(item)]);
     const word = LANG === "en" ? {N:"further north", S:"further south", E:"further east", W:"further west"}[dir] : {N:"nördlicher", S:"südlicher", E:"östlicher", W:"westlicher"}[dir];
     const A = {name:a, lat:la, lon:loa}, B = {name:b, lat:lb, lon:lob};
     const val = p => dir === "N" ? p.lat : dir === "S" ? -p.lat : dir === "E" ? p.lon : -p.lon;
@@ -180,17 +190,17 @@ const GEN = {
   },
   outlier(rng, ctx){
     const item = cycle("outlier", OUTLIERS, rng, ctx);
-    const [q, a, others, why] = item, en = OUTLIERS_EN[OUTLIERS.indexOf(item)];
+    const [q, a, others, why] = item, en = (EN.outliers[OUTLIERS.indexOf(item)] || []);
     return {type:"choice", kind:["🚧",L("Nachbarn","Neighbors")], prompt:L(q, en[0]), opts:shuffle(rng, [a, ...others]), ans:a, why:L(why, en[1])};
   },
   trivia(rng, ctx){
     const item = cycle("trivia", TRIVIA, rng, ctx);
-    const [q, a, others, why] = item, en = TRIVIA_EN[TRIVIA.indexOf(item)];
+    const [q, a, others, why] = item, en = (EN.trivia[TRIVIA.indexOf(item)] || []);
     return {type:"choice", kind:["💡",L("Wissen","Trivia")], prompt:L(q, en[0]), opts:shuffle(rng, [a, ...others]), ans:a, why:L(why, en[1])};
   },
   higher(rng, ctx){
     const item = cycle("higher", HIGHER, rng, ctx);
-    const [metric, i1, i2] = item, why = L(item[3], HIGHER_EN[HIGHER.indexOf(item)]);
+    const [metric, i1, i2] = item, why = L(item[3], EN.higher[HIGHER.indexOf(item)]);
     const pair = rng() < 0.5 ? [BY_ISO[i1], BY_ISO[i2]] : [BY_ISO[i2], BY_ISO[i1]];
     const ans = pair[0][metric] > pair[1][metric] ? pair[0] : pair[1];
     return {type:"higher", kind:["⚖️",L("Höher oder tiefer","Higher or lower")], prompt: metric === "pop" ? L("Welches Land hat mehr Einwohner?", "Which country has more people?") : L("Welches Land ist größer?", "Which country is bigger?"), metric, pair, ans, why};
@@ -218,7 +228,7 @@ const GEN = {
   },
   detective(rng, ctx){
     const r = cycle("detective", DETECTIVE, rng, ctx);
-    const clues = L(r.clues, DETECTIVE_EN[DETECTIVE.indexOf(r)]);
+    const clues = L(r.clues, EN.detective[DETECTIVE.indexOf(r)]);
     return {type:"detective", kind:["🔍",L("Detektiv","Detective")], prompt:L("Welches Land wird gesucht?", "Which country are we looking for?"), r, clues, opts:shuffle(rng, r.opts)};
   }
 };
@@ -649,10 +659,10 @@ function renderHome(){
   const dateStr = new Date().toLocaleDateString(LOCALE(), {weekday:"long", day:"numeric", month:"long"});
   const ch = activeChallenge();
   app.innerHTML = `<div class="intro fade">
-    <div class="langs" role="group" aria-label="Sprache / Language">
+    ${EN.term ? `<div class="langs" role="group" aria-label="Sprache / Language">
       <button class="lang ${LANG === "de" ? "on" : ""}" data-l="de" aria-pressed="${LANG === "de"}">Deutsch</button>
       <button class="lang ${LANG === "en" ? "on" : ""}" data-l="en" aria-pressed="${LANG === "en"}">English</button>
-    </div>
+    </div>` : ""}
     ${globeSvg()}
     <h1>Orbis</h1>
     <div class="no">${L("Tagesrätsel", "Daily puzzle")} #${puzzleNo()} · ${esc(dateStr)}</div>
@@ -706,4 +716,9 @@ async function boot(){
     app.innerHTML = `<div class="err"><h2>${L("Die Karte konnte nicht geladen werden", "The map couldn't be loaded")}</h2><p>${L("Prüfe deine Internetverbindung und lade die Seite neu.", "Check your internet connection and reload the page.")}</p></div>`;
   }
 }
+window.addEventListener("error", () => {
+  if (!app.querySelector(".err") && !app.querySelector(".intro, .prompt, .passport")) {
+    app.innerHTML = `<div class="err"><h2>Da ist etwas schiefgelaufen · Something went wrong</h2><p>Bitte lade die Seite neu. · Please reload the page.</p></div>`;
+  }
+});
 boot();
