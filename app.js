@@ -604,8 +604,8 @@ async function boot(){
   try {
     if (!window.d3 || !window.topojson) throw new Error("Bibliotheken fehlen");
     const [topo, flags] = await Promise.all([
-      fetch("data/countries-50m.json").then(r => { if (!r.ok) throw new Error("Karte"); return r.json(); }),
-      fetch("data/flags.json").then(r => { if (!r.ok) throw new Error("Flaggen"); return r.json(); })
+      fetch("countries-50m.json").then(r => { if (!r.ok) throw new Error("Karte"); return r.json(); }),
+      fetch("flags.json").then(r => { if (!r.ok) throw new Error("Flaggen"); return r.json(); })
     ]);
     TOPO = topo; FLAGS = flags;
     initGeo();
