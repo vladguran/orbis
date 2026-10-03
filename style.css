@@ -185,3 +185,22 @@ button{font:inherit;color:inherit}
 .back{display:inline-block;margin-top:8px;font-family:Fredoka,sans-serif;font-weight:500;text-decoration:none;color:var(--ink-soft)!important}
 .back:hover{color:var(--ink)!important}
 .fine-left{font-size:14px;color:var(--ink-soft);margin-top:30px}
+
+/* Herausforderung */
+.challenge{background:var(--mid-bg);border:2px solid var(--mid);border-radius:16px;padding:14px 18px;margin:-8px auto 26px;max-width:440px;font-size:16px;text-align:center}
+.challenge b{display:block;font-family:Fredoka,sans-serif;font-size:19px;margin-bottom:2px}
+.duel{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px;margin:0 auto 22px;max-width:520px;text-align:center}
+.duel.won{border-color:var(--ok);background:var(--ok-bg)}
+.duel.lost{border-color:var(--bad);background:var(--bad-bg)}
+.duel h3{font-size:22px;margin-bottom:10px}
+.duel-row{display:flex;justify-content:center;align-items:center;gap:24px;font-size:14px;color:var(--ink-soft)}
+.duel-row b{display:block;font-family:Fredoka,sans-serif;font-size:30px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* Sprachwahl */
+.langs{display:flex;justify-content:center;gap:6px;margin:-2vh 0 22px}
+.lang{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:4px 14px;font-family:Fredoka,sans-serif;font-weight:500;font-size:15px;cursor:pointer;color:var(--ink-soft)}
+.lang:hover{border-color:var(--ink-soft);color:var(--ink)}
+.lang.on{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.page .en{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 18px;margin:18px 0 6px}
+.page .en p{margin:0 0 8px}
+.page .en p:last-child{margin:0}
