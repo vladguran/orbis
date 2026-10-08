@@ -235,7 +235,7 @@ const GEN = {
 
 function buildPuzzle(seed, ctx){
   const rng = makeRng("orbis|" + seed);
-  const plan = ["map","flag","compass","capital","outline", rng() < 0.5 ? "outlier" : "trivia","higher","sort","estimate","detective"];
+  const plan = ["flag","map","compass","capital","outline", rng() < 0.5 ? "outlier" : "trivia","higher","sort","estimate","detective"];
   return plan.map((t, i) => GEN[t](makeRng("orbis|" + seed + "|" + i + "|" + t), ctx));
 }
 const dailyCtx = () => ({daily:true, n:puzzleNo()});
@@ -268,7 +268,7 @@ function startGame(mode){
   S.mode = mode;
   S.seed = mode === "daily" ? dayKey() : "frei-" + Date.now();
   S.qs = buildPuzzle(S.seed, mode === "daily" ? dailyCtx() : {daily:false});
-  S.left = false;
+  S.left = false; S.saved = false;
   Track.event(mode === "daily" ? "tagesraetsel-start" : "uebung-start");
   S.i = 0; S.results = []; S.total = 0;
   showQuestion();
@@ -290,6 +290,7 @@ function finish(points, title, text, extra){
   points = Math.max(0, Math.min(1000, Math.round(points)));
   S.results[S.i] = {points, type:S.qs[S.i].type, kind:S.qs[S.i].kind};
   const from = S.total; S.total += points; animateScore(from, S.total);
+  if (S.i + 1 >= ROUNDS) saveResult();
   const g = grade(points);
   sheet.className = "sheet " + g;
   sheet.innerHTML = `<div class="sheet-in">
@@ -530,8 +531,9 @@ function miniMap(A, B){
 }
 
 /* ---------- Ende, Teilen, Statistik ---------- */
-function endGame(){
-  hideSheet();
+function saveResult(){
+  if (S.saved) return;
+  S.saved = true;
   const grid = S.results.map(r => GRADE_EMOJI[grade(r.points)]).join("");
   if (S.mode === "daily") {
     const key = dayKey();
@@ -547,6 +549,11 @@ function endGame(){
     if (ch) Track.event(S.total > ch.score ? "herausforderung-gewonnen" : "herausforderung-verloren");
   } else Track.event("uebung-fertig");
   S.left = true;
+}
+function endGame(){
+  hideSheet();
+  saveResult();
+  const grid = S.results.map(r => GRADE_EMOJI[grade(r.points)]).join("");
   renderResult({score:S.total, grid, results:S.results}, S.mode);
 }
 
@@ -674,9 +681,11 @@ function renderHome(){
       ${today ? `<button class="btn" id="seeres">${L("Heutiges Ergebnis ansehen", "See today's result")}</button><button class="btn ghost" id="practice">${L("Übungsrunde spielen", "Play a practice round")}</button>`
               : `<button class="btn" id="play">${ch ? L("Herausforderung annehmen", "Accept the challenge") : L("Rätsel starten", "Start puzzle")}</button><button class="linkbtn" id="practice">${L("Erst eine Übungsrunde spielen", "Try a practice round first")}</button>`}
     </div>
+    ${zoomCard()}
     ${statsHtml(streak, st)}
     ${legalLinks()}
   </div>`;
+  { const zt = load("zoom:" + dayKey(), null); document.getElementById("zoombtn").onclick = () => zt ? zEnd(zt) : startZoom("daily"); }
   app.querySelectorAll(".langs .lang").forEach(b => b.onclick = () => setLang(b.dataset.l));
   const play = document.getElementById("play"); if (play) play.onclick = () => startGame("daily");
   const seer = document.getElementById("seeres"); if (seer) seer.onclick = () => renderResult(today, "daily");
@@ -695,6 +704,195 @@ function globeSvg(){
   return `<svg class="globe" viewBox="0 0 120 120" aria-hidden="true"><path class="g-sea" d="${path({type:"Sphere"})}"></path><path class="g-grat" d="${grat}"></path><path class="g-land" d="${land}"></path></svg>`;
 }
 
+
+/* ---------- Spielmodus: Zoom Out ---------- */
+const ZROUNDS = 5, ZDUR = 15, ZTAIL = 8;   // 15 Sek. Zoom, danach noch 8 Sek. Zeit zum Raten
+let WORLD10 = null, FEATURE10 = {}, BOUNDS10 = null, ZINDEX = null;
+const Z = {qs:[], i:0, results:[], total:0, mode:"daily", seed:"", raf:0, t0:0, done:false, view:null};
+const ZALIAS = {"usa":"USA","us":"USA","united states":"USA","united states of america":"USA","america":"USA","amerika":"USA",
+  "uk":"Vereinigtes Königreich","britain":"Vereinigtes Königreich","great britain":"Vereinigtes Königreich","england":"Vereinigtes Königreich","grossbritannien":"Vereinigtes Königreich","grobritannien":"Vereinigtes Königreich",
+  "czech republic":"Tschechien","tschechische republik":"Tschechien","holland":"Niederlande","ivory coast":"Côte d’Ivoire","elfenbeinkuste":"Côte d’Ivoire","cote divoire":"Côte d’Ivoire",
+  "congo":"DR Kongo","kongo":"DR Kongo","drc":"DR Kongo","democratic republic of the congo":"DR Kongo","burma":"Myanmar","turkiye":"Türkei","persia":"Iran",
+  "korea":"Südkorea","south korea":"Südkorea","north korea":"Nordkorea","macedonia":"Nordmazedonien","bosnia":"Bosnien und Herzegowina","png":"Papua-Neuguinea"};
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'`´.]/g, "").replace(/-/g, " ").replace(/\s+/g, " ").trim();
+function zIndex(){
+  if (ZINDEX) return ZINDEX;
+  ZINDEX = {};
+  for (const c of COUNTRIES) { ZINDEX[norm(c.de)] = c; const en = EN.term && EN.term[c.de]; ZINDEX[norm(en || c.de)] = c; }
+  for (const [a, de] of Object.entries(ZALIAS)) if (BY_DE[de]) ZINDEX[norm(a)] = BY_DE[de];
+  return ZINDEX;
+}
+async function zLoad(){
+  if (WORLD10) return;
+  const topo = await fetch("countries-10m.json").then(r => { if (!r.ok) throw new Error("map"); return r.json(); });
+  WORLD10 = topojson.feature(topo, topo.objects.countries).features.filter(f => f.properties.name !== "Antarctica");
+  // Einzelne Flächen in den Detaildaten sind falsch herum orientiert und würden sonst die ganze Karte füllen
+  const fix = poly => d3.geoArea({type:"Polygon", coordinates:poly}) > 2 * Math.PI ? poly.map(r => r.slice().reverse()) : poly;
+  for (const f of WORLD10) {
+    const g = f.geometry; if (!g) continue;
+    if (g.type === "Polygon") g.coordinates = fix(g.coordinates);
+    else if (g.type === "MultiPolygon") g.coordinates = g.coordinates.map(fix);
+  }
+  BOUNDS10 = WORLD10.map(f => d3.geoBounds(f));
+  for (const c of COUNTRIES) {
+    const cands = WORLD10.filter(f => f.properties.name === c.en).sort((a,b) => d3.geoArea(b) - d3.geoArea(a));
+    if (cands[0]) FEATURE10[c.iso] = cands[0];
+  }
+}
+function zBuild(seed){
+  const pool = COUNTRIES.filter(c => c.area && c.area >= 30000 && c.iso !== "ru" && FEATURE10[c.iso]);
+  return sample(makeRng("zoom|" + seed), pool, ZROUNDS).map((c, k) => {
+    const f = mainland(FEATURE10[c.iso], c.iso);
+    const polys = f.geometry.type === "MultiPolygon" ? f.geometry.coordinates : [f.geometry.coordinates];
+    const big = polys.slice().sort((a,b) => d3.geoArea({type:"Polygon", coordinates:b}) - d3.geoArea({type:"Polygon", coordinates:a}))[0];
+    const ring = big[0];
+    const pt = ring[Math.floor(makeRng("zoom-pt|" + seed + "|" + k)() * ring.length)];
+    return {c, f, pt};
+  });
+}
+async function startZoom(mode){
+  app.className = "app";
+  app.innerHTML = `<div class="loading">${L("Die Karte wird geladen …", "Loading the map …")}</div>`;
+  try { await zLoad(); } catch(e) { app.innerHTML = `<div class="err"><h2>${L("Die Karte konnte nicht geladen werden", "The map couldn't be loaded")}</h2></div>`; return; }
+  Z.mode = mode; Z.seed = mode === "daily" ? dayKey() : "frei-" + Date.now();
+  Z.qs = zBuild(Z.seed); Z.i = 0; Z.results = []; Z.total = 0;
+  Track.event(mode === "daily" ? "zoom-start" : "zoom-uebung-start");
+  zRound();
+}
+function zSegs(){
+  return Array.from({length:ZROUNDS}, (_, k) => { const r = Z.results[k]; return `<span class="${r ? grade(r.points * 2) : k === Z.i ? "now" : ""}"></span>`; }).join("");
+}
+function zRound(){
+  hideSheet(); cancelAnimationFrame(Z.raf);
+  const q = Z.qs[Z.i]; Z.done = false;
+  app.className = "app";
+  app.innerHTML = `<div class="top"><button class="iconbtn" id="zquit" aria-label="${L("Zurück zum Start", "Back to start")}">${ICON_X}</button>
+    <div class="progress">${zSegs()}</div><div class="score" id="zscore">${fmt(Z.total)}</div></div>
+    <div class="kind">Zoom Out · ${L(`Land ${Z.i + 1} von ${ZROUNDS}`, `Country ${Z.i + 1} of ${ZROUNDS}`)}</div>
+    <h2 class="prompt">${L("Welches Land ist das?", "Which country is this?")}</h2>
+    <div class="zwrap" id="zwrap"><svg id="zmap" viewBox="0 0 1000 1000" role="img" aria-label="${L("Karte, die herauszoomt", "A map zooming out")}"><g id="zg"></g></svg><div class="zpts" id="zpts">+1.000</div></div>
+    <div class="zbar"><span id="zbar"></span></div>
+    <div class="zform"><input id="zin" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="${L("Land eintippen …", "Type a country …")}" aria-label="${L("Land eintippen", "Type a country")}"><div class="zsug" id="zsug"></div></div>
+    <div class="zskip"><button class="linkbtn" id="zskip">${L("Ich weiß es nicht", "I don't know")}</button></div>`;
+  document.getElementById("zquit").onclick = () => { cancelAnimationFrame(Z.raf); Track.event("zoom-abbruch-" + (Z.i + 1)); renderHome(); };
+  // Karte: Endansicht = Land mit Nachbarn, Start = extrem nah an einem Küsten- oder Grenzpunkt
+  const b = d3.geoBounds(q.f), padX = (b[1][0] - b[0][0]) * 0.45 + 1, padY = (b[1][1] - b[0][1]) * 0.45 + 1;
+  const box = [[b[0][0] - padX, b[0][1] - padY], [b[1][0] + padX, b[1][1] + padY]];
+  const proj = d3.geoMercator().fitExtent([[0,0],[1000,1000]], {type:"MultiPoint", coordinates:[box[0], box[1], [box[0][0], box[1][1]], [box[1][0], box[0][1]]]}).clipExtent([[-1500,-1500],[2500,2500]]);
+  const path = d3.geoPath(proj).digits(2);
+  const near = WORLD10.filter((f, k) => { const fb = BOUNDS10[k]; return !(fb[0][0] > box[1][0] + 30 || fb[1][0] < box[0][0] - 30 || fb[0][1] > box[1][1] + 30 || fb[1][1] < box[0][1] - 30) || fb[0][0] > fb[1][0]; });
+  const g = document.getElementById("zg");
+  g.innerHTML = near.map(f => `<path class="c" d="${path(f)}"></path>`).join("") + `<path id="ztarget" d="${path(FEATURE10[q.c.iso])}"></path>`;
+  const p0 = proj(q.pt);
+  const widthKm = d3.geoDistance([box[0][0], (box[0][1] + box[1][1]) / 2], [box[1][0], (box[0][1] + box[1][1]) / 2]) * EARTH;
+  const kmax = Math.max(8, Math.min(60, widthKm / 70));
+  Z.view = {p0, kmax};
+  const input = document.getElementById("zin"), sug = document.getElementById("zsug");
+  const names = () => COUNTRIES.map(c => N(c.de));
+  input.oninput = () => {
+    const v = norm(input.value);
+    if (v.length < 1) { sug.innerHTML = ""; return; }
+    const hits = names().filter(n => norm(n).split(" ").some(w => w.startsWith(v)) || norm(n).startsWith(v)).slice(0, 5);
+    sug.innerHTML = hits.map(n => `<button type="button" data-n="${esc(n)}">${esc(n)}</button>`).join("");
+    sug.querySelectorAll("button").forEach(btn => btn.onclick = () => zGuess(btn.dataset.n));
+  };
+  input.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); const first = sug.querySelector("button"); zGuess(zIndex()[norm(input.value)] ? input.value : (first ? first.dataset.n : input.value)); } };
+  input.onfocus = () => setTimeout(() => input.scrollIntoView({block:"center", behavior:"smooth"}), 250);
+  document.getElementById("zskip").onclick = () => zReveal(null);
+  Z.t0 = performance.now();
+  const tick = now => {
+    if (Z.done) return;
+    const t = (now - Z.t0) / 1000;
+    zSetView(Math.min(1, t / ZDUR));
+    const pts = zPoints(t);
+    document.getElementById("zpts").textContent = "+" + fmt(pts);
+    document.getElementById("zbar").style.width = (t < ZDUR ? 100 - 90 * t / ZDUR : Math.max(0, 10 - 10 * (t - ZDUR) / ZTAIL)) + "%";
+    if (t > ZDUR + ZTAIL) { zReveal(null); return; }
+    Z.raf = requestAnimationFrame(tick);
+  };
+  Z.raf = requestAnimationFrame(tick);
+}
+function zPoints(t){ return t < ZDUR ? Math.round((1000 - 900 * t / ZDUR) / 10) * 10 : 100; }
+function zSetView(u){
+  const {p0, kmax} = Z.view, k = Math.pow(kmax, 1 - u), s = 1 - (k - 1) / (kmax - 1);
+  const cx = p0[0] + (500 - p0[0]) * s, cy = p0[1] + (500 - p0[1]) * s;
+  document.getElementById("zg").style.transform = `translate(500px,500px) scale(${k}) translate(${-cx}px,${-cy}px)`;
+}
+function zGuess(value){
+  if (Z.done) return;
+  const c = zIndex()[norm(value)];
+  if (!c) { toast(L("Dieses Land kenne ich nicht", "I don't know that country")); return; }
+  zReveal(c);
+}
+function zReveal(guess){
+  if (Z.done) return; Z.done = true; cancelAnimationFrame(Z.raf);
+  const q = Z.qs[Z.i], t = (performance.now() - Z.t0) / 1000;
+  const ok = guess === q.c, points = ok ? zPoints(t) : 0;
+  const g = document.getElementById("zg");
+  g.style.transition = "transform .7s ease"; zSetView(1);
+  document.getElementById("zwrap").classList.add(ok ? "ok" : "bad");
+  document.getElementById("zin").disabled = true;
+  Z.results[Z.i] = {points, iso:q.c.iso, de:q.c.de, t:Math.round(t)};
+  const from = Z.total; Z.total += points; animateScore(from, Z.total);
+  const gr = grade(points * 2);
+  sheet.className = "sheet " + gr;
+  const title = ok ? L(`Richtig, ${q.c.de}!`, `Yes, ${N(q.c.de)}!`) : L(`Das war ${q.c.de}.`, `That was ${N(q.c.de)}.`);
+  const text = ok ? L(`Erkannt nach ${Math.round(t)} Sekunden.`, `Spotted after ${Math.round(t)} seconds.`) : (guess ? L(`Du hast ${guess.de} getippt.`, `You guessed ${N(guess.de)}.`) : "");
+  sheet.innerHTML = `<div class="sheet-in">
+      <div class="stamp ${gr} land"><div><small>${gradeWord(gr)}</small><span>+${points}</span></div></div>
+      <div class="msg"><h3>${esc(title)}</h3>${text ? `<p>${esc(text)}</p>` : ""}</div>
+      <button class="btn block" id="znext">${Z.i + 1 < ZROUNDS ? L("Weiter", "Continue") : L("Ergebnis ansehen", "See results")}</button>
+    </div>`;
+  requestAnimationFrame(() => sheet.classList.add("show"));
+  if (Z.i + 1 >= ZROUNDS) zSave();
+  document.getElementById("znext").onclick = () => { Z.i++; if (Z.i < ZROUNDS) zRound(); else zEnd(); };
+}
+function zSave(){
+  if (Z.mode === "daily" && !load("zoom:" + dayKey(), null)) {
+    save("zoom:" + dayKey(), {score:Z.total, results:Z.results});
+    Track.event("zoom-fertig");
+  } else if (Z.mode !== "daily") Track.event("zoom-uebung-fertig");
+}
+function zShareText(score, results){
+  const grid = results.map(r => GRADE_EMOJI[grade(r.points * 2)]).join("");
+  return L(`Orbis Zoom Out #${puzzleNo()} – ${fmt(score)} von ${fmt(ZROUNDS * 1000)}\n${grid}\nSchaffst du mehr? https://${SITE}/#zoom`,
+           `Orbis Zoom Out #${puzzleNo()} – ${fmt(score)} of ${fmt(ZROUNDS * 1000)}\n${grid}\nCan you beat me? https://${SITE}/#zoom`);
+}
+function zEnd(saved){
+  hideSheet();
+  const res = saved || {score:Z.total, results:Z.results};
+  const daily = saved ? true : Z.mode === "daily";
+  const rows = res.results.map(r => `<div class="zrow"><span>${esc(N(r.de))}</span><b class="${grade(r.points * 2)}">+${fmt(r.points)}</b></div>`).join("");
+  app.className = "app";
+  app.innerHTML = `<div class="fade">
+    <div class="top"><button class="iconbtn" id="zhome" aria-label="${L("Zum Start", "Back to start")}">${ICON_X}</button><div class="grow"></div></div>
+    <h1 class="res-title">Zoom Out${daily ? " #" + puzzleNo() : ""}</h1>
+    <div class="passport"><h2>${res.score >= 4000 ? L("Adlerauge!", "Eagle eye!") : res.score >= 2500 ? L("Starke Runde!", "Great round!") : L("Morgen wird besser.", "Tomorrow will be better.")}</h2>
+      <div class="total">${fmt(res.score)}<small> / ${fmt(ZROUNDS * 1000)}</small></div>
+      <div class="zrows">${rows}</div></div>
+    <div class="actions">
+      ${daily ? `<button class="btn" id="zshare">${L("Freunde herausfordern", "Challenge friends")}</button>` : ""}
+      <button class="btn ghost" id="zagain">${L("Neue Runde (Übung)", "New round (practice)")}</button>
+      <button class="linkbtn" id="zhome2">${L("Zum Tagesrätsel", "Go to the daily puzzle")}</button>
+    </div>
+    ${legalLinks()}
+  </div>`;
+  document.getElementById("zhome").onclick = renderHome;
+  document.getElementById("zhome2").onclick = renderHome;
+  document.getElementById("zagain").onclick = () => startZoom("practice");
+  const sh = document.getElementById("zshare");
+  if (sh) sh.onclick = () => { Track.event("zoom-geteilt"); share(zShareText(res.score, res.results)); };
+}
+function zoomCard(){
+  const today = load("zoom:" + dayKey(), null);
+  return `<div class="zcard">
+    <div class="zcard-t">${L("Neu: Zoom Out", "New: Zoom Out")}</div>
+    <p>${L("Die Karte startet ganz nah und zoomt raus. Errate das Land so früh wie möglich.", "The map starts super close and zooms out. Guess the country as early as you can.")}</p>
+    ${today ? `<p class="zcard-s">${L("Heute", "Today")}: <b>${fmt(today.score)}</b> / ${fmt(ZROUNDS * 1000)}</p>` : ""}
+    <button class="btn" id="zoombtn">${today ? L("Ergebnis ansehen", "See result") : L("Zoom Out spielen", "Play Zoom Out")}</button>
+  </div>`;
+}
+
 /* ---------- Start ---------- */
 async function boot(){
   applyLang();
@@ -710,7 +908,8 @@ async function boot(){
     trackVisit();
     readChallenge();
     Track.page();
-    renderHome();
+    if (location.hash === "#zoom") { const zt = load("zoom:" + dayKey(), null); if (zt) { await zLoad(); zEnd(zt); } else startZoom("daily"); }
+    else renderHome();
   } catch(e) {
     console.error(e);
     app.innerHTML = `<div class="err"><h2>${L("Die Karte konnte nicht geladen werden", "The map couldn't be loaded")}</h2><p>${L("Prüfe deine Internetverbindung und lade die Seite neu.", "Check your internet connection and reload the page.")}</p></div>`;
