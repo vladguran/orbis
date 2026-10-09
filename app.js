@@ -934,7 +934,7 @@ function mStart(prefill){
     <p class="mlead">${L("Zoom Out für bis zu 10 Spieler. Jeder spielt auf seinem eigenen Handy oder PC.", "Zoom Out for up to 10 players. Everyone plays on their own phone or computer.")}</p>
     <div class="mbox">
       <label class="mlabel" for="mname">${L("Dein Name", "Your name")}</label>
-      <input class="minput" id="mname" maxlength="16" autocomplete="nickname" value="${esc(name)}" placeholder="${L("z. B. Vlad", "e.g. Alex")}">
+      <input class="minput" id="mname" maxlength="16" autocomplete="nickname" value="${esc(name)}" placeholder="${L("z. B. Alex", "e.g. Alex")}">
     </div>
     <div class="mbox">
       <button class="btn block" id="mcreate">${L("Neuen Raum erstellen", "Create a room")}</button>
