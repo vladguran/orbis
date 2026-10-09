@@ -686,6 +686,7 @@ function renderHome(){
     ${legalLinks()}
   </div>`;
   { const zt = load("zoom:" + dayKey(), null); document.getElementById("zoombtn").onclick = () => zt ? zEnd(zt) : startZoom("daily"); }
+  document.getElementById("zfriends").onclick = () => mStart();
   app.querySelectorAll(".langs .lang").forEach(b => b.onclick = () => setLang(b.dataset.l));
   const play = document.getElementById("play"); if (play) play.onclick = () => startGame("daily");
   const seer = document.getElementById("seeres"); if (seer) seer.onclick = () => renderResult(today, "daily");
@@ -707,7 +708,7 @@ function globeSvg(){
 
 /* ---------- Spielmodus: Zoom Out ---------- */
 const ZROUNDS = 5, ZDUR = 15, ZTAIL = 8;   // 15 Sek. Zoom, danach noch 8 Sek. Zeit zum Raten
-let WORLD10 = null, FEATURE10 = {}, BOUNDS10 = null, ZINDEX = null;
+let WORLD10 = null, FEATURE10 = {}, BOUNDS10 = null, ZINDEX = null, ZCOLOR = null;
 const Z = {qs:[], i:0, results:[], total:0, mode:"daily", seed:"", raf:0, t0:0, done:false, view:null};
 const ZALIAS = {"usa":"USA","us":"USA","united states":"USA","united states of america":"USA","america":"USA","amerika":"USA",
   "uk":"Vereinigtes Königreich","britain":"Vereinigtes Königreich","great britain":"Vereinigtes Königreich","england":"Vereinigtes Königreich","grossbritannien":"Vereinigtes Königreich","grobritannien":"Vereinigtes Königreich",
@@ -725,7 +726,16 @@ function zIndex(){
 async function zLoad(){
   if (WORLD10) return;
   const topo = await fetch("countries-10m.json").then(r => { if (!r.ok) throw new Error("map"); return r.json(); });
-  WORLD10 = topojson.feature(topo, topo.objects.countries).features.filter(f => f.properties.name !== "Antarctica");
+  const geoms = topo.objects.countries.geometries;
+  const nb = topojson.neighbors(geoms);
+  const all = topojson.feature(topo, topo.objects.countries).features;
+  const col = new Array(all.length).fill(-1);
+  all.map((f, k) => k).sort((a, b) => nb[b].length - nb[a].length).forEach(k => {
+    const used = new Set(nb[k].map(j => col[j]));
+    let c = 0; while (used.has(c) && c < 4) c++; col[k] = c;
+  });
+  all.forEach((f, k) => f.properties.col = col[k]);
+  WORLD10 = all.filter(f => f.properties.name !== "Antarctica");
   // Einzelne Flächen in den Detaildaten sind falsch herum orientiert und würden sonst die ganze Karte füllen
   const fix = poly => d3.geoArea({type:"Polygon", coordinates:poly}) > 2 * Math.PI ? poly.map(r => r.slice().reverse()) : poly;
   for (const f of WORLD10) {
@@ -745,8 +755,11 @@ function zBuild(seed){
     const f = mainland(FEATURE10[c.iso], c.iso);
     const polys = f.geometry.type === "MultiPolygon" ? f.geometry.coordinates : [f.geometry.coordinates];
     const big = polys.slice().sort((a,b) => d3.geoArea({type:"Polygon", coordinates:b}) - d3.geoArea({type:"Polygon", coordinates:a}))[0];
-    const ring = big[0];
-    const pt = ring[Math.floor(makeRng("zoom-pt|" + seed + "|" + k)() * ring.length)];
+    const ring = big[0], rr = makeRng("zoom-pt|" + seed + "|" + k);
+    const cands = Array.from({length:40}, () => ring[Math.floor(rr() * ring.length)]);
+    const onLand = q => WORLD10.some((g, j) => { const b = BOUNDS10[j]; return q[0] >= b[0][0] && q[0] <= b[1][0] && q[1] >= b[0][1] && q[1] <= b[1][1] && d3.geoContains(g, q); });
+    const coastal = v => [0,45,90,135,180,225,270,315].some(a => !onLand(d3.geoDestination ? d3.geoDestination(v, a, 0.2) : [v[0] + 0.2 * Math.cos(a * Math.PI / 180), v[1] + 0.2 * Math.sin(a * Math.PI / 180)]));
+    const pt = cands.find(coastal) || cands[0];
     return {c, f, pt};
   });
 }
@@ -775,29 +788,8 @@ function zRound(){
     <div class="zform"><input id="zin" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="${L("Land eintippen …", "Type a country …")}" aria-label="${L("Land eintippen", "Type a country")}"><div class="zsug" id="zsug"></div></div>
     <div class="zskip"><button class="linkbtn" id="zskip">${L("Ich weiß es nicht", "I don't know")}</button></div>`;
   document.getElementById("zquit").onclick = () => { cancelAnimationFrame(Z.raf); Track.event("zoom-abbruch-" + (Z.i + 1)); renderHome(); };
-  // Karte: Endansicht = Land mit Nachbarn, Start = extrem nah an einem Küsten- oder Grenzpunkt
-  const b = d3.geoBounds(q.f), padX = (b[1][0] - b[0][0]) * 0.45 + 1, padY = (b[1][1] - b[0][1]) * 0.45 + 1;
-  const box = [[b[0][0] - padX, b[0][1] - padY], [b[1][0] + padX, b[1][1] + padY]];
-  const proj = d3.geoMercator().fitExtent([[0,0],[1000,1000]], {type:"MultiPoint", coordinates:[box[0], box[1], [box[0][0], box[1][1]], [box[1][0], box[0][1]]]}).clipExtent([[-1500,-1500],[2500,2500]]);
-  const path = d3.geoPath(proj).digits(2);
-  const near = WORLD10.filter((f, k) => { const fb = BOUNDS10[k]; return !(fb[0][0] > box[1][0] + 30 || fb[1][0] < box[0][0] - 30 || fb[0][1] > box[1][1] + 30 || fb[1][1] < box[0][1] - 30) || fb[0][0] > fb[1][0]; });
-  const g = document.getElementById("zg");
-  g.innerHTML = near.map(f => `<path class="c" d="${path(f)}"></path>`).join("") + `<path id="ztarget" d="${path(FEATURE10[q.c.iso])}"></path>`;
-  const p0 = proj(q.pt);
-  const widthKm = d3.geoDistance([box[0][0], (box[0][1] + box[1][1]) / 2], [box[1][0], (box[0][1] + box[1][1]) / 2]) * EARTH;
-  const kmax = Math.max(8, Math.min(60, widthKm / 70));
-  Z.view = {p0, kmax};
-  const input = document.getElementById("zin"), sug = document.getElementById("zsug");
-  const names = () => COUNTRIES.map(c => N(c.de));
-  input.oninput = () => {
-    const v = norm(input.value);
-    if (v.length < 1) { sug.innerHTML = ""; return; }
-    const hits = names().filter(n => norm(n).split(" ").some(w => w.startsWith(v)) || norm(n).startsWith(v)).slice(0, 5);
-    sug.innerHTML = hits.map(n => `<button type="button" data-n="${esc(n)}">${esc(n)}</button>`).join("");
-    sug.querySelectorAll("button").forEach(btn => btn.onclick = () => zGuess(btn.dataset.n));
-  };
-  input.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); const first = sug.querySelector("button"); zGuess(zIndex()[norm(input.value)] ? input.value : (first ? first.dataset.n : input.value)); } };
-  input.onfocus = () => setTimeout(() => input.scrollIntoView({block:"center", behavior:"smooth"}), 250);
+  zDraw(q);
+  zInput(zGuess);
   document.getElementById("zskip").onclick = () => zReveal(null);
   Z.t0 = performance.now();
   const tick = now => {
@@ -812,9 +804,37 @@ function zRound(){
   };
   Z.raf = requestAnimationFrame(tick);
 }
+function zDraw(q){
+  // Endansicht = Land mit Nachbarn, Start = extrem nah an einem Küsten- oder Grenzpunkt
+  const b = d3.geoBounds(q.f), padX = (b[1][0] - b[0][0]) * 0.45 + 1, padY = (b[1][1] - b[0][1]) * 0.45 + 1;
+  const box = [[b[0][0] - padX, b[0][1] - padY], [b[1][0] + padX, b[1][1] + padY]];
+  const proj = d3.geoMercator().fitExtent([[0,0],[1000,1000]], {type:"MultiPoint", coordinates:[box[0], box[1], [box[0][0], box[1][1]], [box[1][0], box[0][1]]]}).clipExtent([[-1500,-1500],[2500,2500]]);
+  const path = d3.geoPath(proj).digits(2);
+  const near = WORLD10.filter((f, k) => { const fb = BOUNDS10[k]; return !(fb[0][0] > box[1][0] + 30 || fb[1][0] < box[0][0] - 30 || fb[0][1] > box[1][1] + 30 || fb[1][1] < box[0][1] - 30) || fb[0][0] > fb[1][0]; });
+  const g = document.getElementById("zg");
+  g.innerHTML = near.map(f => { const d = path(f); return d ? `<path class="c k${f.properties.col}" d="${d}"></path>` : ""; }).join("") + `<path id="ztarget" d="${path(FEATURE10[q.c.iso])}"></path>`;
+  const p0 = proj(q.pt);
+  const widthKm = d3.geoDistance([box[0][0], (box[0][1] + box[1][1]) / 2], [box[1][0], (box[0][1] + box[1][1]) / 2]) * EARTH;
+  const kmax = Math.max(4, Math.min(40, widthKm / 200));
+  Z.view = {p0, kmax};
+}
+function zInput(onPick){
+  const input = document.getElementById("zin"), sug = document.getElementById("zsug");
+  const names = () => COUNTRIES.map(c => N(c.de));
+  input.oninput = () => {
+    const v = norm(input.value);
+    if (v.length < 1) { sug.innerHTML = ""; return; }
+    const hits = names().filter(n => norm(n).split(" ").some(w => w.startsWith(v)) || norm(n).startsWith(v)).slice(0, 5);
+    sug.innerHTML = hits.map(n => `<button type="button" data-n="${esc(n)}">${esc(n)}</button>`).join("");
+    sug.querySelectorAll("button").forEach(btn => btn.onclick = () => onPick(btn.dataset.n));
+  };
+  input.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); const first = sug.querySelector("button"); onPick(zIndex()[norm(input.value)] ? input.value : (first ? first.dataset.n : input.value)); } };
+  input.onfocus = () => setTimeout(() => input.scrollIntoView({block:"center", behavior:"smooth"}), 250);
+}
 function zPoints(t){ return t < ZDUR ? Math.round((1000 - 900 * t / ZDUR) / 10) * 10 : 100; }
 function zSetView(u){
-  const {p0, kmax} = Z.view, k = Math.pow(kmax, 1 - u), s = 1 - (k - 1) / (kmax - 1);
+  // Die Kamera folgt der Ausschnittgröße: Der Startpunkt (Küste/Grenze) bleibt bis zum Schluss im Bild
+  const {p0, kmax} = Z.view, k = Math.pow(kmax, 1 - u), s = (kmax / k - 1) / (kmax - 1);
   const cx = p0[0] + (500 - p0[0]) * s, cy = p0[1] + (500 - p0[1]) * s;
   document.getElementById("zg").style.transform = `translate(500px,500px) scale(${k}) translate(${-cx}px,${-cy}px)`;
 }
@@ -890,7 +910,271 @@ function zoomCard(){
     <p>${L("Die Karte startet ganz nah und zoomt raus. Errate das Land so früh wie möglich.", "The map starts super close and zooms out. Guess the country as early as you can.")}</p>
     ${today ? `<p class="zcard-s">${L("Heute", "Today")}: <b>${fmt(today.score)}</b> / ${fmt(ZROUNDS * 1000)}</p>` : ""}
     <button class="btn" id="zoombtn">${today ? L("Ergebnis ansehen", "See result") : L("Zoom Out spielen", "Play Zoom Out")}</button>
+    <button class="btn ghost" id="zfriends">${L("Mit Freunden spielen", "Play with friends")}</button>
   </div>`;
+}
+
+
+/* ---------- Mehrspieler: Zoom Out mit Freunden ---------- */
+const SB_URL = "https://okplegsseawkirjemodr.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rcGxlZ3NzZWF3a2lyamVtb2RyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0NjYwMjUsImV4cCI6MjEwNzA0MjAyNX0.Fpj3GegSaybGvwv_DPf5-UbJs79clKRPw-o8IjbK8QM";
+const MMAX = 10, MCODE = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+let SBC = null;
+const M = {code:null, me:null, host:false, room:null, players:[], qs:null, round:0, phase:"", ch:null, got:{}, pts:{}, t0:0, raf:0, done:false, hostTimer:0, autoTimer:0};
+function sbc(){ if (!SBC) SBC = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:false, autoRefreshToken:false}}); return SBC; }
+function mCode(){ const a = new Uint32Array(4); crypto.getRandomValues(a); return Array.from(a, x => MCODE[x % MCODE.length]).join(""); }
+const mLink = code => `https://${SITE}/#room=${code}`;
+function mStart(prefill){
+  hideSheet();
+  const name = load("mname", "");
+  app.className = "app";
+  app.innerHTML = `<div class="fade">
+    <div class="top"><button class="iconbtn" id="mback" aria-label="${L("Zurück", "Back")}">${ICON_X}</button><div class="grow"></div></div>
+    <h1 class="res-title">${L("Mit Freunden spielen", "Play with friends")}</h1>
+    <p class="mlead">${L("Zoom Out für bis zu 10 Spieler. Jeder spielt auf seinem eigenen Handy oder PC.", "Zoom Out for up to 10 players. Everyone plays on their own phone or computer.")}</p>
+    <div class="mbox">
+      <label class="mlabel" for="mname">${L("Dein Name", "Your name")}</label>
+      <input class="minput" id="mname" maxlength="16" autocomplete="nickname" value="${esc(name)}" placeholder="${L("z. B. Vlad", "e.g. Alex")}">
+    </div>
+    <div class="mbox">
+      <button class="btn block" id="mcreate">${L("Neuen Raum erstellen", "Create a room")}</button>
+    </div>
+    <div class="mor">${L("oder", "or")}</div>
+    <div class="mbox">
+      <label class="mlabel" for="mcode">${L("Raumcode", "Room code")}</label>
+      <input class="minput mcode-in" id="mcode" maxlength="4" autocapitalize="characters" autocomplete="off" value="${esc(prefill || "")}" placeholder="ABCD">
+      <button class="btn ghost block" id="mjoin">${L("Raum beitreten", "Join room")}</button>
+    </div>
+    ${legalLinks()}
+  </div>`;
+  document.getElementById("mback").onclick = () => { location.hash = ""; renderHome(); };
+  const nm = () => { const v = document.getElementById("mname").value.replace(/\s+/g, " ").trim().slice(0, 16); if (!v) { toast(L("Bitte gib einen Namen ein", "Please enter a name")); return null; } save("mname", v); return v; };
+  document.getElementById("mcreate").onclick = async e => { const n = nm(); if (!n) return; e.target.disabled = true; await mCreate(n).catch(mFail); e.target.disabled = false; };
+  document.getElementById("mjoin").onclick = async e => {
+    const n = nm(); if (!n) return;
+    const c = document.getElementById("mcode").value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (c.length !== 4) { toast(L("Der Raumcode hat 4 Zeichen", "The room code has 4 characters")); return; }
+    e.target.disabled = true; await mJoin(n, c).catch(mFail); e.target.disabled = false;
+  };
+  if (prefill && name) document.getElementById("mjoin").focus();
+}
+function mFail(err){ console.error(err); toast(L("Verbindung fehlgeschlagen. Bitte nochmal versuchen.", "Connection failed. Please try again.")); }
+async function mCreate(name){
+  await zLoad();
+  let code = null;
+  for (let k = 0; k < 4 && !code; k++) {
+    const c = mCode();
+    const {error} = await sbc().from("rooms").insert({code:c, seed:c + "-" + Date.now()});
+    if (!error) code = c; else if (error.code !== "23505") throw error;
+  }
+  if (!code) throw new Error("no code");
+  const {data, error} = await sbc().from("players").insert({room_code:code, name}).select().single();
+  if (error) throw error;
+  M.host = true; M.me = data;
+  Track.event("mehrspieler-raum-erstellt");
+  await mEnter(code);
+}
+async function mJoin(name, code){
+  await zLoad();
+  const {data:room, error} = await sbc().from("rooms").select("*").eq("code", code).maybeSingle();
+  if (error) throw error;
+  if (!room) { toast(L("Diesen Raum gibt es nicht", "That room doesn't exist")); return; }
+  if (room.phase !== "lobby") { toast(L("Das Spiel in diesem Raum läuft schon", "This game has already started")); return; }
+  const {count} = await sbc().from("players").select("id", {count:"exact", head:true}).eq("room_code", code);
+  if ((count || 0) >= MMAX) { toast(L("Der Raum ist voll (10 Spieler)", "The room is full (10 players)")); return; }
+  const {data, error:e2} = await sbc().from("players").insert({room_code:code, name}).select().single();
+  if (e2) throw e2;
+  M.host = false; M.me = data;
+  Track.event("mehrspieler-beigetreten");
+  await mEnter(code);
+}
+async function mEnter(code){
+  M.code = code; M.round = 0; M.phase = ""; M.got = {}; M.pts = {};
+  location.hash = "room=" + code;
+  const {data:room} = await sbc().from("rooms").select("*").eq("code", code).single();
+  M.room = room; M.qs = zBuild(room.seed);
+  if (M.ch) sbc().removeChannel(M.ch);
+  M.ch = sbc().channel("room-" + code)
+    .on("postgres_changes", {event:"*", schema:"public", table:"players", filter:`room_code=eq.${code}`}, () => mLoadPlayers())
+    .on("postgres_changes", {event:"UPDATE", schema:"public", table:"rooms", filter:`code=eq.${code}`}, p => mOnRoom(p.new))
+    .on("postgres_changes", {event:"INSERT", schema:"public", table:"guesses", filter:`room_code=eq.${code}`}, p => mOnGuess(p.new))
+    .subscribe();
+  await mLoadPlayers();
+  mLobby();
+}
+async function mLoadPlayers(){
+  const {data} = await sbc().from("players").select("*").eq("room_code", M.code).order("joined_at");
+  if (data) M.players = data;
+  mRefresh();
+}
+function mRefresh(){
+  const box = document.getElementById("mplayers");
+  if (box) box.innerHTML = mPlayerList();
+  const cnt = document.getElementById("mcount");
+  if (cnt) cnt.textContent = mAnsweredText();
+  const st = document.getElementById("mstartbtn");
+  if (st) st.disabled = M.players.length < 1;
+}
+function mPlayerList(){
+  return M.players.map(p => `<span class="mchip${p.id === M.me.id ? " me" : ""}">${esc(p.name)}</span>`).join("") || `<span class="mhint">${L("Noch niemand da …", "Nobody here yet …")}</span>`;
+}
+function mLobby(){
+  M.phase = "lobby";
+  app.className = "app";
+  app.innerHTML = `<div class="fade">
+    <div class="top"><button class="iconbtn" id="mleave" aria-label="${L("Raum verlassen", "Leave room")}">${ICON_X}</button><div class="grow"></div></div>
+    <h1 class="res-title">${L("Raum", "Room")}</h1>
+    <div class="mcode">${esc(M.code)}</div>
+    <p class="mlead">${L("Freunde öffnen", "Friends open")} <b>${SITE}</b> ${L("und geben diesen Code ein, oder du schickst ihnen den Link.", "and enter this code, or you send them the link.")}</p>
+    <div class="actions"><button class="btn ghost" id="mshare">${L("Einladungslink teilen", "Share invite link")}</button></div>
+    <h2 class="mh2">${L("Spieler", "Players")} <span id="mcount"></span></h2>
+    <div class="mplayers" id="mplayers">${mPlayerList()}</div>
+    <div class="actions">${M.host
+      ? `<button class="btn" id="mstartbtn">${L("Spiel starten", "Start game")}</button>`
+      : `<p class="mhint">${L("Warte, bis der Gastgeber das Spiel startet …", "Waiting for the host to start the game …")}</p>`}</div>
+  </div>`;
+  document.getElementById("mleave").onclick = mLeave;
+  document.getElementById("mshare").onclick = () => share(L(`Spiel mit mir Orbis Zoom Out! Raumcode ${M.code}: ${mLink(M.code)}`, `Play Orbis Zoom Out with me! Room code ${M.code}: ${mLink(M.code)}`));
+  const st = document.getElementById("mstartbtn");
+  if (st) st.onclick = async () => { st.disabled = true; Track.event("mehrspieler-start-" + M.players.length); await mSetRoom({phase:"play", round:1}); };
+  mRefresh();
+}
+async function mSetRoom(patch){
+  const {error} = await sbc().from("rooms").update(patch).eq("code", M.code);
+  if (error) mFail(error);
+}
+function mOnRoom(room){
+  M.room = room;
+  if (room.phase === "play" && room.round !== M.round) mPlay(room.round);
+  else if (room.phase === "reveal" && M.phase !== "reveal") mReveal(room.round);
+  else if (room.phase === "end" && M.phase !== "end") mEnd();
+}
+function mOnGuess(g){
+  (M.got[g.round] = M.got[g.round] || new Set()).add(g.player_id);
+  (M.pts[g.round] = M.pts[g.round] || {})[g.player_id] = g.points;
+  mRefresh();
+  if (M.host && M.phase !== "reveal" && M.room.phase === "play" && g.round === M.round && M.got[g.round].size >= M.players.length) mSetRoom({phase:"reveal"});
+}
+const mAnsweredText = () => M.phase === "play" || M.phase === "wait" ? L(`${(M.got[M.round] || new Set()).size} von ${M.players.length} haben geantwortet`, `${(M.got[M.round] || new Set()).size} of ${M.players.length} answered`) : `(${M.players.length}/${MMAX})`;
+function mPlay(r){
+  hideSheet(); cancelAnimationFrame(M.raf); clearTimeout(M.hostTimer); clearTimeout(M.autoTimer);
+  M.round = r; M.phase = "play"; M.done = false;
+  const q = M.qs[r - 1];
+  app.className = "app";
+  app.innerHTML = `<div class="top"><button class="iconbtn" id="mleave" aria-label="${L("Raum verlassen", "Leave room")}">${ICON_X}</button>
+      <div class="progress">${Array.from({length:ZROUNDS}, (_, k) => `<span class="${k < r - 1 ? "ok" : k === r - 1 ? "now" : ""}"></span>`).join("")}</div>
+      <div class="score" id="mscore">${fmt(mMe().score || 0)}</div></div>
+    <div class="kind">${L(`Raum ${M.code} · Runde ${r} von ${ZROUNDS}`, `Room ${M.code} · Round ${r} of ${ZROUNDS}`)}</div>
+    <h2 class="prompt">${L("Welches Land ist das?", "Which country is this?")}</h2>
+    <div class="zwrap" id="zwrap"><svg id="zmap" viewBox="0 0 1000 1000" role="img" aria-label="${L("Karte, die herauszoomt", "A map zooming out")}"><g id="zg"></g></svg><div class="zpts" id="zpts">+1.000</div></div>
+    <div class="zbar"><span id="zbar"></span></div>
+    <div class="zform" id="mform"><input id="zin" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="${L("Land eintippen …", "Type a country …")}" aria-label="${L("Land eintippen", "Type a country")}"><div class="zsug" id="zsug"></div></div>
+    <p class="mhint mcenter" id="mcount">${mAnsweredText()}</p>`;
+  document.getElementById("mleave").onclick = mLeave;
+  zDraw(q); zInput(v => mGuess(v));
+  Z.t0 = M.t0 = performance.now(); Z.done = false;
+  const tick = now => {
+    if (M.done || M.phase !== "play") return;
+    const t = (now - M.t0) / 1000;
+    zSetView(Math.min(1, t / ZDUR));
+    document.getElementById("zpts").textContent = "+" + fmt(zPoints(t));
+    document.getElementById("zbar").style.width = (t < ZDUR ? 100 - 90 * t / ZDUR : Math.max(0, 10 - 10 * (t - ZDUR) / ZTAIL)) + "%";
+    if (t > ZDUR + ZTAIL) { mSubmit(null); return; }
+    M.raf = requestAnimationFrame(tick);
+  };
+  M.raf = requestAnimationFrame(tick);
+  // Sicherheitsnetz: Falls jemand die Verbindung verliert, beendet der Gastgeber die Runde trotzdem
+  if (M.host) M.hostTimer = setTimeout(() => { if (M.room.phase === "play" && M.round === r) mSetRoom({phase:"reveal"}); }, (ZDUR + ZTAIL + 4) * 1000);
+}
+const mMe = () => M.players.find(p => p.id === M.me.id) || M.me;
+function mGuess(value){
+  if (M.done) return;
+  const c = zIndex()[norm(value)];
+  if (!c) { toast(L("Dieses Land kenne ich nicht", "I don't know that country")); return; }
+  mSubmit(c);
+}
+async function mSubmit(guess){
+  if (M.done) return; M.done = true; cancelAnimationFrame(M.raf);
+  const q = M.qs[M.round - 1], t = (performance.now() - M.t0) / 1000;
+  const ok = guess === q.c, points = ok ? zPoints(t) : 0;
+  M.phase = "wait";
+  const form = document.getElementById("mform");
+  if (form) form.innerHTML = `<div class="mlock ${ok ? "ok" : "bad"}">${ok ? L(`Richtig! +${fmt(points)}`, `Correct! +${fmt(points)}`) : guess ? L("Leider falsch", "Not quite") : L("Keine Antwort", "No answer")}</div>`;
+  mRefresh();
+  const total = (mMe().score || 0) + points;
+  await sbc().from("players").update({score:total}).eq("id", M.me.id);
+  await sbc().from("guesses").insert({room_code:M.code, player_id:M.me.id, round:M.round, points});
+}
+function mRanking(){
+  return M.players.slice().sort((a, b) => (b.score || 0) - (a.score || 0));
+}
+async function mReveal(r){
+  M.phase = "reveal"; M.done = true; cancelAnimationFrame(M.raf); clearTimeout(M.hostTimer);
+  await mLoadPlayers();
+  const q = M.qs[r - 1];
+  const wrap = document.getElementById("zwrap");
+  if (!wrap) mPlayShell(r);
+  const g = document.getElementById("zg");
+  if (g) { g.style.transition = "transform .7s ease"; zSetView(1); }
+  const w = document.getElementById("zwrap"); if (w) w.classList.add("ok");
+  const rows = mRanking().map((p, k) => { const got = (M.pts[r] || {})[p.id]; return `<div class="zrow${p.id === M.me.id ? " me" : ""}"><span>${k + 1}. ${esc(p.name)}</span><b>${fmt(p.score || 0)}${got ? ` <small>+${fmt(got)}</small>` : ""}</b></div>`; }).join("");
+  const last = r >= ZROUNDS;
+  sheet.className = "sheet ok";
+  sheet.innerHTML = `<div class="sheet-in">
+      <div class="msg"><h3>${L(`Das war ${q.c.de}.`, `That was ${N(q.c.de)}.`)}</h3></div>
+      <div class="zrows">${rows}</div>
+      ${M.host ? `<button class="btn block" id="mnext">${last ? L("Siegerehrung", "Final results") : L("Nächste Runde", "Next round")}</button>`
+               : `<p class="mhint mcenter">${L("Gleich geht's weiter …", "Next round coming up …")}</p>`}
+    </div>`;
+  requestAnimationFrame(() => sheet.classList.add("show"));
+  if (M.host) {
+    const go = () => { clearTimeout(M.autoTimer); const b = document.getElementById("mnext"); if (b) b.disabled = true; mSetRoom(last ? {phase:"end"} : {phase:"play", round:r + 1}); };
+    document.getElementById("mnext").onclick = go;
+    M.autoTimer = setTimeout(go, 12000);
+  }
+}
+function mPlayShell(r){
+  // Falls jemand die Auflösung ohne laufende Runde öffnet (z. B. nach Neuladen)
+  app.innerHTML = `<div class="zwrap" id="zwrap"><svg id="zmap" viewBox="0 0 1000 1000"><g id="zg"></g></svg></div>`;
+  zDraw(M.qs[r - 1]);
+}
+async function mEnd(){
+  M.phase = "end"; hideSheet(); clearTimeout(M.autoTimer);
+  await mLoadPlayers();
+  const rank = mRanking();
+  const podium = rank.slice(0, 3).map((p, k) => `<div class="mpod p${k + 1}"><div class="mpod-n">${esc(p.name)}</div><div class="mpod-s">${fmt(p.score || 0)}</div><div class="mpod-b">${k + 1}</div></div>`);
+  const order = [podium[1] || "", podium[0] || "", podium[2] || ""].join("");
+  const rest = rank.slice(3).map((p, k) => `<div class="zrow"><span>${k + 4}. ${esc(p.name)}</span><b>${fmt(p.score || 0)}</b></div>`).join("");
+  const myPlace = rank.findIndex(p => p.id === M.me.id) + 1;
+  app.className = "app";
+  app.innerHTML = `<div class="fade">
+    <div class="top"><button class="iconbtn" id="mleave" aria-label="${L("Zum Start", "Back to start")}">${ICON_X}</button><div class="grow"></div></div>
+    <h1 class="res-title">${rank[0] ? L(`${esc(rank[0].name)} gewinnt!`, `${esc(rank[0].name)} wins!`) : ""}</h1>
+    <div class="mpodium">${order}</div>
+    ${rest ? `<div class="passport"><div class="zrows">${rest}</div></div>` : ""}
+    <p class="mlead mcenter">${L(`Du bist auf Platz ${myPlace}.`, `You finished in place ${myPlace}.`)}</p>
+    <div class="actions">
+      <button class="btn" id="magain">${L("Neuen Raum erstellen", "Create a new room")}</button>
+      <button class="linkbtn" id="mhome">${L("Zum Tagesrätsel", "Go to the daily puzzle")}</button>
+    </div>
+    ${legalLinks()}
+  </div>`;
+  Track.event("mehrspieler-fertig");
+  document.getElementById("mleave").onclick = mLeave;
+  document.getElementById("mhome").onclick = mLeave;
+  document.getElementById("magain").onclick = () => { mClose(); mStart(); };
+  // Der Gastgeber löscht den Raum nach der Siegerehrung, damit keine Daten liegen bleiben
+  if (M.host) { const code = M.code; setTimeout(() => sbc().from("rooms").delete().eq("code", code), 30000); }
+}
+function mClose(){
+  cancelAnimationFrame(M.raf); clearTimeout(M.hostTimer); clearTimeout(M.autoTimer);
+  if (M.ch) { sbc().removeChannel(M.ch); M.ch = null; }
+}
+function mLeave(){
+  const me = M.me, code = M.code, phase = M.phase;
+  mClose();
+  if (me && phase === "lobby") sbc().from("players").delete().eq("id", me.id);
+  M.code = null; location.hash = ""; renderHome();
 }
 
 /* ---------- Start ---------- */
@@ -908,7 +1192,9 @@ async function boot(){
     trackVisit();
     readChallenge();
     Track.page();
-    if (location.hash === "#zoom") { const zt = load("zoom:" + dayKey(), null); if (zt) { await zLoad(); zEnd(zt); } else startZoom("daily"); }
+    const roomHash = location.hash.match(/^#room=([A-Za-z0-9]{4})$/);
+    if (roomHash) mStart(roomHash[1].toUpperCase());
+    else if (location.hash === "#zoom") { const zt = load("zoom:" + dayKey(), null); if (zt) { await zLoad(); zEnd(zt); } else startZoom("daily"); }
     else renderHome();
   } catch(e) {
     console.error(e);

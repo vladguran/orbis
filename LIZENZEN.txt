@@ -270,3 +270,7 @@ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
+
+supabase-js (supabase.js, 591.supabase.js)
+Copyright (c) 2020 Supabase
+MIT License – https://github.com/supabase/supabase-js/blob/master/LICENSE
