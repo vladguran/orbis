@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lingua Muris – Latein mit Hanna und Vlad</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500;1,9..144,600&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B2541; --muted:#756C90; --paper:#FFFDF8; --line:#E4DEF2; --track:#E6E1F1;
+  --cheese:#FFC83D; --cheeseD:#D99A00; --ok:#22B07D; --bad:#F25757;
+  --vlad:#3B82F6; --hanna:#EC4899; --me:#3B82F6; --meSoft:#DBEAFE;
+  --r-xl:30px; --r-lg:22px; --r-md:16px; --r-sm:11px;
+  --shadow:0 1px 0 rgba(43,37,65,.05), 0 14px 32px -20px rgba(43,37,65,.45);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0;min-height:100%}
+body{font-family:'Fredoka',ui-rounded,'Nunito','Segoe UI',system-ui,sans-serif;color:var(--ink);background:#EDE9F8;font-size:16px;line-height:1.4;-webkit-font-smoothing:antialiased}
+#bg{position:fixed;inset:0;z-index:-1;transition:background .6s ease}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible,.cardbox:focus-visible{outline:3px solid var(--me);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 150px}
+.panel{background:var(--paper);border-radius:var(--r-xl);box-shadow:var(--shadow);border:1.5px solid rgba(43,37,65,.06)}
+.pad{padding:20px 22px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.01em}
+h2{font-size:21px;margin-bottom:12px}
+h3{font-size:15px;margin:18px 0 8px;color:var(--muted);font-weight:500}
+.muted{color:var(--muted)}
+kbd{font-family:inherit;font-size:12px;font-weight:600;min-width:24px;display:inline-block;text-align:center;padding:1px 7px;border-radius:8px;background:#fff;color:var(--ink);border:1.5px solid var(--line);border-bottom-width:3.5px;line-height:1.5}
+
+/* ---------- header ---------- */
+.top{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;padding:14px 18px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .bm{width:46px;height:46px;flex:none}
+.brand b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em}
+.brand small{color:var(--muted);font-size:13px}
+.race{display:grid;gap:7px}
+.rrow{display:grid;grid-template-columns:150px 30px 1fr 30px;white-space:nowrap;align-items:center;gap:8px;font-size:13px}
+.rlab b{font-weight:600}
+.rlab span{color:var(--muted);margin-left:4px}
+.rnum{font-weight:700;font-variant-numeric:tabular-nums}
+.rnum.v{text-align:right;color:var(--vlad)} .rnum.h{color:var(--hanna)}
+.rbar{height:14px;border-radius:99px;background:var(--track);overflow:hidden;display:flex;box-shadow:inset 0 1px 2px rgba(43,37,65,.12)}
+.rbar i{display:block;height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.rbar i.v{background:linear-gradient(180deg,#6CA3FA,var(--vlad))}
+.rbar i.h{background:linear-gradient(180deg,#F57BB8,var(--hanna))}
+.sync{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.sync .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px;background:#C9C2DB}
+.sync .dot.on{background:var(--ok)}
+.mebox{display:flex;align-items:center;gap:12px}
+.meav{border:0;background:none;padding:0;border-radius:50%;line-height:0}
+.mestats{min-width:200px}
+.mename{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:600;font-size:17px}
+.logout{border:0;background:none;color:var(--muted);font-size:13px;padding:2px 4px;border-radius:6px}
+.logout:hover{color:var(--ink)}
+.coins{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:15px;margin:2px 0 5px}
+.coin{width:20px;height:20px;flex:none}
+.xpl{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:3px}
+.xpl b{color:var(--ink);font-weight:600}
+.xpbar{height:9px;border-radius:99px;background:var(--track);overflow:hidden}
+.xpbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cheese),#FF9F43);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:6px;margin:14px 0;padding:6px;width:max-content;max-width:100%;overflow-x:auto;background:var(--paper);border-radius:99px;box-shadow:var(--shadow)}
+.tab{border:0;background:none;padding:9px 18px;border-radius:99px;font-weight:500;color:var(--muted);white-space:nowrap}
+.tab:hover{color:var(--ink);background:#F3F0FA}
+.tab.on{background:var(--me);color:#fff;font-weight:600}
+
+/* ---------- pack bar ---------- */
+.packbar{display:flex;align-items:center;gap:10px;padding:10px 12px;flex-wrap:wrap;border-radius:var(--r-lg)}
+.iconbtn{width:38px;height:38px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:20px;line-height:1;display:grid;place-items:center}
+.iconbtn:disabled{opacity:.35;cursor:default}
+.packbar select{height:38px;border-radius:12px;border:1.5px solid var(--line);background:#fff;padding:0 10px;min-width:0;max-width:330px;flex:1 1 0}
+.pmini{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);flex:1 1 180px;min-width:150px}
+.stack{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--track);flex:1;min-width:80px}
+.stack i{display:block;height:100%}
+.dirbtn{margin-left:auto;border:1.5px solid var(--line);background:#fff;border-radius:12px;height:38px;padding:0 14px;font-weight:500}
+
+/* ---------- card stage ---------- */
+.stagewrap{max-width:680px;margin:18px auto 0;position:relative}
+.grade{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:14px}
+.gbtn{border:0;border-radius:18px;padding:14px 16px;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 0 rgba(0,0,0,.14);transition:transform .08s ease, box-shadow .08s ease}
+.gbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.14)}
+.gbtn.bad{background:var(--bad);color:#fff}
+.gbtn.ok{background:var(--ok);color:#fff}
+.gbtn.nav{background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.gbtn kbd{background:rgba(255,255,255,.95);border-color:rgba(0,0,0,.12)}
+.count{background:var(--paper);border-radius:99px;padding:6px 12px;font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;box-shadow:var(--shadow)}
+.cardbox{perspective:1600px;height:min(54vh,380px);min-height:260px;cursor:pointer;outline:none;border-radius:26px;touch-action:pan-y}
+.inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.2,.75,.25,1);transform-style:preserve-3d}
+.cardbox.flipped .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;background-color:var(--paper);
+  background-image:linear-gradient(transparent 0 58px,rgba(242,87,87,.35) 58px 60px,transparent 60px),repeating-linear-gradient(transparent 0 33px,rgba(117,108,144,.10) 33px 34px);
+  box-shadow:0 2px 0 rgba(43,37,65,.06),0 26px 44px -26px rgba(43,37,65,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 34px 40px;text-align:center;overflow:hidden}
+.face.back{transform:rotateY(180deg)}
+.cardhead{position:absolute;top:16px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:4px 11px 4px 9px;border-radius:99px;background:color-mix(in srgb,var(--c) 16%,#fff);color:color-mix(in srgb,var(--c) 70%,#2B2541)}
+.pill::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--c)}
+.cnum{font-size:13px;color:var(--muted)}
+.word{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:600;font-size:clamp(28px,5.4vw,46px);line-height:1.15;max-width:100%;overflow-wrap:anywhere}
+.word.la{font-style:italic;font-weight:600}
+.word.de{font-weight:600}
+.word.m{font-size:clamp(22px,3.8vw,32px)}
+.word.l{font-size:clamp(18px,2.9vw,24px);line-height:1.3}
+.word.xl{font-size:clamp(15px,2.3vw,19px);line-height:1.4;font-weight:500;font-style:normal}
+.word.empty{font-family:inherit;font-size:16px;color:var(--muted);font-style:italic;font-weight:400}
+.side{position:absolute;bottom:14px;left:0;right:0;font-size:12.5px;color:var(--muted)}
+.cardbox.out-ok{animation:outok .23s ease-in forwards}
+.cardbox.out-bad{animation:outbad .23s ease-in forwards}
+@keyframes outok{to{transform:translateX(60px) rotate(4deg);opacity:0}}
+@keyframes outbad{to{transform:translateX(-60px) rotate(-4deg);opacity:0}}
+.cardbox.in{animation:cin .22s ease-out}
+@keyframes cin{from{transform:translateY(10px) scale(.98);opacity:0}}
+.keys{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:16px}
+.keys span{background:var(--paper);border-radius:99px;padding:5px 12px 5px 6px;font-size:13px;color:var(--muted);box-shadow:var(--shadow);display:flex;align-items:center;gap:7px}
+.note{text-align:center;font-size:13px;margin-top:10px}
+.note span{background:var(--paper);padding:4px 12px;border-radius:99px;color:var(--muted)}
+.float{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);pointer-events:none;font-weight:700;font-size:22px;padding:8px 16px;border-radius:99px;background:#fff;box-shadow:var(--shadow);white-space:nowrap;animation:floatup 1.1s ease-out forwards;z-index:5;display:flex;gap:12px;align-items:center}
+.float .x{color:#E58A00}.float .s{font-size:14px;color:var(--muted);font-weight:500}
+.float.bad{color:var(--bad)}
+@keyframes floatup{0%{opacity:0;transform:translate(-50%,-30%) scale(.9)}15%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-150%)}}
+
+.endcard{text-align:center;padding:34px 24px}
+.endcard .bigmouse{width:120px;margin:0 auto 6px}
+.endcard h2{font-size:26px;margin-bottom:6px}
+.chips{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.chip{background:#F4F1FB;border-radius:99px;padding:6px 14px;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.btnrow{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.primary{border:0;background:var(--me);color:#fff;font-weight:600;border-radius:14px;padding:11px 20px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.primary:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.15)}
+.ghost{border:1.5px solid var(--line);background:#fff;font-weight:500;border-radius:14px;padding:10px 18px}
+.ghost:hover{border-color:var(--me)}
+
+/* ---------- progress ---------- */
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-top:16px}
+.srow{display:grid;grid-template-columns:175px 1fr 56px;gap:10px;align-items:center;padding:7px 0}
+.srow .nm{font-weight:600;display:flex;align-items:center;gap:8px}
+.srow .nm::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.srow .ds{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-left:18px}
+.srow .tr{height:12px;border-radius:99px;background:var(--track);overflow:hidden}
+.srow .tr i{display:block;height:100%;background:var(--c);border-radius:99px;min-width:2px}
+.srow .ct{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.srow .ct small{display:block;font-size:11px;color:var(--muted);font-weight:500}
+.packgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.ptile{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:7px 6px 6px;text-align:left;font-size:12.5px;font-weight:600}
+.ptile:hover{border-color:var(--me)}
+.ptile.cur{border-color:var(--me);box-shadow:0 0 0 2px var(--meSoft)}
+.ptile .stack{height:6px;margin-top:5px;min-width:0}
+.vlist{display:grid;gap:6px;max-height:460px;overflow:auto;padding-right:4px}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) auto;gap:12px;align-items:start;padding:9px 12px;border-radius:12px;background:#F8F6FC;font-size:14.5px}
+.vrow .la{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:600}
+.vrow .de{white-space:pre-line}
+.vrow .pill{font-size:11.5px;white-space:nowrap}
+.search{width:100%;height:44px;border-radius:14px;border:1.5px solid var(--line);padding:0 14px;margin-bottom:12px;background:#fff}
+.empty{padding:20px;text-align:center;color:var(--muted);background:#F8F6FC;border-radius:16px}
+.mt{margin-top:16px}
+
+/* ---------- avatar & shop ---------- */
+.avgrid{display:grid;grid-template-columns:minmax(260px,380px) 1fr;gap:16px;margin-top:16px;align-items:start}
+.scene{position:relative;width:260px;height:290px;margin:6px auto 0}
+.scene .main{position:absolute;left:20px;top:0;width:220px}
+.scene .pet{position:absolute;width:84px}
+.scene .pet.p0{left:-6px;bottom:0}.scene .pet.p1{right:-6px;bottom:0}.scene .pet.p2{right:-10px;top:4px;width:70px}
+.scene .pet svg{animation:bob 3s ease-in-out infinite}
+.scene .pet.p1 svg{animation-delay:-1s}.scene .pet.p2 svg{animation-delay:-2s}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.swatches{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:36px;height:36px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line)}
+.sw.on{box-shadow:0 0 0 3px var(--me)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1.5px solid var(--line);background:#fff;border-radius:16px;padding:6px;line-height:0;position:relative}
+.opt.on{border-color:var(--me);box-shadow:0 0 0 2px var(--meSoft)}
+.opt.txt{line-height:1.3;padding:10px 14px;font-weight:500}
+.shophead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.shophead .big{font-size:26px;font-weight:700;display:flex;align-items:center;gap:8px}
+.shophead .coin{width:28px;height:28px}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.item{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.item .prev{height:100px;border-radius:14px;background:#F6F3FC;display:grid;place-items:center;overflow:hidden}
+.item .prev.bgp{background-size:auto,cover}
+.item b{font-weight:600}
+.buy{border:0;border-radius:12px;padding:8px 10px;font-weight:600;background:var(--cheese);color:#4A3500;display:flex;justify-content:center;align-items:center;gap:6px}
+.buy .coin{width:16px;height:16px}
+.buy:disabled{background:#EEEAF5;color:#9A92B0;cursor:default}
+.buy.own{background:#F1EEF8;color:var(--ink)}
+.buy.eq{background:var(--me);color:#fff}
+
+/* ---------- buddy ---------- */
+.buddy{position:fixed;left:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:flex-end;gap:6px}
+.bmouse{border:0;background:none;padding:0;line-height:0;filter:drop-shadow(0 8px 10px rgba(43,37,65,.22));transition:width .6s ease}
+.bmouse.hop{animation:hop .45s ease}
+.bmouse.sad{animation:shake .4s ease}
+@keyframes hop{40%{transform:translateY(-16px) rotate(-4deg)}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.bubble{background:var(--paper);border-radius:16px 16px 16px 4px;padding:7px 12px;box-shadow:var(--shadow);margin-bottom:46px;font-size:13px;max-width:170px}
+.bubble b{display:block;font-size:15px}
+.bubble span{color:var(--muted)}
+.bubble.say b{color:var(--me)}
+
+/* ---------- modal & toast ---------- */
+.modalbg{position:fixed;inset:0;background:rgba(43,37,65,.45);display:grid;place-items:center;z-index:50;padding:16px;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.modal{max-width:560px;width:100%;max-height:86vh;overflow:auto;padding:24px}
+.modal h2{font-size:24px}
+.ladder{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
+.rung{background:#F8F6FC;border-radius:16px;padding:10px;text-align:center;font-size:13px}
+.rung b{display:block;font-size:14px}
+.rung.lock{opacity:.45;filter:grayscale(1)}
+.rung.cur{background:var(--meSoft)}
+.rung .ms{margin:0 auto;height:96px;display:flex;align-items:flex-end;justify-content:center}
+.toasts{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:60;display:grid;gap:8px;justify-items:center;pointer-events:none}
+.toast{background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:500;box-shadow:var(--shadow);animation:tin .3s ease}
+@keyframes tin{from{opacity:0;transform:translateY(-10px)}}
+
+/* ---------- login ---------- */
+.login{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px 16px}
+.lbox{width:100%;max-width:440px}
+.lhero{text-align:center;margin-bottom:14px}
+.lhero .ms{width:120px;margin:0 auto}
+.lhero h1{font-size:40px;font-weight:700;letter-spacing:-.03em}
+.lhero p{margin:2px 0 0;color:var(--muted)}
+.lform{padding:24px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.pickbtn{border:2px solid var(--line);background:#fff;border-radius:22px;padding:14px 8px 10px;display:grid;justify-items:center;gap:6px;font-weight:600;font-size:17px}
+.pickbtn.on{border-color:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent)}
+.lform label{display:block;font-size:14px;color:var(--muted);margin-bottom:12px}
+.lform input{display:block;width:100%;height:46px;border-radius:14px;border:1.5px solid var(--line);padding:0 14px;margin-top:5px;background:#fff;font-size:16px}
+.lform .primary{width:100%;padding:13px;font-size:17px;margin-top:4px}
+.err{color:var(--bad);font-size:14px;min-height:20px;margin:0 0 6px}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .top{grid-template-columns:1fr auto;gap:14px}
+  .race{grid-column:1/-1;order:3}
+  .grid2,.avgrid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .wrap{padding:10px 10px 130px}
+  .top{padding:12px}
+  .top{grid-template-columns:1fr}
+  .brand{display:none}
+  .mestats{min-width:0;flex:1}
+  .mdw{display:none}
+  .packbar select{max-width:none}
+  .pmini{flex-basis:100%;order:5}
+  .dirbtn{flex:1 1 100%;order:6}
+  .bmouse{width:66px!important}
+  .rrow{grid-template-columns:86px 24px 1fr 24px;font-size:12px}
+  .rlab span{display:none}
+  .grade{gap:8px}
+  .gbtn{font-size:15px;padding:12px 8px}
+  .gbtn kbd{display:none}
+  .keys{display:none}
+  .dirbtn{margin-left:0}
+  .srow{grid-template-columns:118px 1fr 44px}
+  .vrow{grid-template-columns:1fr auto}
+  .vrow .de{grid-column:1/-1;grid-row:2}
+  .bubble{display:none}
+  .face{padding:64px 20px 36px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="app"></div>
+<div class="toasts" id="toasts"></div>
+<script>const VOCAB = [["testamenti factio passiva","Fähigkeit, als Erbe eingesetzt zu werden"],["testamenti factio activa","Testierfähigkeit"],["terra nullius","Niemandsland"],["tenor, -oris m.","Hauptaussage, wesentlicher Inhalt"],["tempus, -oris n.","Zeit, Zeitraum"],["tabula, -ae f. pl.: tabulae","Schriftstück, Urkunde"],["suum cuique","jedem das Seine"],["superfluum n. / hyperocha","Überfluss / Übererlös"],["superficies, -ei f.","Bauwerk, Oberfläche"],["superficies solo cedit","die Oberfläche weicht dem Boden"],["summa divisio","erste Einteilung / oberste Einteilung"],["sui iuris","„seines eigenen Rechts\", eigenberechtigt"],["sui generis","eigener Art (außerhalb des Schemas)"],["successio, -onis f.","Rechtsnachfolge, Erbfolge"],["successio in universitatem","Gesamtrechtsnachfolge"],["successio ex testamento","testamentarische Erbfolge"],["successio ab intestato","Erbfolge ohne Testament"],["succedere in locum defuncti","an die Stelle des Erblassers treten, nachrücken"],["succedere in iura defuncti","in die Rechte des Verstorbenen nachfolgen"],["substitutus, -i m.","Ersatzmann, Ersatzerbe"],["substitutio, -onis f.","Ersetzung"],["sub","unter"],["stricto sensu","im strengen Sinn, genau genommen"],["stipulatio, -onis f.","formgebundenes mündliches (Schuld)Versprechen"],["statutum, -i n.","Satzung, Gesetz (Statut)"],["status, -us m.","Stand, Zustand (insbes. Personenstand)"],["status quo","gegenwärtiger Zustand"],["status personae","personenrechtliche Stellung des Einzelnen"],["status libertatis","Zugehörigkeit zur Gemeinschaft (dem Stand) der freien Menschen"],["status familiae","Zugehörigkeit zum agnatischen Familienverband"],["sponsus, -i m.","Bräutigam"],["sponsor, -oris m.","Bürge"],["sponsio, -onis f.","Bürgschaft / Gelobung / Angelobunq (förmliches) Versprechen"],["sponsa, -ae f.","Braut"],["specificatio, -onis f.","Verarbeitung"],["species, -ei f.","Einzelsache, das individuelle Stück"],["solutio, -ionis f.","Schulderfüllung"],["socius, -i m.","Gesellschafter (vgl heute „Sozius\")"],["societas, -atis f.","Gesellschaft / Gesellschaftsvertrag (Zusammenschluss zweier oder mehrerer Personen zur Verfolgung eines gemeinsamen wirtschaftlichen Zwecks)"],["societas delinquere non potest","eine Gesellschaft kann kein Delikt begehen"],["singularia non sunt extendenda","Sonderregeln dürfen nicht ausgedehnt werden"],["sine tempore (s.t.)","pünktlich, ohne Frist („ohne Zeit\")"],["sine obligo","ohne Verpflichtung"],["sine","ohne"],["sic utere tuo ut alienum non laedas","benutze das Deine so, dass du das Fremde nicht verletzt"],["servus, -i m.","der Sklave, Unfreie, Diener"],["servitus, -utis f.","Dienstbarkeit"],["servitus servitutis esse non potest","die Dienstbarkeit kann nicht Gegenstand einerweiteren Dienstbarkeit sein"],["servitus praedio utilis esse debet","die Dienstbarkeit muss dem (herrschenden) Grundstück nützlich sein"],["servitium, -i n.","Sklavendienst, Sklaverei"],["separatio, -onis f.","Trennung"],["separatio bonorum","Nachlassabsonderung"],["sententia, -ae f.","Urteil / Spruch"],["sententia facit ius","ein Urteil schafft Recht"],["senatus, -us m.","Senat"],["senatus consultum","Senatsbeschluss"],["semper in dubiis benigniora praeferenda","im Zweifel ist immer das Günstigere vorzuziehen"],["semel maior semper maior","einmal volljährig, immer volljährig"],["semel heres semper heres","einmal Erbe, immer Erbe"],["secundum voluntatem","gemäß dem Willen"],["secundum verba","gemäß der Erklärung"],["scire leges non hoc est verba earum tenere sed vim ac potestatem","die Gesetze zu kennen bedeutet nicht an ihren Worten zu haften, sondern ihren Sinn und ihre Bedeutung zu begreifen"],["scelus, -Ieris n.","Verbrechen, Untat"],["satisdatio, -onis f.","Sicherheitsleistung durch den Bürgen"],["salarium, -i n.","Sold, Diät, Honorar"],["revocatio, -onis f.","Widerruf"],["revocatio testamenti","Widerruf des Testaments"],["revocatio mandati","Widerruf der Vollmacht"],["revisio, -ortis f.","streitverfangene Sache"],["revisio in iure","Überprüfung in Bezug auf die rechtliche Beurteilung"],["revisio in factum","Überprüfung in Bezug auf die Sachverhaltsfeststellung"],["reus, -i m. pl.: rei","Angeklagter"],["restitutio, -onis f.","Wiederherstellung, Wiedereinsetzung"],["responsum, -i n.","(Antwort) / (Rechts)auskunft / (Rechts )gutachten"],["reservatio mentalis","geheimer (geistiger) Vorbehalt"],["rescriptum, -i n.","Antwortschreiben"],["res, rei f.","Sache, Gegenstand, Ding [einzelne abgegrenzte, juristisch selbständige, körperliche Sache. Alles, was Gegenstand (Rechtsobjekt) eines (privaten) Rechts sein kann]"],["res venalis","käufliche Sache / Kaufsache"],["res sanctae","unter göttlichem Schutz stehende Sachen"],["res sacrae","den Göttern geweihte Sachen"],["res religosae","religiöse Sachen"],["res quae usu consumuntur","verbrauchbare Sachen"],["res publica","Gemeinwesen, Staat"],["res omnium communes","Sachen, die allen gemeinsam gehören, Gemeingut"],["res nullius","herrenlose Sache(n)"],["res litigiosa","streitverfangene Sache"],["res iudicata pro veritate accipitur","die rechtlich entschiedene Sache wird für die Wahrheit gehalten"],["res iudicata ius facit inter partes","die rechtlich entschiedene Sache schafft Recht zwischen den Parteien"],["res iudicata","rechtskräftig entschiedene Streitsache"],["res in iudicium deducta","prozessanhängige Sache"],["res humani iuris","Sachen menschlichen Rechts"],["res habilis","ersitzungsfähige Sache"],["res furtivae","gestohlene Sachen"],["res fungibiles","vertretbare Sachen"],["res extra commercium","Sachen, die am Rechtsverkehr nicht teilnehmen"],["res derelictae","preisgegebene Sachen"],["res certa","eine bestimmte Sache"],["res (nec) mancipi","(nicht) manzipationsfähige Sachen"],["reprobatio, -ionis f.","Gegenbeweis"],["replicatio, -onis f.","Gegeneinrede"],["replicatio doli","Gegeneinrede der Arglist"],["remuneratio, -onis f.","Vergeltung, Erkenntlichkeit"],["remotio tutoris","Enthebung des Vormunds"],["remissio, -onis f.","Erlass"],["rem sibi non liquere","sich über die Sache nicht klar sein"],["rem et poenam","Klagsziel ist sowohl Schadenersatz als auch Strafe"],["rei vindicatio","Eigentumsklage"],["regula iuris","Rechtsregel"],["regressus, -us m.","Rückgriff"],["regalia (pl)","bestimmte Hoheitsrechte"],["reformatio in peius","Erneuerung zum Schlechteren"],["receptum, -i n.","Garantieübernahme, Garantie, Verpflichtung, Pflicht"],["receptio, -onis f.","Übernahme"],["re extincta pignus perit","das Pfand geht mit der Zerstörung der (Pfand-)Sache unter"],["ratione personae","aufgrund der Person"],["ratione loci","aufgrund des Ortes"],["ratio, -onis f.","Rechnung, Rechenschaft, Grund, Zweck Vernunft"],["ratio naturalis","die natürliche Vernunft"],["ratio legis","Zweck des Gesetzes"],["rapina, -ae f.","Raub"],["quota litis","Anteil am Streitgegenstand (Erfolgshonorar für den Anwalt)"],["quod sine die debetur statim debetur","was ohne Termin geschuldet wird, wird sofort geschuldet"],["quod non est licitum in lege necessitas facit licitum","was durch Gesetz nicht erlaubt ist, macht die Not erlaubt"],["quod non est in actis, non est in mundo","was nicht in den Akten ist, ist nicht in der Welt"],["quod licet lovi non licet bovi","was Jupiter erlaubt ist, ist dem Ochsen nicht erlaubt (Ausdruck unterschiedlicher persönlicher Freiheiten nach Status)"],["quod erat demonstrandum","was zu beweisen war"],["quoad usum","Übertragung eines Gebrauchsrechts"],["quisquis praesumitur bonus","jeder wird als redlich vermutet"],["quidam","ein gewisser, irgendein"],["qui tacet consentire videtur","wer schweigt, scheint zuzustimmen"],["qui suo iure utitur neminem laedit","wer sein Recht ausübt, schädigt niemanden"],["qui possidet dominus esse praesumitur","wer eine Sache besitzt, von dem wird vermutet, dass er ihr Eigentümer sei"],["qui quae quod","welcher? welche? welches?"],["querela, -ae f.","Beschwerde, Klage"],["quasi","gleichsam"],["quantus","wieviel"],["quanti ea res est","wieviel die Sache wert ist (bei Prozessbeginn)"],["quanti ea res erit","wieviel die Sache wert sein wird (bei Urteilsfällung)"],["quam","wie"],["quaestio, -onis f.","Frage, Untersuchung / Gerichtshof für Verbrechen / Folter"],["quaestio voluntatis","Frage des Willens, Willensfrage"],["quaestio iuris","Frage des Rechts, Rechtsfrage"],["quaestio facti","Frage der Tatsache, Tatsachenfrage"],["pupillus, -a m./f.","Unmündiger, der unter keiner Gewalt steht, Mündel, Pflegebefohlener, Waise"],["punitur ne peccetur","es wird gestraft, damit kein Unrecht geschieht"],["pubertati proximi","Unmündige, die aber dem Alter der Mündigkeit schon nahe sind"],["pubertas, -atis f.","Mündigkeit, Geschlechtsreife"],["provocatio, -ionis f. (adversus)","Berufung (gegen)"],["protestatio, -onis f.","Einspruch"],["protestatio facto contraria non valet","ein gegen Tatsachen widersprüchliches Erklärungsverhalten wirkt nicht"],["prorogatio fori","Verlegung des Gerichtsstandes"],["proprio nomine","im eigenen Namen"],["proprietas, -atis f.","Eigentum"],["pronuntiatio, -onis f.","öffentliche Bekanntmachung"],["promissio, -onis f.","Versprechen"],["professor, -oris m. (profiteor 2, -fessus sum)","einer, der sich öffentlich erklärt - Hochschullehrer"],["producta sceleris","Produkte (Ergebnisse) einer strafbaren Handlung"],["prodigus, -us m.","Verschwender"],["procurator, -oris m.","Vermögensverwalter (im römischen Recht), Vertreter, Geschäftsführer, Prozessvertreter, Statthalter"],["procuratio, -ionis f.","Verwaltung, Besorgung"],["probatio, -onis f.","Beweis, Beweismittel, Billigung"],["probatio diabolica","der „teuflische\" Beweis (Beweis der Vormännerkette bis zum originären Eigentumserwerb)"],["probare debet, qui dicit, non qui negat","beweisen muss, wer etwas sagt, nicht, wer etwas verneint"],["pro rata","für einen Anteil"],["pro futuro","für die Zukunft"],["pro foro externo","für die Öffentlichkeit bestimmt"],["pro forma","zum Schein"],["pro domo","für das Haus, im eigenen Interesse"],["pro","vor, für, anstatt"],["privilegium, -i n.","Sonderrecht, das dem einzelnen im Gegensatz zur Allgemeinheit verliehene Vorrecht"],["privilegium rei","Vorrecht bezüglich einer Sache"],["privilegium personae","Vorrecht bezüglich einer Person"],["prius, -us n.","das Vorhergehende"],["prior tempore potior iure","der zeitlich Frühere ist der rechtlich Stärkere (wörtl.: früher in der Zeit, stärker im Recht)"],["prior","frühere"],["primus inter pares","Erster unter Gleichen"],["primus","der Vorderste, der Erste"],["primo loco","an erster Stelle"],["prima facie","auf den ersten Blick"],["pretium, -i n.","Preis, Wert, „Zins\""],["pretium iustum","der „gerechte Preis\""],["precarium, -i n.","„das Erbetene\" (freiwillige, jederzeit widerrufbare Überlassung e,ner Sache)"],["praeter legem","außerhalb des Gesetzes"],["praesumptio, -onis f.","Vermutung"],["praesumptio iuris et de iure","unwiderlegbare Rechtsvermutung"],["praesumptio iuris","Rechtsvermutung"],["praesumptio facti","Tatsachenvermutung"],["praesumptio cedit veritati","die Vermutung weicht gegenüber der Wahrheit"],["praescriptio, -onis f.","Vorschrift, Verjährung"],["praes, praedis m.","Burge"],["praedium, -i n.","Grundstück"],["potestas, -tis f.","Macht, Amtsgewalt"],["postulatio actionis","Beantragung einer Klage"],["post mortem","nach dem Tod"],["possessor, -oris m.","der Besitzer"],["possessio, -onis f.","Besitz"],["possessio vitiosa","fehlerhafter Besitz"],["possessio non est iuris, sed facti","der Besitz ist nicht eine Frage des Rechts, sondern der Tatsache"],["possessio iusta","echter Besitz"],["possessio iuris","Rechtsbesitz"],["possessio ex iusta causa","Besitz, der auf einem gültigen Erwerbstitel beruht"],["possessio ad interdicta","Interdiktenbesitz"],["portio debita","der geschuldete Anteil"],["populus romanus, -i m.","das römische Volk"],["pontifex, -ficis m.","Oberpriester"],["poenalia non sunt extendenda","Strafsachen dürfen nicht ausgedehnt werden"],["poena, -ae f.","Strafe, Buße"],["poena talionis","Vergeltungsstrafe"],["poena maior absorbet minorem","die höhere Strafe schließt die geringere Strafe in sich"],["poena capitalis","Todesstrafe"],["pluris petitio","Mehrbegehren"],["plenus venter non studet libenter","ein voller Bauch studiert nicht gern"],["plenum, -i n.","Vollversammlung, Gesamtheit"],["pleno titulo","mit vollem Titel"],["pleno iure","mit vollem Recht"],["plebs, plebis f.","Volk"],["perfidie, -ae f.","Treulosigkeit, Hinterlistigkeit"],["peregrinus, -i m.","Nichtrömer, Fremder, der Nichtbürger"],["per se","an und für sich, von selbst"],["per definitionem","durch die Definition"],["per analogiam","durch Analogieschluss"],["pendente lite","bei schwebendem Verfahren"],["pecus, -coris n.","Vieh"],["pecunia, -ae f.","Geld, Vermögen"],["pecunia non olet","Geld stinkt nicht"],["peculium, -i n.","Sondergut zur Bewirtschaftung, Sondervermögen (eines Sklaven oder auch eines Haussohnes)"],["patronus, -i m.","Schutzherr / Herr"],["patria potestas","Hausgewalt (des pater familias) über die ehelichen Kinder und Kindeskinder"],["pater, -tris m.","Vater"],["partus ancillae","das Kind einer Sklavin"],["pars, partis f.","Teil, Anteil, Partei"],["pars pro toto","ein Teil für das Ganze"],["parentela, -ae f.","Verwandtschaft"],["parens manumissor","der freilassende Vater"],["par in parem non habet imperium","der Gleiche hat über den Gleichen keine Herrschaftsgewalt"],["par condicio creditorum","gleiche Stellung der Gläubiger im Konkursverfahren"],["par","gleich"],["pactum, -i n. pl.: pacta","Abrede, Abmachung (Formfreie Verträge außerhalb des klassischen Vertragsschemas)"],["pactum tacitum","stillschweigende Vereinbarung"],["pactum legitimum","gesetzliche Vereinbarung"],["pactum in favorem tertii","Vertrag zugunsten Dritter"],["pactum fiduciae","Treuhandvereinbarung"],["pactum de vendendo","Verkaufsabrede"],["pactum de non petendo","(formlose) Abrede des Nichtklagens"],["pacta sunt servanda","Verträge sind einzuhalten"],["origo, -ginis f.","Ursprung"],["orbis, -is f.","Kreis, Umkreis, Erde, Welt"],["oratio, -onis f.","Sprache, Rede, Vortrag"],["opus, -eris n.","Werk, Bauwerk"],["optio, -onis f.","Wahl, Möglichkeit"],["optimum, -i n.","das Beste"],["opinio, -onis f.","Meinung, Überzeugung"],["opinio iuris","Rechtsmeinung, Rechtsüberzeugung"],["opinio communis","allgemeine Meinung, herrschende Auffassung"],["opera, -ae f.","Dienstleistung, Arbeit, Mühe"],["onus, -eris n. pl.: onera","Last, Leistung, Beschwer"],["onus probandi","Beweislast"],["omnis obligatio vel ex contractu nascitur vel ex delicto","jede Verpflichtung wird entweder aus Vertrag oder aus Delikt geboren"],["periculosa est","jede Definition im bürgerlichen Recht ist gefährlich"],["omnis definitio in iure civile","einer Tat entschlossen ist"],["omni modo facturus","eine Person, die bereits zur Ausführung"],["odium, -i n.","Hass"],["occupatio, -onis f.","Aneignung herrenloser Sachen (wörtl Besetzung, Besitznahme, Inanspruchnahme)"],["occidere, occidol","töten"],["obligationes litteris contractae","Litteralkontrakte - schriftliche Verträge (wörtl.: durch die Schrift geschlossene Verträge)"],["obligatio, -onis f.","Verbindlichkeit, Schuldverhältnis"],["obligatio(nes) ex contractu","Vertragsschuld(en)"],["obligatio ex delicto","Deliktsschuld"],["oblatio debiti","das Anbieten des Geschuldeten"],["obiter dictum","nebenbei Gesagtes"],["nuptiae, -arum f.","Hochzeit, eheliche Verbindung, Verheiratung, Ehe"],["votum, -i n.","Stimme"],["voluntatem declarare","seinen Willen erklären, ausdrücken"],["voluntas, -atis f.","Wille, Absicht"],["volenti non fit iniuria","dem Einwilligenden geschieht Kein Unrecht"],["viventis nulla hereditas","die Erbschaft eines Lebenden gibt es nicht"],["vitium, -i n.","Fehler, Mangel"],["vitiosus, -a / -um","krankhaft, fehlerhaft"],["vis, vim f.","Kraft, Gewalt"],["vis maior","höhere Gewalt"],["vis compulsiva","willensbeugende (zwingende) Gewalt"],["vis absoluta","absolute (unwiderstehliche) Gewalt"],["vir bonus","der gute Mann, Maßmensch"],["vindicta, -ae f.","Befreiung, Rettung, Strafe, Rache"],["vim vi repellere licet","es ist erlaubt, Gewalt mit Gewalt zurückzuschlagen"],["videat = videatur","es möge gesehen werden"],["vice versa","umgekehrt"],["via, -ae f.","Straße, Fahrrecht"],["vi clam precario","vi = durch/mit Gewalt, gewaltsam clam = heimlich, precario = „bittweise\", aufgrund einer Bittleihe"],["verum tacere et falsum asserere paria sunt","die Wahrheit verschweigen und etwas Falsches versichern ist das Gleiche"],["versio, -onis f.","Bereicherung / Variante"],["veritas, -atis f.","Wahrheit, Wirklichkeit, Aufrichtigkeit, Rechtlichkeit"],["veritas praevalet solemnitati","die Wahrheit geht der Form vor"],["verbum, -i n. pl.: verba","Wort, Aussage"],["verbi causa","des Wortes wegen, aufgrund des Wortes, zum Beispiel"],["verba volant, scripta manent","Worte verfliegen, das Geschriebene bleibt"],["verba contractus sunt lex contractus","die Worte eines Vertrages sind das Gesetz des Vertrages"],["venire contra factum proprium","Auftreten gegen ein eigenes Tun"],["venia, -ae f.","Gnade, Begnadigung"],["venia docendi (legendi)","die Erlaubnis des Lehrens (des Lesens)"],["venditor, -oris m.","der Verkäufer"],["venditio, -onis f.","Verkauf"],["vadimonium, -i n.","Bürgschaft, Bürgschaftsleistung"],["uxor, -oris f.","die Ehefrau, Gattin"],["uxor non in manu","gewaltfreie Ehefrau / nicht unter Gewalt stehende Ehefrau"],["uxor in manu","die unter der Gewalt des Mannes stehende Ehefrau"],["utiliter gestum","nützlich geführt"],["utilitas, -atis f.","Nützlichkeit"],["utilitas publica","öffentliches Interesse"],["utile per inutile non vitiatur","Brauchbares wird durch Unbrauchbares nicht verdorben (Teilnichtigkeit)"],["ususfructus, -us m.","Nießbrauch, Nutznießung"],["usus, -us m.","Gebrauch, Gebrauchsrecht"],["usurpatio, -onis f.","widerrechtliche Besitzergreifung"],["usureceptio, -onis f.","Rückersitzung des Eigentums"],["usurae pl., f. /fenus, -oris n.","Zinsen"],["usurae legales","gesetzliche Zinsen"],["usurae ex pacto","vertraglich vereinbarte Zinsen"],["usucapio, -onis f.","Ersitzung"],["usucapio servitutis","Ersitzung einer Servitut"],["usucapio pro herede","Ersitzung anstelle des Erben"],["usucapio libertatis","Ersitzung der Freiheit"],["usucapio est adiectio dominii per continuationem possessionis","Ersitzung ist Eigentumserwerb infolge fortdauernden Besitzes"],["urbs, -is f.","Stadt"],["uno actu","in einem Akt"],["universitas, -atis f.","(Personen-)Gesamtheit, Körperschaft"],["unitas, -atis f.","Einheit, Vereinigung"],["ultra vires","über das Können hinaus"],["ultra posse nemo tenetur","über das Mögliche hinaus wird niemand verpflichtet"],["ultra alterum tantum","mehr als das Doppelte"],["ultima voluntas","letzter Wille"],["ultima ratio","letzte, äußerste Maßnahme"],["ubi rem meam invenio, ibi vindic","wo ich meine Sache vorfinde, da beanspruche ich sie"],["ubi iudex, ibi iudicium","wo ein Richter, da eine Entscheidung"],["ubi eadem ratio, ibi eadem legis dispositio","wo derselbe Grund, dort auch dasselbe gesetzliche Gebot"],["tutor, -oris m.","Vormund"],["tutor testamentarius","testamentarischer Vormund"],["tutor legitimus","der gesetzmäßige/gesetzliche Vormund"],["tutor dativus","der bestellte Vormund"],["tutela, -ae f.","Vormundschaft"],["tutela impuberum","Vormundschaft über die Unmündigen"],["turpitudo, -dinis f.","Schändlichkeit"],["trinoctium","Zeitraum von drei Nächten"],["tres faciunt collegium","drei bilden einen Verein"],["transactio, -ionis f.","Vergleich, Abmachung"],["traditio, -onis f.","Übergabe in den Besitz, Besitzübertragung, Überlieferung"],["traditio per chartam","Übergabe durch eine Urkunde, an welcher das Recht an der Sache verbrieft ist"],["traditio longa manu","Übergabe durch die lange Hand (körperliche Übergabe)"],["traditio brevi manu","Besitzübergabe kurzer Hand (Form des Besitzerwerbs ohne körperliche Übergabe durch bloße Erklärung)"],["titulus, -i m.","Titel, Grund, Rechtsgrund"],["testis, -is m.","Zeuge"],["testimonium, -i n.","Zeugnis"],["testamentum, -i n.","Testament"],["testamentum simultaneum","gemeinschaftliches Testament"],["testamentum ruptum","das zerstörte (ungültige) Testament"],["testamentum reciprocum","wechselseitiges Testament"],["testamentum facere","ein Testament machen / testieren"],["nuncupatio, -onis f.","mündliche Erklärung oder Abmachung"],["numerus clausus","geschlossene Zahl"],["nullus","niemand"],["nullum crimen sine lege","kein Verbrechen ohne Gesetz"],["nullum","nichts"],["nulla poena sine lege","keine Strafe ohne Gesetz"],["nulla poena sine culpa","keine Strafe ohne Schuld"],["nulla iniuria est, quae in volentem fiat","eine Handlung stellt dann kein Unrecht dar, wenn sie sich gegen jemanden richtet, der mit ihr einverstanden ist"],["noxae deditio","Auslieferung des Schädigers (zum Ersatz des Schadens)"],["noxa, -ae f.","Vergehen, Schädigung, Schaden, Schadenersatz"],["novum, -i n.","ein neuer Tatbestand / etwas Neues"],["novatio, -ionis f.","Neuerungsvertrag"],["nova reperta","neu Ermitteltes / neu Entdecktes"],["nova producta","neu Hervorgebrachtes / neu Erzeugtes"],["nova causa superveniens","neu hinzutretender Rechtsgrund"],["non sequitur","es folgt nicht daraus (ein nicht schlüssiges Argument)"],["non omne, quod licet, honestum est","nicht alles, was erlaubt ist, ist auch ehrenhaft"],["non liquet","es ist nicht klar"],["nomen, -minis n.","Name, Forderung"],["nolens volens","nicht wollend (und doch) wollend"],["nexum, -i n.","Haftungsgeschäft"],["nepos, -otis m.","Geschwistersohn = Neffe, Enkel, Nachkomme"],["nemo tenetur se ipsum accusare","der Beschuldigte kann nicht gezwungen werden, gegen sich selbst auszusagen (niemand kann dazu verhalten werden, sich selbst anzuklagen)"],["nemo sibi ipse causam possessionis mutare potest","niemand kann eigenmächtig seine Besitzposition zu seinen Gunsten verändern"],["nemo prudens punit, quia peccatum est, sed ne peccetur","niemand, der klug ist, straft, weil eine Verfehlung, begangen wurde, sondern damit in Hinkunft nicht mehr gefehlt wird"],["potest quam ipse habet","anderen übertragen, als er selbst hat"],["nemo plus iuris ad alium transferre","niemand kann mehr Recht an einen"],["nemo iudex sine actore","wo kein Kläger, da kein Richter (wörtl. Niemand ist Richter ohne Kläger)"],["nemo iudex in sua causa","niemand sei Richter in eigener Sache"],["fieri debet","anderen bereichern"],["nemo cum damno alterius locupletior","niemand darf sich zum Schaden eines"],["nemo","niemand"],["negotium, -i n. pl.: negotia","Geschäft, Rechtsgeschäft (auch Beschäftigung, Arbeit, Auftrag, Angelegenheit)"],["negotium unilaterale","einseitiges Rechtsgeschäft"],["negotium nullum / negotium imperfectum","nichtiges Rechtsgeschäft"],["negotium mortis causa","Rechtsgeschäft von Todes wegen"],["negotium inter vivos","Rechtsgeschäft unter Lebenden"],["negotium bilaterale","zweiseitiges Rechtsgeschäft"],["negotiorum gestor","Geschäftsführer ohne Auftrag"],["negotiorum gestio","Geschäftsführung ohne Auftrag „Führung von (fremden) Geschäften'"],["negligentia, -ae f.","Fahrlässigkeit, Nachlässigkeit"],["neglegentia crassa","grobe Fahrlässigkeit"],["negativa non sunt probanda","das Nichtbestehen von Tatsachen braucht nicht bewiesen zu werden"],["nefas n.","religiöses Unrecht, Frevel, Sünde"],["necessitas, -atis f.","Notwendigkeit"],["necessitas legem non habet","die Notwendigkeit hat kein Gesetz"],["ne eat iudex ultra petita patrium","der Richter möge nicht über das Begehren der Parteien hinausgehen hinausgehen"],["naturalis possessio","natürlicher Besitz"],["naturalia negotii","Regelungen, die auch ohne konkrete Vereinbarung der Parteien eines Vertrages aufgrund der Rechtsordnung Vertragsinhalt werden"],["nasciturus pro iam nato habetur, quotiens de commodis eius agitur","die Leibesfrucht gilt als geboren, soweit es um ihre Vorteile geht"],["nasciturus","die noch ungeborene Leibesfrucht; der Embryo"],["narra mihi factum dabo tibi ius","erzähle mir den Sachverhalt und ich werde darüber Recht sprechen"],["mutuum, -i n.","Darlehen, Darlehensvertrag"],["municipium, -i n.","selbständige Stadtgemeinde"],["mundus, -i m.","Welt, Erde"],["multa, -ae f.","Geldbuße / Strafsumme"],["mos, moris m.","Sitte, Brauch, Gewohnheit"],["mos maiorum","Sitte der Vorfahren, Sitte der „Älteren\", Gewohnheitsrecht"],["mortis causa","von Todes wegen"],["mors, mortis f.","Tod"],["mors litis","Erlöschen des Prozesses durch Ablauf seiner Befristung"],["mors certa, hora incerta est","der Tod ist sicher, die Stunde (des Todes) ungewiss"],["mora, -ae f.","Verzug, Verzögerung, Aufschub"],["mora solvendi","Annahmeverzug"],["mora perpetuatur obligatio","durch Verzug wird die Obligation verewigt"],["mora debitoris","Schuldnerverzug"],["mora creditoris","Gläubigerverzug"],["mora accipiendi","Leistungsverzug"],["modus, -i m.","Art Und Weise (zB. der rechtlichen Erwerbung)"],["modus vivendi","die Art und Weise, miteinander zu leben"],["modus operandi (procedendi)","Vorgehensweise"],["mobilia, n., pl.","bewegliche Sachen"],["mobilia sequuntur personam","bewegliche Sachen folgen der Person"],["minor viginti quinque annis","der noch nicht 25-jährige"],["minima non curat praetor","um Geringfügigkeit kümmert sich der Prätor nicht"],["metus, -us m.","die Furcht"],["merx, mercis f.","Ware. Kaufsache"],["mens, mentis f.","Verstand, Vernunft, Einsicht. Geist"],["mens testatoris","Wille des Erblassers"],["matrimonium, -i n.","die Ehe"],["matrimonium consummatum","die (durch Beischlaf) vollzogene Ehe"],["mater semper certa est","die Mutter ist immer gewiss"],["mater familias","Ehrentitel der Mutter ehelicher Kinder"],["mare liberum","das freie Meer"],["manus, -us f.","wörtl.: Hand Hausgewalt im Allgemeinen [Gewalt (des pater familias) über die Ehefrau]"],["manus manum lavat","eine Hand wäscht die andere"],["manumissio, -onis f.","Freilassung / Entlassung aus der Gewalt"],["manifesta non egent probatione","was offenkundig ist, bedarf keines Beweises"],["mandatum, -i n.","Auftrag, vertragliche Übernahme einer Geschäftsbesorgung"],["mandatum morte solvitur","der Auftragsvertrag erlischt mit dem Tod"],["mancipium, -i n.","Herrschaft/Gewalt über Sachen"],["mancipatio, -onis f.","„Handergreifung\" (Förmliches Rechtsgeschäft aus dem älteren röm Recht, durch das Rechte übertragen werden)"],["malae fidei possessor","Besitzer „schlechten Glaubens\", bösgläubiger Besitzer: jemand, der weiß, dass ihm die Sache nicht gehört"],["mala fides","Schlechtgläubigkeit, Unredlichkeit"],["major dividat, minor eligat","der Ältere möge teilen, der Jüngere wählen"],["magistratus, -us m.","römisches Staatsamt"],["magister, -tri m.","Meister, Lehrer"],["lucrum, -i n.","Gewinn"],["lucrum cessans","entgangener Gewinn"],["lucida intervalla","die „lichten Momente\" (zeitweilige Zurechnungsfähigkeit von an sich Geisteskranken)"],["locus, -i m.","Ort, Stelle"],["locus regit actum","der Ort bestimmt das Geschehen"],["locatio conductio rei","Mietvertrag, Pachtvertrag, Miete, Pacht, Bestandsvertrag"],["locatio conductio operis","Werkvertrag"],["locatio conductio operarum","Dienstvertrag"],["littera, -ae f.","Buchstabe, Brief, Wissenschaft"],["litis denuntiatio","Streitverkündigung"],["litis contestatio","Streitbefestigung, Streitbezeugung, Streiteinsetzung"],["litis aestimatio","Schätzung des Streitgegenstandes"],["lis, litis f.","Rechtsstreit"],["limen, -minis n.","Grenze"],["licitum, -i n.","das Erlaubte"],["licet","es ist erlaubt"],["licentia, -ae f.","Erlaubnis, Freiheit, Ungebundenheit"],["libra, -ae f.","Waage"],["libertas, -atis f.","Freiheit, Stand des Freigelassenen"],["liberi, -orum m.","(Haus)Kinder / Freie"],["liberatio, -onis f.","Befreiung (von einer Verpflichtung)"],["liber, -bri m. pl.: libri","Buch, Schrift"],["lex, legis f. pl.: leges","Gesetz, Klausel"],["lex superior derogat inferiori","das übergeordnete Gesetz hebt das untergeordnete auf"],["lex specialis derogat generali","das besondere Gesetz hebt das allgemeine auf"],["lex scripta","geschriebenes Gesetz (im Gegensatz zum ungeschriebenen Gewohnheitsrecht)"],["lex rei sitae","das Gesetz der gelegenen Sache (Grundsatz, wonach zivilrechtlich im Allgemeinen das Gesetz des Ortes maßgeblich ist, in welchem die streitverfangene Sache liegt)"],["lex prospicit, non respicit","das Gesetz vorwärts, nicht rückwärts (Gesetze haben keine rückwirkende Kraft)"],["lex posterior derogat priori","das spätere Gesetz setzt das frühere außer Kraft"],["lex perfecta","vollkommenes Gesetz (es sieht für den Fall von Zuwiderhandlungen eine wirksame Sanktion vor)"],["lex iniusta non est lex","ein ungerechtes Gesetz ist kein Gesetz"],["lex imperfecta","unvollkommenes Gesetz (darunter versteht man ein sanktionsloses Gesetz)"],["lex contractus","Vertragsklausel"],["lex commissoria","Verfallsklausel, Verwirkungsklausel (im röm. Kauf- und Pfandrecht)"],["levis nota","kleiner Makel"],["legitimatio ad causam passiva","Passivlegitimation (Stellung als Beklagter)"],["legitimatio ad causam activa","Aktivlegitimation (Befugnis, als Kläger aufzutreten)"],["legislator, -oris m.","Gesetzgeber"],["legislatio, -onis f.","Gesetzgebung"],["legis citatae","des zitierten Gesetzes"],["legem ferre","ein Gesetz erlassen"],["legatum, -i n.","Vermächtnis (nicht Erbschaft!)"],["legatum per vindicationem","Vindikationslegat (Dinglich wirkendes Legat, bei dem der Bedachte ipso iure ein dingliches Recht erhält und dieses gegen den Erben mit der entsprechenden vindicatio durchsetzen kann)"],["legatum per damnationem","Damnationslegat („Legat durch Verpflichtung\"; den Erben trifft eine schuldrechtliche Verpflichtung auf Erfüllung des Vermächtnisses)"],["legatum debiti","Erfüllung einer schon bestehenden Schuld durch Legat"],["latu sensu","im Weiten, im weiteren Sinn"],["laesio, -onis f.","absichtliche Verletzung, Nachteil"],["laesio enormis","Verkürzung über die Hälfte („übermäßig große\" Verletzung)"],["lacuna, -ae f.","Lücke, Öffnung, Loch"],["lacuna iuris","Rechtslücke"],["iustitia, -ae f.","Gerechtigkeit, Rechtspflege"],["iusta causa possessionis","Erwerbstitel (wörl.: einen rechtmäßigen Grund für den Besitz)"],["iusta causa","gültiger, tauglicher Rechtsgrund"],["iussum, -i n.","Befehl, Gebot, Ermächtigung"],["iusiurandum, -i n.","Eid"],["iusiurandum in litem","Schätzungseid"],["iusiurandum in iure","Eid vor Gericht"],["ius, iuris n. pl.: iura","Recht, Rechtsordnung, Berechtigung"],["ius puniende","das Recht zu strafen"],["ius publicum privatorum pactis mutari non potest","Öffentliches Recht kann durch Vereinbarung Privater nicht geändert werden"],["ius publicum","öffentliches Recht"],["ius privatum sub tutela iuris publici latet","das Privatrecht steht unter der Obhut des öffentlichen Rechts"],["ius privatum","Privatrecht"],["ius positivum","gesetztes (= aufgrund menschlichen Willens geschaffenes) Recht"],["iurisprudentia, -ae f.","Rechtswissenschaft /Rechtsprechung"],["iurisdictio, -onis f.","Gerichtsbarkeit / Rechtsprechung"],["iuris ignorantia nocet, facti non nocet","Unkenntnis des Gesetzes schadet, Unkenntnis von Tatsachen jedoch nicht"],["iure suo uti nemo cogitur","niemand ist verpflichtet, von dem ihm zustehenden Recht Gebrauch zu machen"],["iura praediorum urbanorum","Rechte an städtischen Grundstücken oder Gebäudeservituten"],["iura praediorum rusticorum","Rechte an ländlichen Grundstücken oder Feldservituten"],["iura praediorum","Grunddienstbarkeiten (Realservituten)"],["iura novit curia","die Kurie (das Gericht) kennt das Recht"],["iura in re aliena","Rechte an fremder Sache (heute: beschränkte dingliche Rechte)"],["iudicium, -i n.","Urteilsspruch, gerichtliche Entscheidung, Rechtsstreit"],["iudicium rescissorium","Erneuerungsverfahren"],["iudicium rescindens","aufhebendes Verfahren"],["iudicia stricti iuris","Verfahren mit kaum Ermessensspielraum des Richters (wörtl. strengrechtliche Klage)"],["iudicatum, -i n.","Urteil(sschuld)"],["iudex, -dicis m.","Richter"],["iudex unus","Einzelrichter"],["iudex suspectus","verdächtiger Richter (heute: befangener Richter)"],["iudex non calculat","der Richter rechnet nicht"],["iudex ne procedat ex officio","der Richter soll nicht von Amts wegen einen Prozess einleiten"],["iudex iudicet secundum allegata et probata patrium","der Richter möge gemäß dem von den Parteien Vorgebrachten und Bewiesenen urteilen"],["iudex inhabilis","untauglicher Richter"],["iter, -ineris n.","Weg, Wegerecht"],["is damnum dat qui iubet dare","derjenige fügt den Schaden zu, der ihn zuzufügen anordnet"],["ipso iure","Unmittelbar kraft Rechtssatzes"],["ipso facto","durch dieselbe Tat"],["invitus agere nemo cogitur","niemand wird gegen seinen Willen gezwungen, eine Klage einzubringen"],["invito beneficium non datur","eine Rechtswohltat kann niemandem gegen seinen Willen aufgedrängt werden"],["invitatio ad offerendum","Aufforderung zur Abgabe eines Anbots"],["inventarium, -ii n.","Verzeichnis der Erbschaftsgegenstände"],["invecta et illata","die vom Pächter oder Mieter eingebrachten Sachen"],["interrogatio, -onis f.","Befragung, Verhör"],["interpretatio, -onis f.","Auslegung"],["interpretatio restrictiva","einschränkende Auslegung"],["interpretatio legalis","Auslegung durch das Gesetz (Legalinterpretation)"],["interpretatio extensiva","ausdehnende Auslegung"],["interdictum utrubi","Interdikt „bei wem von beiden\" (zum Schutz des Besitzes an beweglichen Sachen)"],["interdictum uti possidetis","Interdikt „wie ihr besitzt\" (zum Schutz des Besitzes an Grundstücken)"],["interdictum demolitorium","Interdikt zur Beseitigung des Baus"],["interdictio, -onis f.","Entmündigung (eigentlich: Verbot)"],["intercessio, -onis f.","Übernahme der Haftung für eine fremde Schuld, zB Bürgschaft"],["inter vivos","unter Lebenden"],["inter partes","unter den Parteien"],["inter absentes","unter Abwesenden, gegenüber Abwesenden"],["inter","zwischen"],["intentio, -onis f.","Absicht, Rechtsbehauptung, Klagebegehren (vgl heute: Intention)"],["instrumentum, -i n.","Werkzeug / Zubehör zu einem Laden oder Grundstück / Urkunde über ein Rechtsgeschäft"],["instrumentum fundi","lnventar eines Landgutes"],["instrumenta sceleris","Verbrechenswerkzeug"],["instrumenta probationis","Beweismittel"],["instrumenta dotalia","Mitgifturkunden"],["iniustus possessor","unechter Besitzer (wer vi, clam oder precario besitzt)"],["iniusta possessio","unechter, fehlerhafter Besitz"],["iniuria, -ae f.","Unrecht, Beleidigung, Rechtswidrigkeit. Verstoß gegen die Rechtsordnung"],["iniuria non excusat iniuriam","Unrecht entschuldigt Unrecht nicht"],["infitiando lis crescit in duplum","durch Bestreiten wächst die Haftsumme auf das Doppelte"],["plebiscitum, -i n.","Volksbeschluss"],["pignus, -oris n.","Pfand, Pfandsache, Pfandgegenstand"],["pignus pignore dari potest","ein Pfand Kann zum Pfand gegeben werden"],["pignus legale","gesetzliches Pfandrecht"],["pignus irregulare","unregelmäßiges Pfand"],["pignus hypotheca, -ae f.","besitzloses Pfand"],["pignus datum","Faustpfand („das hingegebene Pfand\")"],["pignus conventionale","durch Vertrag begründetes Pfandrecht"],["petitio, -onis f.","Bitte, Klagerecht, Gesuch, Klage, Anspruch"],["persona, -ae f.","Person, Persönlichkeit"],["persona sui iuris","eigenberechtigte Person"],["persona non grata","unerwünschte Person"],["perpetuus, -a / -um","fortdauernd, fortgesetzt"],["perpetuatio obligationis","Fortdauer der Verbindlichkeit (wenn die Erfüllung einer Forderung nachträglich unmöglich wird, kann die Forderung des Gläubigers als Schadenersatzanspruch fortbestehen)"],["perpetuatio fori","Beibehaltung des Gerichtsstandes"],["perpetua causa","ständige Angelegenheit"],["permutatio, -ionis f.","Tausch"],["periculum, -i n.","Gefahr / Gefahrtragung"],["periculum in mora","Gefahr im Verzug"],["periculum est emptoris","die Gefahr trägt der Käufer"],["periculum eius esse debet, cuius est commodum","die Gefahr soll der traqen, der den Vorteil hat"],["infans, -antis m./f. pl.: infantes","Kind (bis 7 Jahre)"],["infamia, -ae f.","Schande, Ehrlosigkeit, Ehrverlust"],["indebitum, -i n.","Nichtschuld"],["indebitum solutum","Zahlung einer Nichtschuld"],["indebitum","etwas Nichtgeschuldetes"],["incertum, -i n.","das Unbestimmte"],["incapacitas, -tatis f.","Unfähigkeit"],["in toto","gesamt / gänzlich"],["in statu nascendi","im Zustande des Entstehens"],["in solidum","in Bezug auf das Ganze"],["in rem versio","Vermögensvermehrung, Bereicherung"],["in praxi","im Alltag / in der Praxis"],["in perpetuum","für ewig, für immer"],["in natura","wirklich"],["in ius vocatio","Ladung zum Gericht"],["in iure cessio","die Abtretung vor Gericht (Eigentumsübertragungsform des römischen Rechts)"],["in iure","vor Gericht / auf der Gerichtsstätte"],["in futuro","in Hinkunft, in Zukunft"],["in fraudem legis","unter Umgehung des Gesetzes"],["in fraudem creditorum","zum Schaden der Gläubiger"],["in flagranti","auf frischer Tat"],["in eventu","möglicherweise / eventuell"],["in effectu","in der Wirkung, im Ergebnis"],["in dubio pro reo","im Zweifel für den Angeklagten"],["in dubio pro possessore","im Zweifel für den Besitzer"],["in dubio minus","im Zweifel weniger"],["in dubio contra actorem","im Zweifelsfall gegen den Kläger"],["in concreto","in Wirklichkeit, im Besonderen"],["in casu","im gegebenen Fall"],["in brevi","in Kürze"],["in abstracto","im Allgemeinen, abgesehen von der Wirklichkeit"],["in absentia","in Abwesenheit"],["impuberes infantia maiores","noch nicht Mündige, die der Kindheit aber schon entwachsen sind"],["imperium, -i n.","Macht /Staatsgewalt /Befehl"],["imperitia, -ae f.","Unerfahrenheit /Ungeschicklichkeit"],["imperitia iuris","Unerfahrenheit im Recht"],["imperator, -oris m.","Feldherr / Befehlshaber"],["impensae utiles","nützliche Aufwendungen"],["impensae necessariae","notwendige Aufwendungen"],["immobilis, -e n. pl.: immobilia","unbeweglich"],["immissio, -onis f.","störende Einwirkung von außen auf ein Grundstück"],["ignorantia, -ae f.","Unkenntnis / Unwissenheit"],["ignorantia iuris nocet","Unkenntnis des Rechts schadet"],["ignorantia iuris","Rechtsunkenntnis"],["ignorantia facti, non iuris excusat","Tatsachenunkenntnis, nicht Rechtsunkenntnis entschuldigt"],["id est","das heißt"],["hypotheca, -ae f.","besitzloses Pfand"],["humus, -i m.","Erde, Boden"],["humanitas, -atis f.","Menschlichkeit"],["hora, -ae f.","Stunde"],["honor, -oris m.","Ehre"],["honeste vivere, neminem laedere, suum cuique tribuere","ehrenhaft leben, niemanden verletzen und jedem das Seine gewähren (das sind die Gebote des Rechts)"],["homo, -inis m. pl.: homines","Mensch"],["homicidium, -i n.","Mord, Totschlag"],["hoc loco","an diesem Ort"],["hic, haec, hoc","dieser, diese, dieses"],["hic et nunc","hier und jetzt"],["hic","hier"],["heres, heredis m. pl.: heredes","Erbe"],["hereditatis petitio","Erbschaftsklage"],["hereditas, -atis f.","Erbschaft"],["hereditas iacens","ruhender Nachlass"],["heredis institutio","Erbeinsetzung"],["habitus, -us m.","Haltung, Stellung"],["gravitas, -atis f.","Schwere, Gewicht, Last"],["gratia, -ae f.","Anmut, Gunst, Gefälligkeit"],["gradus, -us m.","Schritt, Stufe, Rang"],["gestio, -onis f.","Führung, Geschäftsführung, Verwaltung"],["genus, -eris n.","Gattung, Art"],["genus non perit","die Gattung geht nicht unter"],["gens, gentis f.","Sippe(-nverband), Großfamilie"],["furtum, -i n.","Diebstahl, Entwendung"],["furtum usus","Gebrauchsdiebstahl"],["furtum possessionis","Besitzdiebstahl"],["furtum nec manifestum","der nicht offensichtliche Diebstahl"],["furtum manifestum","der offensichtliche Diebstahl"],["furiosus nullum negotium gerere potest","der Geisteskranke kann kein Rechtsgeschäft führen"],["furiosi voluntas nulla est","der Wille eines Geisteskranken ist nichtig"],["fur, -is m./f.","Dieb"],["fur semper in mora","der Dieb befindet sich immer in Verzug"],["fundus, -i m.","Landgut, Grund und Boden"],["fructus, -us m.","Frucht, Ertrag, Nutzen (auch: Gewinn, Vorteil, Lohn, Erfolg, Genuss)"],["fraus, fraudis f.","Betrug / Gläubigerbenachteiligung im Konkurs"],["fraus creditorum","Schädigung der Gläubiger"],["forum, -i n.","öffentlicher Platz in Rom für Versammlungen und Gerichtsverhandlungen"],["forum prorogatum","der verschobene Gerichtsstand"],["forum domicilii","Gerichtsstand des Wohnsitzes des Beklagt«»"],["forum contractus","Gerichtsstand des Vertragsabschlussortes"],["forum commune","allgemeiner Gerichtsstand"],["formula actionis","Klagsformel"],["formaliter","der Form nach / förmlich"],["forensis -e","gerichtlich"],["fiscus, -i m.","Staatsvermögen"],["filii familias","die Söhne"],["filiae familias","die Töchter"],["fiducia, -ae f.","Vertrauen, Treuhand"],["fides, -fidei f.","Treue, Glaube, Pflicht zum Worthalten"],["fidepromissio, -ionis f.","Treueversprechen"],["fideiussor pro reo solvet","der Bürge zahlt für den Schuldner"],["fideiussio, -ionis f.","Bürgschaft"],["fictus possessor","fingierter (angenommener) Besitzer"],["fictio, -onis f.","Fiktion, Annahme"],["favor, -oris m.","Begünstigung"],["fas, fari n.","göttliches Recht"],["familia, -ae f.","Familie (Gemeinschaft der Personen unter einer Hausgewalt)"],["fama, -ae f.","Gerücht"],["falsus procurator","Vertreter ohne Vertretungsbefugnis"],["falsa demonstratio non nocet","die Falschbezeichnung schadet nicht"],["facultas, -tatis f.","Fähigkeit, Befähigung"],["factum, -i n.","Tat, Tatsache"],["facta concludentia","schlüssige Handlungen, d.h. Handlungen, aus denen man eine bestimmte Willenserklärung ableiten kann"],["facio, ut des","ich mache (etwas), damit du (etwas) gibst"],["extraneus, -i m.","außenstehende Person"],["extra","außerhalb"],["expressis verbis","ausdrücklich"],["exilium, -i n.","Verbannung, Exil"],["exheredatio, -onis f.","Enterbung eines Pflichtteilsberechtigten"],["exempli causa","beispielhalber"],["executio iuris non habet iniuriam","die Vollstreckung des Rechts ist kein Unrecht"],["excusatio, -onis f.","Entschuldigung"],["exceptio, -onis f.","Einrede, Einwendung (eigentlich: Ausnahme)"],["exceptio rei venditae et traditae","Einrede der verkauften und übergebenen Sache"],["exceptio rei judicatae","Einrede der entschiedenen Sache"],["exceptio plurium (concumbentium)","Einrede des Mehrverkehrs während der Empfängniszeit (gegen eine Vaterschaftsklage)"],["exceptio pacti","Einrede der Vereinbarung des Nichtklagens"],["exceptio iusti dominii","Einrede des rechtmäßigen Eigentums"],["exceptio doli","Einrede der Arglist"],["ex turpi causa non oritur actio","aus einer verwerflichen Sache entsteht keine Klage"],["ex tune","vom damaligen Zeitpunkt an"],["ex testamento","„aus dem Testament\" (als Berufungsgrund zu einem Erwerb)"],["ex ratione legis","nach dem Sinn des Gesetzes, aus der Sicht des Gesetzgebers heraus"],["ex post","danach"],["ex pacto illicito non oritur actio","aus einer unerlaubten Vereinbarung entsteht keine Klage"],["ex officio","von Amts wegen"],["ex nunc","von jetzt an"],["ex nihilo nihil","aus nichts kommt nichts"],["ex lege","unmittelbar auf das Gesetz zurückgehend"],["ex iniuria ius non oritur","aus Unrecht kann kein Recht erwachsen"],["ex facto oritur ius","Recht entsteht aus Tatsächlichem"],["ex eadem causa","aus demselben Grund"],["ex delicto","aus einem begangenen Delikt"],["ex contractu","auf einem Vertrage beruhend"],["ex bona fide","in gutem Glauben"],["ex ante","von früher aus"],["ex alia causa","aus einem anderen Rechtsgrund"],["ex aequo et bono","nach billigem und gutem (Ermessen)"],["evictio, -onis f.","Entwehrung (Verkäufer haftet, wenn ein an der Kaufsache berechtigter Dritter diese vom Käufer herausverlangt,"],["etiam tacere est respondere","auch Schweigen ist eine Antwort"],["essentialia negotii","die wesentlichen (und unentbehrlichen) Bestandteile eines Rechtsgeschäfts"],["error, -oris m.","Irrtum, Fehler"],["error iuris nulli prodest","ein Rechtsirrtum nützt niemandem"],["rror iuris nocet","Irrtum über das Recht schadet"],["error iuris","Rechtsirrtum = Irrtum über Rechtsvorschriften"],["error in procedendo","Verfahrensfehler"],["error in persona vel obiecto","Irrtum in der Person oder im Vertragsgegenstand"],["error in negotio","Irrtum überdas Rechtsgeschäft, den Vertragstypus"],["error in iudicando","Entscheidungsfehler"],["error in corpore","Irrtum in Bezug auf den Vertragsgegenstand"],["error facti","Irrtum über Tatsächliches"],["error calculi non nocet","ein Rechenfehler schadet nicht (zB im Urteil)"],["errantis voluntas nulla est","der Wille eines Irrenden ist nichtig"],["dolus generalis","allgemeiner Vorsatz"],["dolus eventualis","bedingter Vorsatz"],["dolus directus","direkter Vorsatz"],["dolo malo","vorsätzlich, mit Arglist"],["doli capax","deliktsfähig"],["do, ut des","ich gebe (etwas), damit du (etwas) gibst"],["divortium, -i n.","Trennung, Scheidung"],["diversitas, -atis f.","Verschiedenheit"],["distinctio iuris","Unterscheidung im Recht"],["dissolutio, -onis f.","Auflösung"],["dissensus, -us m.","Meinungsverschiedenheit, Dissens, Uneinigkeit (Nichtübereinstimmung zweier Willenserklärungen)"],["dispositio, -onis f.","Anordnung"],["dispens, -tis f.","Nachsicht, Befreiung"],["dismembratio, -onis f.","Zerfall, Auflösung, Staatsuntergang durch Zerfall"],["discrepantia, -ae f.","Uneinigkeit, Widerspruch"],["diligentia, -ae f.","Sorgfalt"],["diligens paterfamilias","sorgfältiger Hausvater"],["dies, -ei m.","Tag, Termin, Frist, Befristung"],["dies veniens","„der kommende Tag\" (= Erfüllungs-, Zahltag des Legats - Fälligkeitstag)"],["dies cedens","„Anfalltag\" des Legats (= Todestag des Erblassers)"],["dictum, -i n.","Spruch, Ausspruch, Wort"],["dicta et promissa","Zugesagtes und Versprochenes"],["dicitur","es wird gesagt, man sagt es, man behauptet es"],["dicat testaro et erit lex","der Testator spreche und es wird Gesetz sein"],["detentio, -onis f.","Innehabung einer Sache"],["derelictio, -onis f.","Preisgabe, Weggabe (zB freiwillige Aufgabe des Eigentums an einer Sache, ohne dass ein anderer Eigentümer wird)"],["depositum, -i n.","„das Niedergelegte\" Hinterlegungsvertrag, Verwahrungsvertrag"],["denuntiatio, -onis f.","Anzeige, Ankündigung"],["denegatio actionis","Abweisung der Klage"],["demonstratio, -onis f.","Bezeichnung, Hinweis, Darlegung"],["delictum, -i n.","unerlaubte Handlung, Vergehen, Fehler"],["delegatio, -onis f.","(bloße) Anweisung"],["delegatio solvendi","Zahlungsanweisung"],["delegatio obligandi","Verpflichtungsanweisung"],["deleatur","es möge vernichtet, getilgt, weggestrichen werden"],["defensor, -oris m.","Verteidiger"],["defensio, -onis f.","Verteidigung (vor Gericht)"],["deditio, -ionis f.","Auslieferung (an den Feind)"],["declaratio, -onis f.","Kundmachung, Offenbarung"],["debitum, -i n.","Schuld, Verpflichtung"],["debitor, -oris m.","Schuldner"],["debere (debeo - debui - debitum)","schulden"],["de lege lata","vom erlassenen Gesetz her; von der Rechtslage, wie sie derzeit ist"],["de lege ferenda","vom zu schaffenden Gesetz aus, vom zu erlassenden Gesetz her, von der Rechtslage aus"],["de lege","von Gesetzes wegen"],["de iure","von Rechts wegen"],["de facto","tatsächlich"],["datio, -onis f.","Leistung, Zuwendung von Eigentum Hingabe, Eigentumsverschaffung"],["dare actionem","Erteilung der Klage"],["dare (do - dedi - datum)","geben = Eigentum verschaffen"],["damnum, -i n.","(Eintritt eines) Schaden, Nachteil, Sachbeschädigung"],["damnum iniuria datum","Sachbeschädigung (wörtl.: widerrechtlich verursachter Schaden)"],["damnum emergens","der „aufgetretene\" Schaden positiver Schaden der objektive Nachteil des Geschädigten"],["da mihi facta, dabo tibi ius","liefere mir die Tatsachen, dann werde ich dir das Recht geben"],["custodia, -ae f.","Obhut, Gewahrsam, Aufsicht"],["ius offerendi et succedendi","Recht des Anbietens und Nachfolgens"],["ius non scriptum","ungeschriebenes Recht (zB Gewohnheitsrecht)"],["ius gentium","Völkerrecht"],["ius dispositivum","nachgiebiges Recht"],["ius commune","gemeines Recht"],["ius cogens","zwingendes Recht"],["curator, -oris m.","Pfleger, Beistand, Ven/valter, Sachwalter"],["curator bonorum","Vermögensverwalter für die Konkursmasse"],["curator absentis","Abwesenheitskurator"],["cura prodigi","Verschwenderpflegschaft"],["cura minorum","Pflegschaft über den Minderjährigen (den noch nicht 25-Jährigen)"],["cura furiosi","Pflegegewalt über den Geisteskranken"],["cum tempore (c.t.)","mit sog. „akademischem Viertel\" („mit Zeit\")"],["culpa, -ae f.","Verschulden (ganz allgemein), Fahrlässigkeit"],["culpa levis","leichte Fahrlässigkeit"],["culpa lata dolo proxima est","grobe Fahrlässigkeit kommt dem Vorsatz nahe"],["culpa lata","schwere (grobe) Fahrlässigkeit"],["culpa in contrahendo","Verschulden bei Vertragsschluss, insb. auch bei der Vertragsvorbereitung"],["cuius est solum, eius est usque ad coelum","wem der Boden gehört, dem gehört er bis zum Himmel"],["cuius est commodum eius est incommodum","wer den Vorteil hat, trägt auch die Last"],["cui bono","Wem zum Guten? Wem zum Vorteil? Wem zum Nutzen?"],["crimen, -minis n. pl.: crimina","Verbrechen"],["crimen laesae maiestatis","Verbrechen der verletzten Hoheit (Majestätsbeleidigung)"],["cretio, -onis f.","förmliche Erklärung, die Erbschaft antreten zu wollen"],["creditum, -i n.","Schuld, Darlehen"],["creditor, -oris m.","Gläubiger"],["corpus, -poris n. pl.: corpora","Körper / Gesamtheit von Werken"],["corpus delicti","Gegenstand des Verbrechens / Beweisstück"],["corpore et animo","durch Gewahrsam und Besitzwillen"],["conventio, -onis f.","Übereinkunft, Abmachung, Vertrag, Konvention"],["convalescentia, -ae f.","Heilung (Gültigwerden eines bisher ungültigen Rechtsgeschäfts)"],["conubium, -i n.","das Recht, eine gültige römische Ehe einzugehen"],["contrarius actus","Rechtsakt, der einen früheren aufhebt; Gegenteilige Handlung"],["contrariam probationem non admittens","den Gegenbeweis nicht zulassend"],["contradictio, -onis f.","Widerspruch"],["contradictio in se","Widerspruch in sich"],["contractus, -us m.","Vereinbarung, Vertrag, insb. Schuldvertrar (ein auf Begründung einer Verpflichtung gerichtetes Verhalten)"],["contractus bilaterales inaequales","unvollkommen zweiseitiges Schuldverhältnis"],["contractus bilaterales aequales","Vollkommen zweiseitiger Vertrag, synallagmatischer Vertrag (hier stehen sich zwei Hauptansprüche gegenüber)"],["contra vim non valet ius","gegen Gewalt hat das Recht keine Macht"],["contra rem iudicatam nemo audietur","nach Rechtskraft der Sache wird niemand mehr gehört werden"],["contra legem","gegen das Gesetz"],["contra facta non valent argumenta","gegenüber vorliegenden Tatsachen vermögen Argumente nichts"],["contra bonos mores","gegen die guten Sitten"],["contra","gegen, anderer Meinung"],["consultum, -i n.","Beschluss (vom Senat), „Rat\""],["consuetudo, -dinis f.","Gewohnheit / Gewohnheitsrecht"],["constitutum, -i n.","Verabredung, Verfügung, Verordnung"],["constitutum possessorium","Besitzkonstitut"],["consortium, -i n.","(Erben-)Gemeinschaft"],["consilium, -i n.","Überlegung, Ratschlag, Rat (als Kollegium)"],["consensus, -us m.","Willensübereinstimmung (Übereinstimmung, Einigkeit, Einstimmigkeit)"],["consensus facit nuptias","die Willensübereinstimmung schafft die Ehe"],["consensu contractus","durch Willensübereinstimmung geschlossen"],["confusio, -onis f.","Vereinigung, Vermischung"],["confirmatio, -onis f.","Bestätigung"],["confessus pro iudicato habetur","der Geständige wird für verurteilt gehalten"],["confessio, -onis f.","Geständnis, Anerkennung"],["confessio pro veritate accipitur","das Geständnis wird als Wahrheit angesehen"],["confessio non est probatio","ein Geständnis ist kein Beweis"],["confessio est regina probationum","das Geständnis ist die Königin der Beweismittel"],["condominium, -i n.","Miteigentum"],["condictio, -onis f.","Rückforderung"],["condictio sine causa","Rückforderung „ohne Grund\" (für die übrigen Fälle rechtsgrundlosen Vorenthaltens, für die keine eigene Kondiktion vorgesehen ist)"],["condictio possessionis","Klage auf Rückübertragung des Besitzes"],["condictio ob turpem causam","Rückforderung wegen eines sittenwidrigen Grundes (der Zweck der Leistung verstößt gegen die guten Sitten)"],["condictio ob iniustam causam","Rückforderung wegen eines rechtswidrigen Grundes (Leistung verstößt gegen ein rechtliches Verbot)"],["condictio ob causam finitam (condictio causa finita)","Rückforderung wegen Wegfall des Rechtsgrundes"],["condictio liberationis","Klage auf die Befreiung von einer Verpflichtung"],["condictio indebiti","Rückforderung des Ungeschuldeten (des Nichtgeschuldeten)"],["condictio causa data causa non secuta","Rückforderung wegen Nichteintreffens des Rechtsgrundes, auf den hin geleistet wurde"],["condicio sine qua non","„Bedingung ohne die nicht\" (ein Verhalten darf nicht weggedacht werden können, ohne dass nicht auch der Erfolg wegfällt)"],["condicio pendet","die Bedingung „schwebt\" / die Bedingung „hängt\""],["condicio iuris","Rechtsbedingung"],["condemnatio, -onis f.","Verurteilung"],["condemnatio pecuniaria","Geldverurteilung"],["conclusio, -onis f.","logischer Schluss / logische Schlussfolgerung"],["concilium, -i n.","Versammlung"],["concilium repraesentat mentem populi","die Versammlung (der Abgeordneten) vertritt den Willen des Volkes"],["compromissum, -i n.","Schiedsvertrag"],["compensatio, -onis f.","Aufrechnung, Kompensation, Abrechnung, Ausgleichung"],["communis opinio facit ius","die übereinstimmende Meinung schafft Recht"],["communis opinio","(allgemein) herrschende Meinung"],["communio, -onis f.","Gemeinschaft"],["commodum, -i n.","Nutzen, Vorteil"],["commodatum, -i n.","Leihe, Leihvertrag"],["commixtio, -onis f.","Vermengung von festen Stoffen (wie Getreide)"],["commercium, -i n.","Rechtsverkehr, Handel (Fähigkeit, Rechtsgeschäfte gültig abzuschließen)"],["color insaniae","\"Anschein des Wahnsinns\" (geistige Umnachtung des Testators zum Zeitpunkt der Testamentserstellung)"],["collatio dotis","Einbringung der Mitgift"],["collatio bonorum","Einbringung des Vermögens"],["cognitio, -onis f.","Erkenntnis (amtliche Untersuchung)"],["cognatio, -onis f.","Blutsverwandtschaft, Kognation"],["cogitationis poenam nemo patitur","wegen bloßer Gedanken wird niemand bestraft"],["codex, -dicis m. pl. codices","Gesetzbuch, Gesetzessammlung"],["coactio non est imputabilis","Zwang ist nicht zurechenbar"],["clientes (cliens, -entis) m.","Hörige, Schutzbefohlene"],["civis, -is m./f.","der (römische) Bürger (im Gegensatz zum Fremden)"],["circumscriptio, -onis f.","Übervorteilung"],["cessio, -ionis f.","Forderungsabtretung"],["cessio voluntaria","freiwillige Abtretung"],["cessio legis","gesetzlicher Forderungsübergang, Übergang einer Forderung auf eine andere Person aufgrund des Gesetzes"],["cessante ratione legis cessat lex ipsa","bei Wegfall des Zweckes bzw inneren Grundes eines Gesetzes hört auch die Wirksamkeit des Gesetzes auf"],["cessante ratione cessat lex ipsa","fällt der Zweck eines Gesetzes weg, fällt das Gesetz selbst weg"],["cessante occasione legis non cessat lex ipsa","bei Wegfall des äußeren Anlasses für ein Gesetz hört das Gesetz nicht zu wirken auf"],["certum, -i n.","das (genau) Bestimmte, das Sichere"],["certum dare","eine bestimmte Sache leisten"],["certa pecunia","eine bestimmte Geldsumme, ein bestimmtes Vermögen"],["caveat emptor","der Käufer sei auf der Hut"],["cautio, -ionis f.","(Versprechen zur) Sicherheitsleistung, Kaution"],["cautela abundans non nocet","übertriebene Vorsicht schadet nicht"],["causa, -ae f.","Ursache, (Rechts)grund, Titel\nauch: Rechtssache, Rechtsfall"],["causa cognita","nach Untersuchung des Falles"],["casus, -us m.","Fall, Zufall"],["casum sentit dominus","den Zufall spürt der Herr (Eigentümer) (Das Risiko des zufälligen Untergangs oder der zufälligen Beschädigung der Sache trägt grundsätzlich ihr Eigentümer)"],["caput, -pitis n.","Haupt, Kopf"],["capitis deminutio maxima","Verlust der Freiheit (größte Änderung der Rechtsfähigkeit)"],["capitis deminutio","Änderung bzw Schmälerung der Rechtsfähigkeit"],["capacitas, -tatis f.","Fähigkeit"],["bonum, -i n.","das Gute"],["bonum publicum","Staatswohl"],["bonum et aequum","das Gute und Gerechte"],["bonum commune","Gemeinwohl"],["bonorum possessor","Erbschaftsbesitzer"],["bonorum possessio","Erbschaftsbesitz"],["boni mores","die guten Sitten"],["bonae fidei possessor","Besitzer „guten Glaubens\" (er ist der Meinung, die Sache gehöre ihm unabhänqia davon, ob das zutrifft oder nicht)"],["bona fides Praesumitur","der gute Glaube wird vermutet"],["bona fides","die „gute Treue\" - der gute Glaube"],["bona fide","gutgläubig, redlich"],["bilateralis / unilateralis","zweiseitig / einseitig"],["beneficium, -i n.","(Rechts-)Wohltat, Vergünstigung"],["bellum, -i n.","Krieg"],["bellum gerere","Krieg führen"],["bellum defensivum","Verteidigungskrieg"],["bella gerant alii, tu, felix Austria, nube!","Andere mögen Kriege führen, du, glückliches Österreich, heirate!"],["beati possidentes","„Glücklich die Besitzenden\" (wer eine Sache besitzt, ist im Vorteil)"],["audiatur et altera pars","es möge auch der andere Teil gehört werden"],["auctoritas, -atis f.","Macht, Ansehen, Autorität, Gewähr, Bürgschaft, Gültigkeit"],["auctor, -oris m./f.","Gewährsmann, Gewährleister, Urheber, Rechtsvorgänger"],["assignatio, -ionis f.","Anweisung"],["argumentum, -i n.","Beweismittel, Beweisgrund, Merkmal"],["argumentum e contrario","Umkehrschluss"],["argumentum a minori ad maius","Schlussfolgerung vom Kleineren auf das Größere"],["argumentum a maiori ad minus","Schlussfolgerung vom Größeren auf das Kleine"],["argumenta non sunt numeranda sed ponderanda","die Gründe sind nicht abzuzählen sondern zu gewichten"],["arbitrium, -i n.","Schiedsspruch"],["arbitrium iudicis","richterliches Ermessen"],["aquae ductus","das Recht, eine Wasserleitung über ein fremdes Grundstück zu führen (Feidservitut)"],["approbatio, -ionis f.","Bestätigung, Billigung"],["appellatio, -onis f.","Berufung"],["annus, -i m.","Jahr"],["animus, -i m.","Absicht, Wille (des Handelnden)"],["animus rem sibi habendi","Besitzwille (Wille, eine Sache für sich zu haben)"],["animus rem alteri habendi","der Wille, eine Sache für einen anderen innezuhaben"],["animus possidendi","Besitzwille"],["animus obligandi","Verpflichtungswille"],["animus novandi","Erneuerungsabsicht, -Wille"],["animus negotii alieni gerendi","Absicht, für einen anderen ein Geschäft zu führen"],["animus donandi","Schenkungswille, -absicht"],["animus domini","der Wille, eine Sache als die seine, (als Eigentümer) für sich zu behalten"],["ambiguitas, -atis f.","Zwei-, Mehrdeutigkeit (einer Willenserklärung)"],["ambiguitas contra stipulatorem","Zweideutigkeit (wirkt) gegen den Stipulator"],["alteri stipulari nemo potest","niemand kann sich für einen anderen etwas versprechen lassen"],["altera pars","die Gegenpartei - der „andere Teil\""],["alma (almus 3) mater, -tris f.","nährende Mutter"],["alluvio, -onis f.","Anschwemmung von Erde, Landanschwemmung durch Flüsse"],["alius m., alia f., aliud n.","ein anderer, eine andere, etwas anderes"],["alius","etwas anderes"],["alieno nomine","in fremdem Namen"],["alieno facto ius alterius non mutatur","durch eine fremde Tat wird das Recht eines anderen nicht verändert"],["agnatus proximus","der nächste Blutsverwandte"],["agere in fraudem legis","unter Umgehung des Gesetzes handeln"],["affectus, -us m.","Zustand, Leidenschaft, Begierde"],["aetas, -atis f.","Lebensalter, Zeitalter"],["aestimatio, -onis f.","Schätzung / der Schätzwert"],["aes alienum","„fremdes Geld\" = Schulden"],["aerarium, -i n.","die Staatskasse, das Staatsvermögen"],["aequum est enim ut cuius participavit lucrum participet et damnum","es ist gerecht, dass derjenige, der den Nutzen (aus etwas) zieht, auch an dem (daraus resultierenden) Schaden beteiligt sein soll"],["aequitas, -atis f.","Billigkeit"],["aedes, -is f.","Gebäude"],["advocatus, -i m.","Rechtsbeistand, Rechtsanwalt, Anwalt"],["adulterium, -i n.","Ehebruch"],["adoptio imitatur naturam","die Adoption ahmt die Natur nach"],["adiudicatio, -onis f.","richterlicher Zuspruch durch Urteil"],["aditio, -ionis f.","Antritt"],["aditio hereditatis","Erbschaftsantritt /Erbschaftsannahme"],["addictio, -onis f.","prätorische Zusage\nZusprechen durch den Prätor\n(zB von Eigentum)"],["ad usum","zum Gebrauch"],["ad libitum","nach Belieben, beliebig"],["ad infinitum","bis ins Unendliche"],["ad hoc","„zu diesem\" - diesen Fall betreffend"],["ad acta","zu den Akten"],["ad absurdum (führen)","gründlich widerlegen - „zum Sinnlosen weiterführen\""],["actus -us m.","Recht, sein Vieh überfremden Grund zu treiben - Feldservitut (allgemein: Rechtsakt, Geschäft)"],["actori incumbit onus probandi","dem Kläger obliegt die Beweislast"],["actor, -oris m.","Kläger/Ankläger/Verwalter/Geschäftsführer"],["actor sequitur forum rei","der Kläger folgt dem Gerichtsstand des Beklagten"],["actiones noxales","Noxalklagen (Klage gegen den Gewalthaber wegen eines Delikts das durch den Gewaltunterworfenen begangen wurde)"],["actio, -onis f. (pl.: actiones)","Handlung(en)/Klage(n)"],["actio venditi","Klage des Verkäufers"],["actio utilis","verwendbar, brauchbar gemachte Klage"],["actio semel extincta non reviviscit","ein einmal erloschener Anspruch lebt nicht wieder auf"],["actio redhibitoria","Wandlungsklage (die zur Rückabwicklung des Vertrages führt)"],["actio quanti minoris","Minderungsklage (damit erhält der Käufer einen Teil des Kaufpreises zurück)"],["actio publiciana","„publizianische Klage\"\n(Klage aus dem rechtlich vermutten Eigentum mit geringen Beweiserfordernissen)"],["actio poenalis","Strafklage (Klage auf Buße)"],["actio perpetua","unbefristetes Klagerecht („ewiges Klagerecht\")"],["actio negotorium gestorum","Klage aus der Geschäftsführung ohne Auftrag"],["actio negatoria","Eigentumsfreiheitsklage"],["actio mandati contraria","(Gegen-)klage des Beauftragten aus dem Auftragsvertrag"],["actio mandati","Klage des Auftraggebers aus dem Auftragsvertrag"],["actio locati","Klage des Vermieters"],["actio iniuriarum","Klage wegen Persönlichkeitsverletzung"],["actio in rem","Klage „auf eine Sache\"\n(dingliche Klage, dient der Durchsetzung eines dinglichen Rechts)"],["actio in personam","Klage gegen eine bestimmte Person"],["actio furti (manifesti)\nactio furti (nec manifesti)","Diebstahlsklage"],["actio ex testamento","Klage, die sich auf ein Testament gründet"],["actio ex stipulatu","Klage aufgrund eines Schuldversprechens"],["actio empti","Klage (des Käufers) aus dem Kaufvertrag"],["actio directa","Hauptanklage, direkte Klage des Hauptanspruchsberechtigten"],["actio de dolo / actio doli","Schadenersatzklage (des Geschädigten gegen den Täter), der ihm durch Arglist einen Vermögensschaden zugefügt hat."],["emptor, -oris m.","der Käufer"],["emptio venditio, f.","Kaufvertrag"],["emptio spei","„Kauf einer Hoffnung\" (Hoffnungskauf / Kauf einer bloßen Gewinnaussicht)"],["emancipatio, -onis f.","Entlassung aus der Familiengewalt"],["edictum, -i n.","Erlass, Bekanntmachung, Verordnung"],["eadem causa","dieselbe Sache, derselbe Rechtsgrund, dieselbe Rechtsangelegenheit"],["duplum, -i n.","das Doppelte"],["duplicatio, -onis f.","Entgegnung des Beklagten"],["dubium, -i n.","Zweifel"],["dotis promissio","Versprechen, eine Mitgift zu bestellen"],["dotis dictio","Zusage der Mitgift"],["dos, dotis f.","Mitgift, Heiratsgut"],["donatio, -ionis f.","Schenkung(-svertrag)"],["dominus, -i m.","Herr, Eigentümer"],["dominium, -i n.","Eigentum"],["dominium transferre","Eigentum übertragen"],["dominium directum","Herrschaftsrecht (das umfassendste dingliche Recht)"],["domini loco","an Stelle des Eigentümers"],["domicilium, -i n.","Wohnsitz"],["dolus, -i m.","die Arglist iSv Betrug (bewusste Täuschung, Schädigungsabsich, der Vorsatz)"],["dolus suus neminem relevat","niemandem hilft seine Arglist"],["dolus specialis","besonderer Vorsatz (Wissentlichkeit)"],["dolus semper praestatur","für Vorsatz ist immer einzustehen"],["dolus pro possessione est","die Arglist steht für den Besitz"],["dolus non praesumitur","Vorsatz wird nicht vermutet"],["dolus malus","böswilliger Vorsatz"],["dolus in contrahendo","Arglist beim Vertragsschluss"],["actio contraria","Widerklage, Gegenklage des Nebenanspruchsberechtigten"],["actio confessoria","Klage des Servitutsberechtigten"],["actio conducti","Klage des Mieters"],["actio certae creditae pecuniae","wörtl. \"Klage des bestimmten anvertrauten Geldes\" (Klage auf eine bestimmte Summe geschuldeten Geldes)"],["actio auctoritatis","Gewahrschaftsklage (Klage aufgrund von Gewahrleistungsanspruchen)"],["actio annalis","einjahrig befristetes Klagerecht"],["actio ad exhibendum","Klage auf Vorweisung"],["acta publica probant se ipsa","öffentliche Akte beweisen sich selbst"],["acquisitio, -onis f.","Erwerb"],["acquisitio hereditatis","Erbschaftserwerb"],["accusatio, -onis f.","Anklage"],["accusatio suspecti tutoris","Anklage gegen einen verdächtigen Vormund, dem ein Treueverstoß vorgeworfen wird"],["accidentalia negotii","Nebenbestimmungen eines Vertrags"],["accessio, -onis f.","Zuwachs, das Hinzukommen, Hinzufugen"],["accessio cedit principali","die Nebensache teilt notwendig das Schicksal der Hauptsache"],["acceptilatio, -onis f.","förmliche Bestätigung der Erfüllung einer Stipulationsschuld\n(Erlassgeschäft im römischen Recht nach Erfüllung einer Stipulationsschuld)"],["abusus, -us m.","Missbrauch"],["abusus non tollit usum","Missbrauch hebt ein Gebrauchsrecht nicht auf"],["absolutus sententia iudicis praesumitur innocens","wer durch Gerichtsurteil freigesprochen worden ist, gilt als unschuldig"],["absolutio, -onis f.","Freisprechung"],["abrogatio, -onis f.","Abschaffung"],["abolitio, -ionis f.","Aufhebung\n(zB eines Strafverfahrens)"],["aberratio ictus","Abirren des Schlages\n(Erfolg trifft einen vom geplanten Opfer Verschiedenen)"],["ab urbe condita","ab Gründung der Stadt"],["ab intestato","\"vom Testamentlosen\"\n(Erwerb ohne Testament)"],["ab initio nullum semper nullum","anfangs nichtig, immer nichtig"],["ab initio","von Anfang an"],["a verbis legis non est recedendum","von den Worten des Gesetzes ist nicht abzugehen"],["a priori",""]];</script>
+<script>
+(function(){
+"use strict";
+
+/* =====================================================================
+   SYNC (optional): Damit Hanna und Vlad den Fortschritt der anderen
+   Person auf verschiedenen Geräten sehen, hier die URL einer Firebase
+   Realtime Database eintragen, z. B.
+   "https://lingua-muris-default-rtdb.europe-west1.firebasedatabase.app"
+   Leer lassen = alles wird nur im Browser dieses Geräts gespeichert.
+   ===================================================================== */
+const SYNC_URL = "https://vokabel-274ed-default-rtdb.europe-west1.firebasedatabase.app";
+
+const N = VOCAB.length, PACK = 20, PACKS = Math.ceil(N / PACK), DAY = 864e5;
+const WAIT = {4: 2 * DAY, 5: 5 * DAY, 6: 7 * DAY};
+const XP = {1: 1, 2: 3, 3: 7, 4: 15, 5: 31, 6: 63};
+const STAGES = {
+  1: {name: 'Nicht gemacht', c: '#ADA5C4', ds: 'noch nie abgefragt'},
+  2: {name: 'Falsch', c: '#F25757', ds: 'kommt sofort wieder'},
+  3: {name: 'Richtig', c: '#F5A524', ds: 'kommt sofort wieder'},
+  4: {name: '2× richtig', c: '#7BC943', ds: 'wartet 2 Tage'},
+  5: {name: '3× richtig', c: '#22B07D', ds: 'wartet 5 Tage'},
+  6: {name: 'Langzeit', c: '#7C5CFF', ds: 'wartet 1 Woche'},
+  7: {name: 'Gemeistert', c: '#D99A00', ds: 'fertig gelernt'}
+};
+const USERS = {
+  vlad: {name: 'Vlad', color: '#3B82F6', soft: '#DBEAFE'},
+  hanna: {name: 'Hanna', color: '#EC4899', soft: '#FCE7F3'}
+};
+const PASSWORD = '1234';
+const TITLES = [[1,'Neuling'],[2,'Mäuschen'],[3,'Käseknabberer'],[4,'Bücherwurm'],[5,'Ratatui'],[7,'Discipulus'],[9,'Magister'],[12,'Doctor Iuris'],[15,'Praetor'],[20,'Imperator Murium']];
+const TITLE_INFO = {1:'Ganz klein, mit einem Keimling auf dem Kopf',2:'Wächst ein Stück',3:'Hält ein Stück Käse',4:'Wird größer und klüger',5:'Bekommt eine Brille',7:'Trägt einen roten Schal',9:'Bekommt den Doktorhut',12:'Hält ein Gesetzbuch',15:'Trägt den Lorbeerkranz',20:'Goldener Lorbeer und Purpurmantel'};
+const PRAISE = ['Bene!','Optime!','Euge!','Recte!','Macte!','Sehr gut!','Weiter so!'];
+const COMFORT = ['Nihil desperandum!','Iterum!','Kommt wieder!','Fast!','Paulatim!'];
+const SKIN = ['#FFE3CC','#F7CBA6','#E3A982','#B97C58','#7E5338'];
+const HAIRC = ['#3B2A20','#6B4226','#C98B3E','#F1D27E','#23202B','#D9534F','#8E6BD8'];
+const SHIRT = ['#3B82F6','#EC4899','#22B07D','#F5A524','#7C5CFF','#2B2541'];
+const HAIRS = ['Kurz','Lang','Locken','Dutt','Zopf','Wuschel'];
+
+const SHOP = [
+  {id:'bg_lavendel',cat:'bg',name:'Lavendel',price:0},
+  {id:'bg_wiese',cat:'bg',name:'Mauswiese',price:30},
+  {id:'bg_kirsch',cat:'bg',name:'Kirschblüte',price:60},
+  {id:'bg_meer',cat:'bg',name:'Mittelmeer',price:90},
+  {id:'bg_forum',cat:'bg',name:'Forum am Abend',price:150},
+  {id:'bg_nacht',cat:'bg',name:'Sternennacht',price:200},
+  {id:'bg_kaese',cat:'bg',name:'Käseland',price:300},
+  {id:'hat_muetze',cat:'hat',name:'Wollmütze',price:25},
+  {id:'hat_blume',cat:'hat',name:'Blumenkranz',price:40},
+  {id:'hat_lorbeer',cat:'hat',name:'Lorbeerkranz',price:80},
+  {id:'hat_doktor',cat:'hat',name:'Doktorhut',price:120},
+  {id:'hat_krone',cat:'hat',name:'Krone',price:250},
+  {id:'gl_rund',cat:'glasses',name:'Runde Brille',price:20},
+  {id:'gl_sonne',cat:'glasses',name:'Sonnenbrille',price:45},
+  {id:'gl_herz',cat:'glasses',name:'Herzbrille',price:70},
+  {id:'fr_gold',cat:'frame',name:'Goldrahmen',price:60},
+  {id:'fr_regen',cat:'frame',name:'Regenbogenrahmen',price:110},
+  {id:'pet_fisch',cat:'pet',name:'Goldfisch',price:20},
+  {id:'pet_hamster',cat:'pet',name:'Hamster',price:35},
+  {id:'pet_hase',cat:'pet',name:'Hase',price:50},
+  {id:'pet_katze',cat:'pet',name:'Katze',price:60},
+  {id:'pet_hund',cat:'pet',name:'Hund',price:60},
+  {id:'pet_igel',cat:'pet',name:'Igel',price:80},
+  {id:'pet_schildi',cat:'pet',name:'Schildkröte',price:90},
+  {id:'pet_papagei',cat:'pet',name:'Papagei',price:140}
+];
+const CATS = [['bg','Hintergründe'],['hat','Kopfbedeckungen'],['glasses','Brillen'],['frame','Rahmen'],['pet','Haustiere']];
+const ITEM = Object.fromEntries(SHOP.map(i => [i.id, i]));
+
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nl = s => esc(s).replace(/\n/g, '<br>');
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const svgU = s => `url("data:image/svg+xml,${encodeURIComponent(s)}")`;
+function rel(t) {
+  const d = t - Date.now();
+  if (d <= 0) return 'jetzt';
+  if (d < 3600e3) return 'in ' + Math.max(1, Math.round(d / 60e3)) + ' Min.';
+  if (d < DAY) return 'in ' + Math.round(d / 3600e3) + ' Std.';
+  const n = Math.ceil(d / DAY);
+  return n === 1 ? 'morgen' : 'in ' + n + ' Tagen';
+}
+function sizeCls(t) { const n = t.length; return n > 120 ? 'xl' : n > 60 ? 'l' : n > 26 ? 'm' : ''; }
+
+/* ---------- levels ---------- */
+const xpAt = l => Math.round(30 * Math.pow(l - 1, 2.1));
+function levelOf(xp) { let l = 1; while (l < 50 && xp >= xpAt(l + 1)) l++; return l; }
+function titleFor(l) { let t = TITLES[0][1]; for (const [lv, n] of TITLES) if (l >= lv) t = n; return t; }
+
+/* ---------- data ---------- */
+function blank(uid) {
+  return {p:{}, xp:0, md:0, own:{}, bg:'bg_lavendel', dir:'ld', pack:0, upd:0, stats:{ok:0, bad:0},
+    av: uid === 'hanna' ? {skin:0, hair:1, hc:2, shirt:1, hat:'', glasses:'', frame:'', pets:[]}
+                        : {skin:1, hair:0, hc:1, shirt:0, hat:'', glasses:'', frame:'', pets:[]}};
+}
+function norm(d, uid) {
+  const b = blank(uid);
+  if (!d || typeof d !== 'object') return b;
+  const o = Object.assign(b, d);
+  o.p = d.p || {}; o.own = d.own || {};
+  o.av = Object.assign(blank(uid).av, d.av || {});
+  o.av.pets = (d.av && Array.isArray(d.av.pets)) ? d.av.pets : [];
+  o.stats = Object.assign({ok:0, bad:0}, d.stats || {});
+  return o;
+}
+const LS = 'linguamuris_v1_';
+let syncOk = null;
+const DB = {
+  data: {vlad: null, hanna: null}, timers: {},
+  local(uid) { try { return JSON.parse(localStorage.getItem(LS + uid)); } catch (e) { return null; } },
+  url(uid) { return SYNC_URL.replace(/\/+$/, '') + '/linguamuris/' + uid + '.json'; },
+  async load(uid) {
+    const l = this.local(uid); let r = null;
+    if (SYNC_URL) {
+      try { const res = await fetch(this.url(uid), {cache:'no-store'}); if (res.ok) { r = await res.json(); syncOk = true; } else syncOk = false; }
+      catch (e) { syncOk = false; }
+    }
+    const d = (r && (!l || (r.upd || 0) >= (l.upd || 0))) ? r : l;
+    this.data[uid] = norm(d, uid);
+    return this.data[uid];
+  },
+  save(uid) {
+    const d = this.data[uid]; d.upd = Date.now();
+    try { localStorage.setItem(LS + uid, JSON.stringify(d)); } catch (e) {}
+    if (!SYNC_URL) return;
+    clearTimeout(this.timers[uid]);
+    this.timers[uid] = setTimeout(() => {
+      fetch(this.url(uid), {method:'PUT', body: JSON.stringify(this.data[uid])})
+        .then(r => { syncOk = r.ok; }).catch(() => { syncOk = false; });
+    }, 700);
+  }
+};
+
+/* ---------- learning logic ---------- */
+let me = null, view = 'quiz', Q = null, L = {pack:null, pos:0, flipped:false, list:[]}, busy = false;
+const U = () => DB.data[me];
+const E = (u, i) => u.p['c' + i];
+const stageOf = (u, i) => { const e = E(u, i); return e ? e[0] : 1; };
+function isDue(u, i, now = Date.now()) {
+  const e = E(u, i);
+  if (!e) return true;
+  if (e[0] >= 7) return false;
+  return e[0] <= 3 || now >= e[1];
+}
+function answer(i, ok) {
+  const u = U(), s = stageOf(u, i), now = Date.now();
+  const ns = ok ? (s === 1 ? 3 : s + 1) : (s === 1 ? 2 : Math.max(2, s - 1));
+  u.p['c' + i] = [ns, ns >= 7 ? now : now + (WAIT[ns] || 0)];
+  let gx = 0;
+  if (ok) { gx = XP[s]; u.xp += gx; u.md += 1; u.stats.ok++; } else u.stats.bad++;
+  DB.save(me);
+  return {s, ns, gx};
+}
+function counts(u) {
+  const c = {1:0,2:0,3:0,4:0,5:0,6:0,7:0}; let t = 0;
+  for (const k in u.p) { c[u.p[k][0]]++; t++; }
+  c[1] += N - t; return c;
+}
+function atLeast(u, s) { let n = 0; if (!u) return 0; for (const k in u.p) if (u.p[k][0] >= s) n++; return n; }
+function packRange(p) { const a = p * PACK; return [a, Math.min(N, a + PACK)]; }
+function reviewList(u) { const now = Date.now(), r = []; for (let i = 0; i < N; i++) { const e = E(u, i); if (e && e[0] < 7 && isDue(u, i, now)) r.push(i); } return r; }
+function quizList(u) {
+  if (u.pack === -1) return reviewList(u);
+  const [a, b] = packRange(u.pack), now = Date.now(), r = [];
+  for (let i = a; i < b; i++) if (isDue(u, i, now)) r.push(i);
+  return r;
+}
+function learnList(u) {
+  if (u.pack === -1) return reviewList(u);
+  const [a, b] = packRange(u.pack), r = []; for (let i = a; i < b; i++) r.push(i); return r;
+}
+function nextDueIn(u) {
+  const [a, b] = u.pack === -1 ? [0, N] : packRange(u.pack); let m = Infinity;
+  for (let i = a; i < b; i++) { const e = E(u, i); if (e && e[0] >= 4 && e[0] < 7) m = Math.min(m, e[1]); }
+  return m === Infinity ? null : m;
+}
+function buildQueue() { const u = U(); Q = {pack: u.pack, list: quizList(u), pos: 0, flipped: false, ses: {ok:0, bad:0, xp:0, md:0, mastered:0}}; }
+
+/* ---------- drawings ---------- */
+let gid = 0;
+function coin() {
+  return `<svg class="coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#FFC83D"/><circle cx="12" cy="12" r="8.5" fill="#FFD966" stroke="#D99A00" stroke-width="1.2"/><circle cx="8.6" cy="9" r="2.3" fill="#D99A00"/><circle cx="15.4" cy="9" r="2.3" fill="#D99A00"/><ellipse cx="12" cy="13.4" rx="3.6" ry="3.3" fill="#D99A00"/></svg>`;
+}
+function laurel(cx, cy, r, c1, c2, spread = 100, rx = 5) {
+  let s = '';
+  for (const side of [-1, 1]) for (let k = 0; k < 7; k++) {
+    const deg = -90 + side * (14 + k * (spread - 14) / 6), a = deg * Math.PI / 180;
+    const x = (cx + r * Math.cos(a)).toFixed(1), y = (cy + r * Math.sin(a)).toFixed(1);
+    s += `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${(rx * .46).toFixed(1)}" transform="rotate(${(deg + 90 + side * 28).toFixed(0)} ${x} ${y})" fill="${k % 2 ? c2 : c1}"/>`;
+  }
+  return s;
+}
+function hairBack(h, c) {
+  if (h === 1) return `<path d="M26 48 Q24 18 50 17 Q76 18 74 48 L77 86 Q64 92 50 89 Q36 92 23 86Z" fill="${c}"/>`;
+  if (h === 2) return [[26,52,8],[74,52,8],[25,63,7],[75,63,7]].map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`).join('');
+  if (h === 4) return `<path d="M66 28 Q92 32 88 62 Q86 76 78 82 Q81 62 68 48Z" fill="${c}"/>`;
+  return '';
+}
+function hairFront(h, c) {
+  if (h === 0) return `<path d="M27 47 Q25 20 50 19 Q75 20 73 47 Q71 33 60 30 Q55 38 44 34 Q35 33 27 47Z" fill="${c}"/>`;
+  if (h === 1) return `<path d="M27 54 Q25 19 50 18 Q75 19 73 54 Q71 32 61 28 Q52 38 38 32 Q30 39 27 54Z" fill="${c}"/>`;
+  if (h === 2) return [[29,39,8],[35,29,9],[45,23,9.5],[56,23,9.5],[65,29,9],[71,39,8]].map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`).join('');
+  if (h === 3) return `<circle cx="50" cy="14" r="9.5" fill="${c}"/><path d="M28 45 Q28 22 50 21 Q72 22 72 45 Q66 30 50 30 Q34 30 28 45Z" fill="${c}"/><path d="M44 21.5 Q50 24 56 21.5" stroke="rgba(0,0,0,.15)" stroke-width="2" fill="none"/>`;
+  if (h === 4) return `<path d="M28 45 Q28 22 50 21 Q72 22 72 45 Q66 30 50 30 Q34 30 28 45Z" fill="${c}"/><circle cx="70" cy="31" r="3.4" fill="#F25757"/>`;
+  if (h === 5) return `<path d="M26 47 L27 31 L33 34 L35 21 L42 28 L48 16 L53 27 L61 18 L63 30 L71 24 L69 35 L75 37 L73 47 Q66 33 50 32 Q34 33 26 47Z" fill="${c}"/>`;
+  return '';
+}
+function heart(x, y) { return `M${x} ${y + 5} C${x - 10} ${y - 1} ${x - 5} ${y - 9} ${x} ${y - 3.5} C${x + 5} ${y - 9} ${x + 10} ${y - 1} ${x} ${y + 5}Z`; }
+function glassesSVG(g) {
+  if (g === 'gl_rund') return `<g fill="rgba(255,255,255,.28)" stroke="#2B2541" stroke-width="1.8"><circle cx="42" cy="49" r="6.4"/><circle cx="58" cy="49" r="6.4"/></g><path d="M48.4 48.6 Q50 47 51.6 48.6" stroke="#2B2541" stroke-width="1.8" fill="none"/><path d="M35.6 48 L29 46.5 M64.4 48 L71 46.5" stroke="#2B2541" stroke-width="1.6"/>`;
+  if (g === 'gl_sonne') return `<rect x="34" y="44" width="14" height="10" rx="4" fill="#26213A"/><rect x="52" y="44" width="14" height="10" rx="4" fill="#26213A"/><path d="M48 47 L52 47 M34 47 L29 46 M66 47 L71 46" stroke="#26213A" stroke-width="2"/><path d="M37 46.6 L41 46.6 M55 46.6 L59 46.6" stroke="rgba(255,255,255,.65)" stroke-width="1.5" stroke-linecap="round"/>`;
+  if (g === 'gl_herz') return `<path d="${heart(42, 49)}" fill="#FF4F8B" stroke="#D6336C" stroke-width="1"/><path d="${heart(58, 49)}" fill="#FF4F8B" stroke="#D6336C" stroke-width="1"/><path d="M48 47.5 L52 47.5" stroke="#D6336C" stroke-width="1.6"/>`;
+  return '';
+}
+function flower(x, y, c) {
+  let s = '';
+  for (let k = 0; k < 5; k++) { const a = k * 72 * Math.PI / 180; s += `<circle cx="${(x + 3.2 * Math.cos(a)).toFixed(1)}" cy="${(y + 3.2 * Math.sin(a)).toFixed(1)}" r="2.7" fill="${c}"/>`; }
+  return s + `<circle cx="${x}" cy="${y}" r="2.1" fill="#FFF3B0"/>`;
+}
+function hatSVG(h) {
+  if (h === 'hat_muetze') return `<path d="M26 36 Q27 11 50 10 Q73 11 74 36Z" fill="#F25757"/><path d="M34 15 L35 31 M42 12 L42 31 M50 11 L50 31 M58 12 L58 31 M66 15 L65 31" stroke="rgba(0,0,0,.09)" stroke-width="2.4"/><rect x="24" y="30" width="52" height="10" rx="5" fill="#FFE1E1"/><circle cx="50" cy="9" r="5.5" fill="#FFE1E1"/>`;
+  if (h === 'hat_blume') return `<path d="M27 37 Q50 12 73 37" stroke="#5DBB63" stroke-width="2.2" fill="none"/>` + [[29,33,'#FF8FB1'],[37,25,'#FFC83D'],[50,21,'#B78CFF'],[63,25,'#FF8FB1'],[71,33,'#7BC4FF']].map(f => flower(...f)).join('');
+  if (h === 'hat_lorbeer') return laurel(50, 48, 26, '#4E9F3D', '#7BC943');
+  if (h === 'hat_doktor') return `<path d="M34 27 L34 35 Q50 41 66 35 L66 27Z" fill="#2B2541"/><path d="M21 24 L50 12 L79 24 L50 35Z" fill="#3A3157"/><circle cx="50" cy="23.5" r="2" fill="#FFC83D"/><path d="M50 23.5 Q66 26 71 27 L71 38" stroke="#FFC83D" stroke-width="1.8" fill="none"/><circle cx="71" cy="40" r="2.5" fill="#FFC83D"/>`;
+  if (h === 'hat_krone') return `<path d="M30 32 L31 14 L40.5 23 L50 8 L59.5 23 L69 14 L70 32Z" fill="#FFC83D" stroke="#D99A00" stroke-width="1.5" stroke-linejoin="round"/><rect x="30" y="28" width="40" height="5.5" rx="2" fill="#F5B400"/><circle cx="50" cy="21" r="2.7" fill="#FF4F8B"/><circle cx="39" cy="27" r="1.8" fill="#3B82F6"/><circle cx="61" cy="27" r="1.8" fill="#22B07D"/>`;
+  return '';
+}
+function avatarSVG(av, uid, size) {
+  const id = 'a' + (++gid);
+  const skin = SKIN[av.skin] || SKIN[0], hc = HAIRC[av.hc] || HAIRC[0], sh = SHIRT[av.shirt] || SHIRT[0];
+  const ring = av.frame === 'fr_gold' ? `url(#${id}g)` : av.frame === 'fr_regen' ? `url(#${id}r)` : USERS[uid].color;
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true" style="display:block">
+<defs><clipPath id="${id}c"><circle cx="50" cy="50" r="45"/></clipPath>
+<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A3"/><stop offset=".5" stop-color="#E0A800"/><stop offset="1" stop-color="#FFF1B8"/></linearGradient>
+<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F25757"/><stop offset=".25" stop-color="#FFC83D"/><stop offset=".5" stop-color="#22B07D"/><stop offset=".75" stop-color="#3B82F6"/><stop offset="1" stop-color="#B05CFF"/></linearGradient></defs>
+<circle cx="50" cy="50" r="45" fill="${USERS[uid].soft}"/>
+<g clip-path="url(#${id}c)">
+${hairBack(av.hair, hc)}
+<path d="M14 106 Q14 77 50 75 Q86 77 86 106Z" fill="${sh}"/>
+<path d="M41 76.5 Q50 86 59 76.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
+<rect x="43.5" y="62" width="13" height="15" rx="6" fill="${skin}"/><rect x="43.5" y="62" width="13" height="7" rx="3" fill="rgba(0,0,0,.08)"/>
+<circle cx="28.5" cy="50" r="5" fill="${skin}"/><circle cx="71.5" cy="50" r="5" fill="${skin}"/>
+<ellipse cx="50" cy="47" rx="22" ry="23" fill="${skin}"/>
+${hairFront(av.hair, hc)}
+<path d="M38 42 Q42 40 46 42 M54 42 Q58 40 62 42" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>
+<ellipse cx="42" cy="49" rx="2.7" ry="3.4" fill="#2B2541"/><circle cx="43" cy="47.7" r="1" fill="#fff"/>
+<ellipse cx="58" cy="49" rx="2.7" ry="3.4" fill="#2B2541"/><circle cx="59" cy="47.7" r="1" fill="#fff"/>
+<ellipse cx="36.5" cy="56" rx="4.2" ry="2.6" fill="#FF8FA3" opacity=".45"/><ellipse cx="63.5" cy="56" rx="4.2" ry="2.6" fill="#FF8FA3" opacity=".45"/>
+<path d="M45 57.5 Q50 62.5 55 57.5" stroke="#2B2541" stroke-width="2" fill="none" stroke-linecap="round"/>
+${glassesSVG(av.glasses)}${hatSVG(av.hat)}
+</g>
+<circle cx="50" cy="50" r="46" fill="none" stroke="${ring}" stroke-width="${av.frame ? 5.5 : 3}"/>
+</svg>`;
+}
+const PETS = {
+  pet_katze: `<path d="M44 53 Q61 51 56 36" stroke="#E8913C" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="47" rx="15" ry="12" fill="#F4A259"/><path d="M18 23 L20 8 L29 17Z M46 23 L44 8 L35 17Z" fill="#F4A259"/><path d="M21 18 L21.5 12 L25.5 16Z M43 18 L42.5 12 L38.5 16Z" fill="#FFB3C7"/><circle cx="32" cy="27" r="13" fill="#F4A259"/><path d="M27 17 L28.5 22 M32 15.5 L32 21 M37 17 L35.5 22" stroke="#E07B26" stroke-width="2" stroke-linecap="round"/><ellipse cx="27" cy="28" rx="1.9" ry="2.5" fill="#2B2541"/><ellipse cx="37" cy="28" rx="1.9" ry="2.5" fill="#2B2541"/><path d="M30.5 32 L33.5 32 L32 33.8Z" fill="#FF7FA0"/><path d="M22 32 L13 31 M22 34.5 L14 37 M42 32 L51 31 M42 34.5 L50 37" stroke="#8A7A70" stroke-width="1"/><ellipse cx="25" cy="57" rx="4.5" ry="2.6" fill="#FBD3A6"/><ellipse cx="39" cy="57" rx="4.5" ry="2.6" fill="#FBD3A6"/>`,
+  pet_hund: `<path d="M46 50 Q57 44 55 35" stroke="#C8915A" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="47" rx="15" ry="11.5" fill="#D9A46C"/><circle cx="32" cy="27" r="13.5" fill="#D9A46C"/><circle cx="38" cy="21" r="4" fill="#B57B48" opacity=".55"/><path d="M19.5 19 Q11 25 14.5 39 Q20.5 37 22.5 28Z M44.5 19 Q53 25 49.5 39 Q43.5 37 41.5 28Z" fill="#8C5A35"/><ellipse cx="32" cy="33.5" rx="7.5" ry="5.5" fill="#F3DCC0"/><path d="M30 37 Q32 43 34 37Z" fill="#FF7FA0"/><ellipse cx="32" cy="31" rx="2.8" ry="2" fill="#2B2541"/><path d="M32 33 L32 35 M29 35.6 Q32 37.6 35 35.6" stroke="#2B2541" stroke-width="1.3" fill="none" stroke-linecap="round"/><ellipse cx="26.5" cy="25" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="37.5" cy="25" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="25" cy="57" rx="4.5" ry="2.6" fill="#F3DCC0"/><ellipse cx="39" cy="57" rx="4.5" ry="2.6" fill="#F3DCC0"/>`,
+  pet_hase: `<ellipse cx="25" cy="14" rx="4.6" ry="12.5" fill="#EEE9F5"/><ellipse cx="25" cy="15" rx="2.2" ry="8.6" fill="#FFC2D3"/><ellipse cx="39" cy="14" rx="4.6" ry="12.5" fill="#EEE9F5"/><ellipse cx="39" cy="15" rx="2.2" ry="8.6" fill="#FFC2D3"/><ellipse cx="32" cy="48" rx="15" ry="12" fill="#EEE9F5"/><circle cx="47" cy="51" r="4.5" fill="#fff"/><circle cx="32" cy="31" r="12" fill="#F8F5FC"/><ellipse cx="27.5" cy="30" rx="1.8" ry="2.4" fill="#2B2541"/><ellipse cx="36.5" cy="30" rx="1.8" ry="2.4" fill="#2B2541"/><ellipse cx="32" cy="34.5" rx="1.8" ry="1.3" fill="#FF8FA3"/><rect x="30.6" y="36.5" width="2.8" height="3" rx=".8" fill="#fff" stroke="#D8D0E6" stroke-width=".7"/><ellipse cx="24.5" cy="35" rx="3" ry="1.8" fill="#FFC2D3" opacity=".7"/><ellipse cx="39.5" cy="35" rx="3" ry="1.8" fill="#FFC2D3" opacity=".7"/><ellipse cx="25" cy="58" rx="5" ry="2.6" fill="#fff"/><ellipse cx="39" cy="58" rx="5" ry="2.6" fill="#fff"/>`,
+  pet_hamster: `<circle cx="19" cy="25" r="5.2" fill="#E9A86A"/><circle cx="19" cy="25" r="2.8" fill="#FFB3C7"/><circle cx="45" cy="25" r="5.2" fill="#E9A86A"/><circle cx="45" cy="25" r="2.8" fill="#FFB3C7"/><ellipse cx="32" cy="41" rx="19.5" ry="17.5" fill="#F2B880"/><ellipse cx="32" cy="47" rx="12.5" ry="10.5" fill="#FFF1DE"/><ellipse cx="26" cy="35" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="38" cy="35" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="32" cy="39" rx="1.6" ry="1.2" fill="#FF7FA0"/><ellipse cx="21" cy="41" rx="4.5" ry="3.2" fill="#FFB3C7" opacity=".6"/><ellipse cx="43" cy="41" rx="4.5" ry="3.2" fill="#FFB3C7" opacity=".6"/><ellipse cx="32" cy="48" rx="2.6" ry="4" fill="#3A3157" transform="rotate(20 32 48)"/><path d="M31.2 45.5 L32.8 50.5" stroke="#EDE7F7" stroke-width=".8"/><circle cx="28.5" cy="48.5" r="2.4" fill="#FFD1B0"/><circle cx="35.5" cy="48.5" r="2.4" fill="#FFD1B0"/>`,
+  pet_fisch: `<ellipse cx="32" cy="38" rx="22" ry="20" fill="#D8F2FF" stroke="#9BD6F5" stroke-width="2"/><path d="M13 46 Q32 54 51 46 Q48 57 32 58 Q16 57 13 46Z" fill="#E8D7B0"/><path d="M20 50 Q18 40 22 34 M23 50 Q25 42 22 36" stroke="#5DBB63" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="33" cy="35" rx="8.5" ry="6" fill="#FF9F43"/><path d="M40.5 35 L48 29.5 L48 40.5Z" fill="#FF7F11"/><path d="M31 29.5 Q34 26 37 30" fill="#FF7F11"/><circle cx="29" cy="34" r="1.4" fill="#2B2541"/><circle cx="24" cy="26" r="1.6" fill="none" stroke="#9BD6F5" stroke-width="1"/><circle cx="21" cy="21" r="1.1" fill="none" stroke="#9BD6F5" stroke-width="1"/><rect x="15" y="15" width="34" height="5" rx="2.5" fill="#B9E3F8"/>`,
+  pet_igel: `<path d="${(() => { let d = ''; for (let k = 0; k <= 16; k++) { const a = Math.PI + k * Math.PI / 16 * 1.0 - .0, r = k % 2 ? 15 : 23; const ang = Math.PI * (0.95 + k * 1.1 / 16); d += (k ? 'L' : 'M') + (32 + r * Math.cos(ang)).toFixed(1) + ' ' + (40 + r * Math.sin(ang)).toFixed(1) + ' '; } return d + 'Z'; })()}" fill="#8B6B4A"/><ellipse cx="32" cy="42" rx="15" ry="14" fill="#8B6B4A"/><ellipse cx="32" cy="45" rx="11" ry="10" fill="#F3DEC2"/><ellipse cx="27.5" cy="42" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="36.5" cy="42" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="32" cy="47.5" rx="2.4" ry="1.8" fill="#2B2541"/><ellipse cx="24" cy="48" rx="2.8" ry="1.7" fill="#FFB3C7" opacity=".7"/><ellipse cx="40" cy="48" rx="2.8" ry="1.7" fill="#FFB3C7" opacity=".7"/><ellipse cx="25" cy="57" rx="4" ry="2.3" fill="#E9CFAE"/><ellipse cx="39" cy="57" rx="4" ry="2.3" fill="#E9CFAE"/>`,
+  pet_schildi: `<ellipse cx="12" cy="42" rx="7.5" ry="6.5" fill="#8CD17D"/><circle cx="9.5" cy="40.5" r="1.5" fill="#2B2541"/><path d="M8 45 Q10.5 46.5 13 45" stroke="#2B2541" stroke-width="1" fill="none"/><ellipse cx="22" cy="51" rx="5" ry="4" fill="#8CD17D"/><ellipse cx="44" cy="51" rx="5" ry="4" fill="#8CD17D"/><path d="M53 47 L60 49 L53 50Z" fill="#8CD17D"/><path d="M16 47 Q17 21 34 21 Q51 21 53 47Z" fill="#3E9C5F"/><path d="M34 26 L41 31 L39 39 L29 39 L27 31Z" fill="#2E7D4A"/><path d="M20 40 L27 31 M41 31 L49 39 M29 39 L26 46 M39 39 L42 46 M34 26 L34 21" stroke="#2E7D4A" stroke-width="1.6"/><rect x="14" y="45" width="41" height="5" rx="2.5" fill="#5DBB63"/>`,
+  pet_papagei: `<path d="M28 50 L22 62 L30 60 L34 50Z" fill="#3B82F6"/><rect x="10" y="55" width="44" height="4" rx="2" fill="#8C5A35"/><ellipse cx="32" cy="40" rx="11" ry="15" fill="#22B07D"/><ellipse cx="36" cy="42" rx="5.5" ry="10.5" fill="#178C62" transform="rotate(-12 36 42)"/><path d="M36 44 L40 54 L34 51Z" fill="#FFC83D"/><circle cx="31" cy="22" r="10.5" fill="#F25757"/><ellipse cx="35" cy="22" rx="4.2" ry="4.6" fill="#fff"/><circle cx="35.6" cy="21.6" r="2" fill="#2B2541"/><path d="M22 20 Q15 22 18 30 Q22 28 24.5 25Z" fill="#FFC83D"/><path d="M19 27 Q21 26.5 23 25" stroke="#D99A00" stroke-width="1" fill="none"/><path d="M29 54.5 L29 57 M35 54.5 L35 57" stroke="#7A7A7A" stroke-width="2" stroke-linecap="round"/>`
+};
+const petSVG = (id, size) => `<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true" style="display:block;overflow:visible">${PETS[id] || ''}</svg>`;
+
+function mouseSVG(lv) {
+  const fur = '#BDB4D6', furD = '#A69CC2', belly = '#EEE9F7', pink = '#FFB3C7', ink = '#2B2541';
+  let s = `<svg viewBox="0 0 120 132" aria-hidden="true" style="display:block;width:100%;height:auto;overflow:visible">`;
+  if (lv >= 20) s += `<path d="M28 80 Q60 64 92 80 L100 126 Q60 134 20 126Z" fill="#7C3AED"/><path d="M28 80 Q60 64 92 80" stroke="#FFC83D" stroke-width="2.5" fill="none"/>`;
+  s += `<path d="M84 110 Q113 112 106 86 Q101 68 114 60" stroke="${pink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  s += `<ellipse cx="60" cy="97" rx="29" ry="27" fill="${fur}"/><ellipse cx="60" cy="101" rx="18" ry="19" fill="${belly}"/>`;
+  if (lv >= 20) s += `<path d="M33 88 Q58 104 88 82 L90 100 Q62 118 35 106Z" fill="#FFFDF8"/><path d="M33 88 Q58 104 88 82" stroke="#E0A800" stroke-width="2" fill="none"/>`;
+  s += `<ellipse cx="47" cy="123" rx="10" ry="5" fill="${pink}"/><ellipse cx="73" cy="123" rx="10" ry="5" fill="${pink}"/>`;
+  if (lv >= 12) s += `<g transform="rotate(-8 60 103)"><rect x="45" y="92" width="30" height="21" rx="2.5" fill="#E85D75"/><rect x="47.5" y="94" width="25" height="17" rx="1.5" fill="#FFF6E0"/><path d="M60 94 L60 111" stroke="#E85D75" stroke-width="1.5"/><path d="M50.5 98 H57 M50.5 101.5 H57 M50.5 105 H56 M63 98 H69.5 M63 101.5 H69.5 M63 105 H68" stroke="#C9BFA0" stroke-width="1.1"/><text x="60" y="91" font-size="5.5" text-anchor="middle" fill="#B83A52" font-family="Fraunces,serif" font-style="italic">ius</text></g><circle cx="46" cy="104" r="5" fill="${furD}"/><circle cx="74" cy="104" r="5" fill="${furD}"/>`;
+  else if (lv >= 3) s += `<path d="M46 110 L76 98 L76 112 L46 112Z" fill="#FFC83D" stroke="#E0A800" stroke-width="1.2" stroke-linejoin="round"/><path d="M46 110 L76 98 L80 100 L50 112Z" fill="#FFE08A"/><circle cx="62" cy="107" r="2.2" fill="#E0A800"/><circle cx="70" cy="104.5" r="1.6" fill="#E0A800"/><circle cx="56" cy="110" r="1.3" fill="#E0A800"/><circle cx="45" cy="105" r="5" fill="${furD}"/><circle cx="77" cy="103" r="5" fill="${furD}"/>`;
+  else s += `<ellipse cx="37" cy="97" rx="6" ry="9.5" fill="${furD}" transform="rotate(25 37 97)"/><ellipse cx="83" cy="97" rx="6" ry="9.5" fill="${furD}" transform="rotate(-25 83 97)"/>`;
+  s += `<circle cx="32" cy="34" r="17" fill="${fur}"/><circle cx="32" cy="34" r="10.5" fill="${pink}"/><circle cx="88" cy="34" r="17" fill="${fur}"/><circle cx="88" cy="34" r="10.5" fill="${pink}"/>`;
+  s += `<circle cx="60" cy="58" r="28" fill="${fur}"/>`;
+  if (lv >= 7) s += `<path d="M37 80 Q60 93 83 80 L83 88 Q60 101 37 88Z" fill="#F25757"/><path d="M69 89 L76 108 L68 106 L63 91Z" fill="#D94343"/><path d="M42 84 L42 89 M50 87 L50 92 M58 88 L58 93" stroke="#FFD1D1" stroke-width="1.6"/>`;
+  s += `<ellipse cx="49" cy="58" rx="3.9" ry="4.7" fill="${ink}"/><circle cx="50.3" cy="56.3" r="1.4" fill="#fff"/><ellipse cx="71" cy="58" rx="3.9" ry="4.7" fill="${ink}"/><circle cx="72.3" cy="56.3" r="1.4" fill="#fff"/>`;
+  s += `<ellipse cx="41" cy="67" rx="5" ry="3" fill="${pink}" opacity=".7"/><ellipse cx="79" cy="67" rx="5" ry="3" fill="${pink}" opacity=".7"/>`;
+  s += `<ellipse cx="60" cy="67.5" rx="4.3" ry="3.3" fill="#FF7FA0"/><path d="M55 72.5 Q60 77 65 72.5" stroke="${ink}" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="58.4" y="74.2" width="3.2" height="3" rx=".8" fill="#fff"/>`;
+  s += `<path d="M46 67 L27 63 M46 70 L27 72 M74 67 L93 63 M74 70 L93 72" stroke="#7F7698" stroke-width="1.1" stroke-linecap="round"/>`;
+  if (lv >= 5) s += `<g fill="rgba(255,255,255,.22)" stroke="${ink}" stroke-width="2.6"><circle cx="49" cy="58" r="9"/><circle cx="71" cy="58" r="9"/></g><path d="M58 57 Q60 54.5 62 57" stroke="${ink}" stroke-width="2.6" fill="none"/><path d="M40 56 L34 53 M80 56 L86 53" stroke="${ink}" stroke-width="2.2"/>`;
+  if (lv >= 15) s += laurel(60, 58, 29, lv >= 20 ? '#E0A800' : '#4E9F3D', lv >= 20 ? '#FFD34D' : '#7BC943', 96, 6.5);
+  else if (lv >= 9) s += `<path d="M44 33 L44 41 Q60 47 76 41 L76 33Z" fill="#2B2541"/><path d="M30 31 L60 18 L90 31 L60 43Z" fill="#3A3157"/><circle cx="60" cy="30.5" r="2.3" fill="#FFC83D"/><path d="M60 30.5 Q77 33 82 34 L82 47" stroke="#FFC83D" stroke-width="2" fill="none"/><circle cx="82" cy="49" r="2.8" fill="#FFC83D"/>`;
+  else if (lv <= 2) s += `<path d="M60 31 L60 25" stroke="#5DBB63" stroke-width="2.2" stroke-linecap="round"/><path d="M60 26 Q53 17 47 21 Q52 28 60 26Z" fill="#7BC943"/><path d="M60 26 Q66 15 73 18 Q69 27 60 26Z" fill="#5DBB63"/>`;
+  return s + '</svg>';
+}
+
+/* ---------- backgrounds ---------- */
+const BGS = {
+  bg_lavendel: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><g fill='#D9D1F0'><circle cx='20' cy='24' r='3'/><circle cx='92' cy='70' r='2.4'/><circle cx='64' cy='12' r='1.6'/><circle cx='118' cy='118' r='2'/><circle cx='34' cy='100' r='1.6'/></g></svg>")}, linear-gradient(160deg,#F2EFFB,#E2DCF4)`,
+  bg_wiese: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><g fill='#fff'><circle cx='20' cy='20' r='3'/><circle cx='26' cy='20' r='3'/><circle cx='23' cy='15' r='3'/><circle cx='23' cy='25' r='3'/></g><circle cx='23' cy='20' r='2' fill='#FFC83D'/><g fill='#FFD6E5'><circle cx='80' cy='74' r='2.6'/><circle cx='85' cy='74' r='2.6'/><circle cx='82.5' cy='70' r='2.6'/><circle cx='82.5' cy='78' r='2.6'/></g><circle cx='82.5' cy='74' r='1.7' fill='#fff'/><path d='M50 110 q4 -10 8 0 M100 40 q3 -8 6 0' stroke='#8FD6A9' stroke-width='2' fill='none'/></svg>")}, linear-gradient(170deg,#E9FAF0,#BDEBD1)`,
+  bg_kirsch: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><g fill='#FFB8CF'><ellipse cx='30' cy='30' rx='7' ry='4' transform='rotate(30 30 30)'/><ellipse cx='120' cy='50' rx='6' ry='3.5' transform='rotate(-20 120 50)'/><ellipse cx='70' cy='120' rx='7' ry='4' transform='rotate(60 70 120)'/></g><g fill='#FF8FB1'><ellipse cx='140' cy='130' rx='5' ry='3' transform='rotate(10 140 130)'/><ellipse cx='60' cy='70' rx='4.5' ry='2.6' transform='rotate(-40 60 70)'/></g></svg>")}, linear-gradient(165deg,#FFF3F7,#FFD4E3)`,
+  bg_meer: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='300' height='140'><path d='M0 50 Q37 30 75 50 T150 50 T225 50 T300 50 V140 H0Z' fill='#5AB8E8' opacity='.55'/><path d='M0 80 Q37 62 75 80 T150 80 T225 80 T300 80 V140 H0Z' fill='#2E9AD6' opacity='.6'/></svg>")} bottom/300px 140px repeat-x, linear-gradient(180deg,#F2FBFF 0%,#BCE6FA 70%,#8DD0F2 100%)`,
+  bg_forum: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='520' height='200'><g fill='#5B3F86' opacity='.55'><rect x='20' y='60' width='16' height='140'/><rect x='70' y='60' width='16' height='140'/><rect x='120' y='60' width='16' height='140'/><rect x='170' y='60' width='16' height='140'/><rect x='10' y='44' width='186' height='16'/><path d='M10 44 L103 10 L196 44Z'/><rect x='300' y='100' width='14' height='100'/><rect x='340' y='120' width='14' height='80'/><rect x='292' y='90' width='70' height='10'/><rect x='420' y='70' width='15' height='130'/></g><rect y='186' width='520' height='14' fill='#4A3170' opacity='.55'/></svg>")} bottom/520px 200px repeat-x, linear-gradient(180deg,#FFE0B0 0%,#FFB59A 45%,#E88BB0 75%,#9C7FD2 100%)`,
+  bg_nacht: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><g fill='#fff'><circle cx='20' cy='30' r='1.3'/><circle cx='90' cy='15' r='.9'/><circle cx='150' cy='60' r='1.5'/><circle cx='60' cy='100' r='1'/><circle cx='120' cy='140' r='1.2'/><circle cx='30' cy='160' r='.8'/><circle cx='170' cy='170' r='1'/></g><path d='M120 100 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z' fill='#FFE8A3'/></svg>")}, radial-gradient(circle at 80% 10%,#4B3C8A,transparent 50%), linear-gradient(180deg,#2A2350,#141128)`,
+  bg_kaese: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><g fill='#F2B21F'><ellipse cx='30' cy='35' rx='14' ry='11'/><ellipse cx='105' cy='25' rx='8' ry='6'/><ellipse cx='90' cy='95' rx='18' ry='14'/><ellipse cx='25' cy='115' rx='7' ry='6'/><ellipse cx='135' cy='135' rx='10' ry='8'/></g><g fill='#FFE48A'><ellipse cx='28' cy='32' rx='9' ry='6'/><ellipse cx='87' cy='91' rx='12' ry='8'/></g></svg>")}, linear-gradient(160deg,#FFE79A,#FFC83D)`
+};
+function applyBg(id) { $('#bg').style.background = BGS[id] || BGS.bg_lavendel; }
+
+/* ---------- UI: shell ---------- */
+const TABS = [['quiz','Abfragen'],['learn','Lernen'],['progress','Fortschritt'],['avatar','Avatar'],['shop','Shop']];
+function renderApp() {
+  const c = USERS[me];
+  document.documentElement.style.setProperty('--me', c.color);
+  document.documentElement.style.setProperty('--meSoft', c.soft);
+  $('#app').innerHTML = `<div class="wrap">
+    <header class="top panel" id="top"></header>
+    <nav class="tabs" id="tabs" aria-label="Bereiche"></nav>
+    <main id="view"></main>
+  </div>
+  <aside class="buddy" id="buddy"></aside>`;
+  applyBg(U().bg); renderTop(); renderTabs(); renderView(); renderBuddy();
+}
+function raceRow(s) {
+  const v = atLeast(DB.data.vlad, s), h = atLeast(DB.data.hanna, s), t = v + h, pv = t ? v / t * 100 : 0;
+  return `<div class="rrow" title="Vokabeln, die mindestens Stufe ${s} erreicht haben">
+    <span class="rlab"><b>Stufe ${s}</b><span>${STAGES[s].name}</span></span>
+    <span class="rnum v">${v}</span>
+    <div class="rbar">${t ? `<i class="v" style="width:${pv}%"></i><i class="h" style="width:${100 - pv}%"></i>` : ''}</div>
+    <span class="rnum h">${h}</span></div>`;
+}
+function syncNote() {
+  if (!SYNC_URL) return `<span class="dot"></span>Gespeichert auf diesem Gerät`;
+  return syncOk === false ? `<span class="dot"></span>Sync gerade nicht erreichbar, wird lokal gespeichert` : `<span class="dot on"></span>Synchronisiert zwischen euren Geräten`;
+}
+function renderTop() {
+  const u = U(), lv = levelOf(u.xp), a = xpAt(lv), b = xpAt(lv + 1);
+  const pct = lv >= 50 ? 100 : Math.max(0, Math.min(100, (u.xp - a) / (b - a) * 100));
+  $('#top').innerHTML = `
+    <div class="brand"><span class="bm">${mouseSVG(1)}</span><div><b>Lingua Muris</b><small>JKU Fachvokabeln Latein</small></div></div>
+    <div class="race">${[4,5,6].map(raceRow).join('')}<p class="sync">${syncNote()}</p></div>
+    <div class="mebox">
+      <button class="meav" data-go="avatar" aria-label="Avatar bearbeiten">${avatarSVG(u.av, me, 56)}</button>
+      <div class="mestats">
+        <div class="mename">${USERS[me].name}<button class="logout" id="logout">Abmelden</button></div>
+        <div class="coins" title="Maus-Dollar">${coin()}<span>${u.md}<span class="mdw"> Maus-Dollar</span></span></div>
+        <div class="xpl"><span>Level <b>${lv}</b> ${titleFor(lv)}</span><span>${u.xp} XP</span></div>
+        <div class="xpbar"><i style="width:${pct}%"></i></div>
+      </div>
+    </div>`;
+  $('#logout').onclick = () => { localStorage.removeItem('lm_session'); me = null; Q = null; renderLogin(); };
+  $$('[data-go]', $('#top')).forEach(b => b.onclick = () => go(b.dataset.go));
+}
+function renderTabs() {
+  $('#tabs').innerHTML = TABS.map(([k, n]) => `<button class="tab ${view === k ? 'on' : ''}" data-tab="${k}">${n}</button>`).join('');
+  $$('[data-tab]').forEach(b => b.onclick = () => go(b.dataset.tab));
+}
+function go(v) { view = v; renderTabs(); renderView(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+function renderView() {
+  ({quiz: renderQuiz, learn: renderLearn, progress: renderProgress, avatar: renderAvatar, shop: renderShop})[view]();
+}
+
+/* ---------- pack bar ---------- */
+function stackHTML(u, a, b) {
+  const c = {1:0,2:0,3:0,4:0,5:0,6:0,7:0};
+  for (let i = a; i < b; i++) c[stageOf(u, i)]++;
+  const n = b - a || 1;
+  return `<div class="stack">${[7,6,5,4,3,2].map(s => c[s] ? `<i style="width:${c[s] / n * 100}%;background:${STAGES[s].c}"></i>` : '').join('')}</div>`;
+}
+function packBar() {
+  const u = U(), p = u.pack;
+  const opts = Array.from({length: PACKS}, (_, k) => { const [a, b] = packRange(k); return `<option value="${k}" ${k === p ? 'selected' : ''}>Paket ${k + 1}: Nr. ${a + 1} bis ${b}</option>`; }).join('');
+  let mini = '';
+  if (p >= 0) {
+    const [a, b] = packRange(p), due = quizList(u).length;
+    mini = `<div class="pmini">${stackHTML(u, a, b)}<span>${due} fällig</span></div>`;
+  }
+  return `<div class="packbar panel">
+    <button class="iconbtn" id="pPrev" aria-label="Vorheriges Paket" ${p <= 0 ? 'disabled' : ''}>‹</button>
+    <select id="packSel" aria-label="Paket wählen"><option value="-1" ${p === -1 ? 'selected' : ''}>Alle fälligen Wiederholungen (${reviewList(u).length})</option>${opts}</select>
+    <button class="iconbtn" id="pNext" aria-label="Nächstes Paket" ${p >= PACKS - 1 ? 'disabled' : ''}>›</button>
+    ${mini}
+    <button class="dirbtn" id="dirBtn" title="Richtung wechseln">${u.dir === 'ld' ? 'Latein → Deutsch' : 'Deutsch → Latein'}</button>
+  </div>`;
+}
+function bindPackBar() {
+  const u = U();
+  const setPack = p => { u.pack = p; DB.save(me); Q = null; L.pack = null; renderView(); };
+  $('#pPrev').onclick = () => setPack(Math.max(0, u.pack - 1));
+  $('#pNext').onclick = () => setPack(Math.min(PACKS - 1, u.pack + 1));
+  $('#packSel').onchange = e => { setPack(+e.target.value); e.target.blur(); };
+  $('#dirBtn').onclick = e => { u.dir = u.dir === 'ld' ? 'dl' : 'ld'; DB.save(me); e.currentTarget.blur(); renderView(); };
+}
+
+/* ---------- card ---------- */
+function cardHTML(i, flipped) {
+  const u = U(), [la, de] = VOCAB[i], st = STAGES[stageOf(u, i)];
+  const ld = u.dir === 'ld';
+  const face = (txt, lang, label) => `
+    <div class="cardhead"><span class="pill" style="--c:${st.c}">${st.name}</span><span class="cnum">Nr. ${i + 1}</span></div>
+    ${txt ? `<div class="word ${lang} ${sizeCls(txt)}">${nl(txt)}</div>` : `<div class="word empty">Im Set steht hier nichts</div>`}
+    <div class="side">${label}</div>`;
+  return `<div class="cardbox in ${flipped ? 'flipped' : ''}" id="card" tabindex="0" role="button" aria-label="Karteikarte umdrehen">
+    <div class="inner">
+      <div class="face front">${face(ld ? la : de, ld ? 'la' : 'de', ld ? 'Latein' : 'Deutsch')}</div>
+      <div class="face back">${face(ld ? de : la, ld ? 'de' : 'la', ld ? 'Deutsch' : 'Latein')}</div>
+    </div></div>`;
+}
+function bindCard(onFlip, onSwipe) {
+  const c = $('#card'); if (!c) return;
+  let sx = null, sy = null, swiped = false;
+  c.onclick = () => { if (swiped) { swiped = false; return; } onFlip(); };
+  c.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); onFlip(); } };
+  c.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+  c.addEventListener('touchend', e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.4) { swiped = true; setTimeout(() => swiped = false, 400); onSwipe(dx > 0); }
+  });
+}
+
+/* ---------- quiz ---------- */
+function renderQuiz() {
+  if (!Q || Q.pack !== U().pack) buildQueue();
+  $('#view').innerHTML = packBar() + `<section class="stagewrap" id="stage"></section>`;
+  bindPackBar(); renderQuizCard();
+}
+function renderQuizCard() {
+  const w = $('#stage'); if (!w) return;
+  const u = U();
+  if (!Q.list.length) {
+    const nd = nextDueIn(u);
+    w.innerHTML = `<div class="panel endcard"><div class="bigmouse">${mouseSVG(levelOf(u.xp))}</div>
+      <h2>Hier ist gerade nichts fällig</h2>
+      <p class="muted">${u.pack === -1 ? 'Du hast alle Wiederholungen erledigt.' : 'Alle Karten in diesem Paket warten auf ihre nächste Runde.'}${nd ? ' Die nächste kommt ' + rel(nd) + ' wieder.' : ''}</p>
+      <div class="btnrow mt">${u.pack < PACKS - 1 ? `<button class="primary" id="nextPack">Nächstes Paket</button>` : ''}<button class="ghost" id="toLearn">Im Lernmodus ansehen</button></div></div>`;
+    bindEnd(); return;
+  }
+  if (Q.pos >= Q.list.length) {
+    const s = Q.ses, left = quizList(u).length;
+    w.innerHTML = `<div class="panel endcard"><div class="bigmouse">${mouseSVG(levelOf(u.xp))}</div>
+      <h2>${s.bad === 0 ? 'Fehlerfrei durch!' : 'Runde geschafft!'}</h2>
+      <p class="muted">${s.ok} richtig, ${s.bad} nicht richtig${s.mastered ? ', ' + s.mastered + ' gemeistert' : ''}</p>
+      <div class="chips"><span class="chip">+${s.xp} XP</span><span class="chip">${coin()} +${s.md}</span></div>
+      <div class="btnrow">${left ? `<button class="primary" id="again">Weiter üben (${left} fällig)</button>` : ''}${u.pack >= 0 && u.pack < PACKS - 1 ? `<button class="${left ? 'ghost' : 'primary'}" id="nextPack">Nächstes Paket</button>` : ''}<button class="ghost" id="toLearn">Lernmodus</button></div></div>`;
+    bindEnd(); return;
+  }
+  const i = Q.list[Q.pos];
+  w.innerHTML = `
+    <div class="grade">
+      <button class="gbtn bad" id="gBad"><kbd>←</kbd>Nicht richtig</button>
+      <div class="count">${Q.pos + 1} / ${Q.list.length}</div>
+      <button class="gbtn ok" id="gOk">Richtig<kbd>→</kbd></button>
+    </div>
+    ${cardHTML(i, Q.flipped)}
+    <div class="keys"><span><kbd>Leertaste</kbd>Karte umdrehen</span><span><kbd>←</kbd>Nicht richtig</span><span><kbd>→</kbd>Richtig</span></div>`;
+  $('#gBad').onclick = e => { e.currentTarget.blur(); grade(false); };
+  $('#gOk').onclick = e => { e.currentTarget.blur(); grade(true); };
+  bindCard(flipQuiz, ok => grade(ok));
+}
+function bindEnd() {
+  const u = U();
+  const a = $('#again'); if (a) a.onclick = () => { buildQueue(); renderQuizCard(); };
+  const n = $('#nextPack'); if (n) n.onclick = () => { u.pack = Math.min(PACKS - 1, Math.max(0, u.pack + 1)); DB.save(me); Q = null; L.pack = null; renderView(); };
+  const t = $('#toLearn'); if (t) t.onclick = () => go('learn');
+}
+function flipQuiz() { Q.flipped = !Q.flipped; const c = $('#card'); if (c) { c.classList.remove('in'); c.classList.toggle('flipped', Q.flipped); } }
+function grade(ok) {
+  if (busy || !Q || Q.pos >= Q.list.length) return;
+  busy = true;
+  const i = Q.list[Q.pos], before = levelOf(U().xp);
+  const r = answer(i, ok);
+  if (ok) { Q.ses.ok++; Q.ses.xp += r.gx; Q.ses.md++; if (r.ns === 7) Q.ses.mastered++; } else Q.ses.bad++;
+  const c = $('#card'); if (c) { c.classList.remove('in'); c.classList.add(ok ? 'out-ok' : 'out-bad'); }
+  showFloat(ok, r);
+  buddySay(ok);
+  if (r.ns === 7) toast('Gemeistert: ' + esc(VOCAB[i][0].split('\n')[0]));
+  setTimeout(() => {
+    Q.pos++; Q.flipped = false; busy = false;
+    renderQuizCard(); renderTop();
+    const after = levelOf(U().xp);
+    if (after > before) levelUp(before, after); else renderBuddy(true);
+  }, 230);
+}
+function showFloat(ok, r) {
+  const w = $('#stage'); if (!w) return;
+  const f = document.createElement('div');
+  f.className = 'float' + (ok ? '' : ' bad');
+  f.innerHTML = ok
+    ? `<span class="x">+${r.gx} XP</span><span>${coin()}</span><span>+1</span><span class="s">Stufe ${r.s} → ${r.ns === 7 ? '✓' : r.ns}</span>`
+    : `<span>Stufe ${r.s} → ${r.ns}</span>`;
+  w.appendChild(f); setTimeout(() => f.remove(), 1150);
+}
+
+/* ---------- learn ---------- */
+function renderLearn() {
+  const u = U();
+  if (L.pack !== u.pack) { L.pack = u.pack; L.pos = 0; L.flipped = false; }
+  L.list = learnList(u);
+  if (L.pos >= L.list.length) L.pos = 0;
+  $('#view').innerHTML = packBar() + `<section class="stagewrap" id="stage"></section>`;
+  bindPackBar(); renderLearnCard();
+}
+function renderLearnCard() {
+  const w = $('#stage'); if (!w) return;
+  if (!L.list.length) {
+    w.innerHTML = `<div class="panel endcard"><div class="bigmouse">${mouseSVG(levelOf(U().xp))}</div><h2>Keine Wiederholungen offen</h2><p class="muted">Wähl oben ein Paket, um es durchzublättern.</p></div>`; return;
+  }
+  const i = L.list[L.pos];
+  w.innerHTML = `
+    <div class="grade">
+      <button class="gbtn nav" id="lPrev" ${L.pos === 0 ? 'disabled style="opacity:.45"' : ''}><kbd>←</kbd>Zurück</button>
+      <div class="count">${L.pos + 1} / ${L.list.length}</div>
+      <button class="gbtn nav" id="lNext">${L.pos === L.list.length - 1 ? 'Abfragen' : 'Weiter'}<kbd>→</kbd></button>
+    </div>
+    ${cardHTML(i, L.flipped)}
+    <div class="keys"><span><kbd>Leertaste</kbd>Karte umdrehen</span><span><kbd>←</kbd>Zurück</span><span><kbd>→</kbd>Weiter</span></div>
+    <p class="note"><span>Im Lernmodus änderst du keine Stufen. Danach dieselben Karten unter Abfragen.</span></p>`;
+  $('#lPrev').onclick = e => { e.currentTarget.blur(); learnMove(-1); };
+  $('#lNext').onclick = e => { e.currentTarget.blur(); learnMove(1); };
+  bindCard(flipLearn, right => learnMove(right ? -1 : 1));
+}
+function flipLearn() { L.flipped = !L.flipped; const c = $('#card'); if (c) { c.classList.remove('in'); c.classList.toggle('flipped', L.flipped); } }
+function learnMove(d) {
+  if (d > 0 && L.pos >= L.list.length - 1) { Q = null; go('quiz'); return; }
+  const np = Math.max(0, Math.min(L.list.length - 1, L.pos + d));
+  if (np === L.pos) return;
+  L.pos = np; L.flipped = false; renderLearnCard();
+}
+
+/* ---------- progress ---------- */
+function renderProgress() {
+  const u = U(), c = counts(u), other = me === 'vlad' ? 'hanna' : 'vlad', oc = counts(DB.data[other] || blank(other));
+  const tiles = Array.from({length: PACKS}, (_, k) => { const [a, b] = packRange(k); return `<button class="ptile ${k === u.pack ? 'cur' : ''}" data-pack="${k}" title="Nr. ${a + 1} bis ${b}">${k + 1}${stackHTML(u, a, b)}</button>`; }).join('');
+  const mastered = [];
+  for (let i = 0; i < N; i++) if (stageOf(u, i) === 7) mastered.push(i);
+  $('#view').innerHTML = `
+  <div class="grid2">
+    <section class="panel pad"><h2>Deine Stufen</h2>
+      ${[1,2,3,4,5,6,7].map(s => `<div class="srow" style="--c:${STAGES[s].c}"><div><span class="nm">${s === 7 ? '' : s + ' '}${STAGES[s].name}</span><span class="ds">${STAGES[s].ds}</span></div><div class="tr"><i style="width:${c[s] / N * 100}%"></i></div><div class="ct">${c[s]}<small>${USERS[other].name} ${oc[s]}</small></div></div>`).join('')}
+      <p class="muted" style="font-size:13px;margin:10px 0 0">Richtig hebt eine Vokabel eine Stufe hoch, falsch setzt sie eine Stufe zurück. Ab Stufe 4 wartet sie, bevor sie wieder abgefragt wird. Wer Stufe 6 richtig hat, hat sie gemeistert.</p>
+    </section>
+    <section class="panel pad"><h2>Pakete</h2><div class="packgrid">${tiles}</div>
+      <p class="muted" style="font-size:13px;margin:12px 0 0">Ein Paket hat ${PACK} Karten, immer in derselben Reihenfolge wie im Quizlet-Set. Antippen, um es zu öffnen.</p></section>
+  </div>
+  <section class="panel pad mt"><h2>Gemeistert (${mastered.length})</h2>
+    ${mastered.length ? `<div class="vlist">${mastered.map(vrow).join('')}</div>` : `<div class="empty">Noch keine gemeisterte Vokabel. Eine Vokabel ist gemeistert, wenn du sie auch in Stufe 6 nach einer Woche noch richtig hast.</div>`}
+  </section>
+  <section class="panel pad mt"><h2>Alle Vokabeln</h2>
+    <input class="search" id="dictQ" placeholder="Suchen, Latein oder Deutsch" aria-label="Vokabeln durchsuchen">
+    <div class="vlist" id="dictR"></div></section>`;
+  $$('[data-pack]').forEach(b => b.onclick = () => { u.pack = +b.dataset.pack; DB.save(me); Q = null; L.pack = null; go('quiz'); });
+  const run = () => {
+    const q = $('#dictQ').value.trim().toLowerCase(), r = [];
+    for (let i = 0; i < N && r.length < 120; i++) { const [a, b] = VOCAB[i]; if (!q || a.toLowerCase().includes(q) || b.toLowerCase().includes(q)) r.push(i); }
+    $('#dictR').innerHTML = r.length ? r.map(vrow).join('') + (r.length >= 120 ? `<p class="muted" style="text-align:center;font-size:13px">Die ersten 120 Treffer. Tipp etwas ein, um weiter einzugrenzen.</p>` : '') : `<div class="empty">Keine Vokabel passt zu „${esc(q)}“.</div>`;
+  };
+  $('#dictQ').oninput = run; run();
+}
+function vrow(i) {
+  const u = U(), st = STAGES[stageOf(u, i)], e = E(u, i);
+  const wait = e && e[0] >= 4 && e[0] < 7 && e[1] > Date.now() ? ', ' + rel(e[1]) : '';
+  return `<div class="vrow"><span class="la">${nl(VOCAB[i][0])}</span><span class="de">${esc(VOCAB[i][1])}</span><span class="pill" style="--c:${st.c}">${st.name}${wait}</span></div>`;
+}
+
+/* ---------- avatar ---------- */
+function sceneHTML(av, uid) {
+  return `<div class="scene"><div class="main">${avatarSVG(av, uid, 220)}</div>${(av.pets || []).slice(0, 3).map((p, k) => `<div class="pet p${k}">${petSVG(p, k === 2 ? 70 : 84)}</div>`).join('')}</div>`;
+}
+function renderAvatar() {
+  const u = U(), av = u.av;
+  const owned = cat => SHOP.filter(i => i.cat === cat && (u.own[i.id] || i.price === 0));
+  const sw = (key, arr) => `<div class="swatches">${arr.map((c, k) => `<button class="sw ${av[key] === k ? 'on' : ''}" style="background:${c}" data-av="${key}" data-v="${k}" aria-label="Farbe ${k + 1}"></button>`).join('')}</div>`;
+  const itemOpts = (cat, key) => {
+    const list = owned(cat);
+    if (!list.length) return `<p class="muted" style="margin:0;font-size:14px">Noch nichts gekauft. <button class="ghost" data-go="shop" style="padding:5px 12px;margin-left:4px">Zum Shop</button></p>`;
+    return `<div class="opts"><button class="opt txt ${!av[key] ? 'on' : ''}" data-item="${cat}" data-v="">Ohne</button>${list.map(it => `<button class="opt ${av[key] === it.id ? 'on' : ''}" data-item="${cat}" data-v="${it.id}" title="${it.name}">${avatarSVG(Object.assign({}, av, {[key]: it.id}), me, 56)}</button>`).join('')}</div>`;
+  };
+  const pets = owned('pet');
+  $('#view').innerHTML = `<div class="avgrid">
+    <section class="panel pad" style="text-align:center"><h2>${USERS[me].name}</h2>${sceneHTML(av, me)}<p class="muted" style="font-size:13px">Haustiere sind Deko. Bis zu drei dürfen mit aufs Bild.</p></section>
+    <section class="panel pad">
+      <h3 style="margin-top:0">Hautton</h3>${sw('skin', SKIN)}
+      <h3>Frisur</h3><div class="opts">${HAIRS.map((n, k) => `<button class="opt ${av.hair === k ? 'on' : ''}" data-av="hair" data-v="${k}" title="${n}">${avatarSVG(Object.assign({}, av, {hair: k, hat: ''}), me, 56)}</button>`).join('')}</div>
+      <h3>Haarfarbe</h3>${sw('hc', HAIRC)}
+      <h3>Shirt</h3>${sw('shirt', SHIRT)}
+      <h3>Kopfbedeckung</h3>${itemOpts('hat', 'hat')}
+      <h3>Brille</h3>${itemOpts('glasses', 'glasses')}
+      <h3>Rahmen</h3>${itemOpts('frame', 'frame')}
+      <h3>Haustiere</h3>${pets.length ? `<div class="opts">${pets.map(p => `<button class="opt ${av.pets.includes(p.id) ? 'on' : ''}" data-pet="${p.id}" title="${p.name}">${petSVG(p.id, 56)}</button>`).join('')}</div>` : `<p class="muted" style="margin:0;font-size:14px">Noch kein Haustier. <button class="ghost" data-go="shop" style="padding:5px 12px;margin-left:4px">Zum Shop</button></p>`}
+    </section></div>`;
+  $$('[data-av]').forEach(b => b.onclick = () => { av[b.dataset.av] = +b.dataset.v; saveAv(); });
+  $$('[data-item]').forEach(b => b.onclick = () => { const key = b.dataset.item; av[key] = b.dataset.v; saveAv(); });
+  $$('[data-pet]').forEach(b => b.onclick = () => togglePet(b.dataset.pet));
+  $$('[data-go]', $('#view')).forEach(b => b.onclick = () => go(b.dataset.go));
+}
+function togglePet(id) {
+  const av = U().av, k = av.pets.indexOf(id);
+  if (k >= 0) av.pets.splice(k, 1);
+  else { if (av.pets.length >= 3) { av.pets.shift(); } av.pets.push(id); }
+  saveAv();
+}
+function saveAv() { const y = window.scrollY; DB.save(me); renderTop(); renderView(); window.scrollTo(0, y); }
+
+/* ---------- shop ---------- */
+function renderShop() {
+  const u = U();
+  const state = it => {
+    const has = it.price === 0 || u.own[it.id];
+    const eq = it.cat === 'bg' ? u.bg === it.id : it.cat === 'pet' ? u.av.pets.includes(it.id) : u.av[it.cat] === it.id;
+    if (eq) return `<button class="buy eq" data-buy="${it.id}">${it.cat === 'bg' ? 'Aktiv' : 'Angelegt'}</button>`;
+    if (has) return `<button class="buy own" data-buy="${it.id}">${it.cat === 'bg' ? 'Verwenden' : 'Anlegen'}</button>`;
+    if (u.md < it.price) return `<button class="buy" disabled>${coin()} ${it.price}<span style="font-weight:400">, noch ${it.price - u.md}</span></button>`;
+    return `<button class="buy" data-buy="${it.id}">${coin()} ${it.price} kaufen</button>`;
+  };
+  const prev = it => {
+    if (it.cat === 'bg') return `<div class="prev bgp" style="background:${esc(BGS[it.id])}"></div>`;
+    if (it.cat === 'pet') return `<div class="prev">${petSVG(it.id, 80)}</div>`;
+    return `<div class="prev">${avatarSVG(Object.assign({}, u.av, {[it.cat]: it.id}), me, 86)}</div>`;
+  };
+  $('#view').innerHTML = `<section class="panel pad shophead"><span class="big">${coin()}${u.md}</span><span class="muted">Maus-Dollar. Jede richtige Antwort bringt einen.</span></section>
+    ${CATS.map(([cat, name]) => `<section class="panel pad mt"><h2>${name}</h2><div class="items">${SHOP.filter(i => i.cat === cat).map(it => `<div class="item">${prev(it)}<b>${it.name}</b>${state(it)}</div>`).join('')}</div></section>`).join('')}`;
+  $$('[data-buy]').forEach(b => b.onclick = () => buy(b.dataset.buy));
+}
+function buy(id) {
+  const u = U(), it = ITEM[id], has = it.price === 0 || u.own[id];
+  if (!has) {
+    if (u.md < it.price) return;
+    u.md -= it.price; u.own[id] = 1; toast(esc(it.name) + ' gekauft');
+  }
+  if (it.cat === 'bg') { u.bg = id; applyBg(id); }
+  else if (it.cat === 'pet') { if (has) { togglePet(id); return; } if (u.av.pets.length >= 3) u.av.pets.shift(); u.av.pets.push(id); }
+  else u.av[it.cat] = (has && u.av[it.cat] === id) ? '' : id;
+  saveAv();
+}
+
+/* ---------- buddy, level, toast ---------- */
+function renderBuddy(keepMsg) {
+  const b = $('#buddy'); if (!b) return;
+  const lv = levelOf(U().xp), size = Math.round(62 + Math.min(lv, 20) * 3.4);
+  const old = keepMsg && $('#bubble') && $('#bubble').classList.contains('say') ? $('#bubble').outerHTML : null;
+  b.innerHTML = `<button class="bmouse" id="bmouse" style="width:${size}px" aria-label="Deine Maus ansehen">${mouseSVG(lv)}</button>${old || `<div class="bubble" id="bubble"><b>${titleFor(lv)}</b><span>Level ${lv}</span></div>`}`;
+  $('#bmouse').onclick = showLadder;
+}
+let sayT = null;
+function buddySay(ok) {
+  const bub = $('#bubble'), m = $('#bmouse'); if (!bub || !m) return;
+  bub.classList.add('say'); bub.innerHTML = `<b>${ok ? pick(PRAISE) : pick(COMFORT)}</b><span>${ok ? '' : 'Die Karte kommt bald wieder.'}</span>`;
+  m.classList.remove('hop', 'sad'); void m.offsetWidth; m.classList.add(ok ? 'hop' : 'sad');
+  clearTimeout(sayT); sayT = setTimeout(() => renderBuddy(), 1800);
+}
+function levelUp(from, to) {
+  renderBuddy();
+  const newTitle = titleFor(to) !== titleFor(from);
+  modal(`<div style="text-align:center"><div style="width:150px;margin:0 auto">${mouseSVG(to)}</div><h2>Level ${to}!</h2>
+    <p class="muted">${newTitle ? `Deine Maus heißt jetzt <b style="color:var(--ink)">${titleFor(to)}</b>. ${TITLE_INFO[TITLES.find(t => t[1] === titleFor(to))[0]]}.` : 'Deine Maus ist wieder ein Stück gewachsen.'}</p>
+    <div class="btnrow mt"><button class="primary" data-close>Weiterlernen</button></div></div>`);
+}
+function showLadder() {
+  const lv = levelOf(U().xp), cur = titleFor(lv);
+  modal(`<h2>Deine Maus</h2><p class="muted" style="margin:4px 0 0">Level ${lv}, ${U().xp} XP. XP pro richtiger Antwort: Stufe 1 bringt 1, Stufe 2 bringt 3, Stufe 3 bringt 7, Stufe 4 bringt 15, Stufe 5 bringt 31, Stufe 6 bringt 63.</p>
+    <div class="ladder">${TITLES.map(([l, n]) => `<div class="rung ${lv < l ? 'lock' : ''} ${n === cur ? 'cur' : ''}"><div class="ms"><div style="width:${44 + Math.min(l, 20) * 2.2}px">${mouseSVG(l)}</div></div><b>${n}</b>ab Level ${l}<br><span class="muted">${TITLE_INFO[l]}</span></div>`).join('')}</div>
+    <div class="btnrow mt"><button class="primary" data-close>Schließen</button></div>`);
+}
+function modal(html) {
+  closeModal();
+  const bg = document.createElement('div'); bg.className = 'modalbg'; bg.id = 'modal';
+  bg.innerHTML = `<div class="panel modal" role="dialog" aria-modal="true">${html}</div>`;
+  bg.onclick = e => { if (e.target === bg || e.target.hasAttribute('data-close')) closeModal(); };
+  document.body.appendChild(bg);
+  const f = bg.querySelector('[data-close]'); if (f) f.focus();
+}
+function closeModal() { const m = $('#modal'); if (m) m.remove(); }
+function toast(html) {
+  const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = html;
+  $('#toasts').appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown', e => {
+  if (!me) return;
+  if ($('#modal')) { if (e.key === 'Escape' || e.key === 'Enter' || e.code === 'Space') { e.preventDefault(); closeModal(); } return; }
+  if (e.target.matches('input, select, textarea') || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (view === 'quiz' && Q && Q.pos < Q.list.length) {
+    if (e.code === 'Space') { e.preventDefault(); flipQuiz(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); grade(false); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); grade(true); }
+  } else if (view === 'learn' && L.list.length) {
+    if (e.code === 'Space') { e.preventDefault(); flipLearn(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); learnMove(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); learnMove(1); }
+  }
+});
+
+/* ---------- login ---------- */
+function renderLogin() {
+  applyBg('bg_lavendel');
+  const prevAv = uid => norm(DB.local(uid), uid).av;
+  $('#app').innerHTML = `<div class="login"><div class="lbox">
+    <div class="lhero"><div class="ms">${mouseSVG(5)}</div><h1>Lingua Muris</h1><p>Latein-Fachvokabeln für Hanna und Vlad</p></div>
+    <form class="panel lform" id="lf" autocomplete="on">
+      <div class="pick">${['vlad', 'hanna'].map(uid => `<button type="button" class="pickbtn" data-uid="${uid}" style="--c:${USERS[uid].color}">${avatarSVG(prevAv(uid), uid, 76)}<span>${USERS[uid].name}</span></button>`).join('')}</div>
+      <label>Name<input id="lname" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+      <label>Passwort<input id="lpw" type="password" autocomplete="current-password" inputmode="numeric" required></label>
+      <p class="err" id="lerr" role="alert"></p>
+      <button class="primary" type="submit">Anmelden</button>
+    </form></div></div>`;
+  $$('.pickbtn').forEach(b => b.onclick = () => {
+    $$('.pickbtn').forEach(x => x.classList.toggle('on', x === b));
+    $('#lname').value = USERS[b.dataset.uid].name; $('#lpw').focus();
+  });
+  $('#lname').oninput = () => { const k = $('#lname').value.trim().toLowerCase(); $$('.pickbtn').forEach(x => x.classList.toggle('on', x.dataset.uid === k)); };
+  $('#lf').onsubmit = async e => {
+    e.preventDefault();
+    const uid = $('#lname').value.trim().toLowerCase();
+    if (!USERS[uid] || $('#lpw').value !== PASSWORD) { $('#lerr').textContent = 'Name oder Passwort stimmt nicht.'; return; }
+    localStorage.setItem('lm_session', uid);
+    await loadAll(); me = uid; view = 'quiz'; Q = null; L.pack = null; renderApp();
+  };
+}
+async function loadAll() { await Promise.all(['vlad', 'hanna'].map(uid => DB.load(uid))); }
+async function refreshOther() {
+  if (!me) return;
+  const o = me === 'vlad' ? 'hanna' : 'vlad';
+  await DB.load(o);
+  const race = $('.race'); if (race) race.innerHTML = [4, 5, 6].map(raceRow).join('') + `<p class="sync">${syncNote()}</p>`;
+}
+
+/* ---------- start ---------- */
+(async function start() {
+  const s = localStorage.getItem('lm_session');
+  if (s && USERS[s]) { await loadAll(); me = s; renderApp(); } else renderLogin();
+  setInterval(refreshOther, SYNC_URL ? 20000 : 4000);
+  window.addEventListener('storage', e => { if (me && e.key && e.key.startsWith(LS)) refreshOther(); });
+})();
+})();
+</script>
+</body>
+</html>
