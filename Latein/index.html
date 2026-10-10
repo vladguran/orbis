@@ -184,10 +184,10 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;min-width:24px;display:in
 .shophead .coin{width:28px;height:28px}
 .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 .item{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:8px}
-.item .prev{height:100px;border-radius:14px;background:#F6F3FC;display:grid;place-items:center;overflow:hidden}
+.item .prev{height:116px;border-radius:14px;background:#F6F3FC;display:grid;place-items:center;overflow:hidden}
 .item .prev.bgp{background-size:auto,cover}
-.item b{font-weight:600}
-.buy{border:0;border-radius:12px;padding:8px 10px;font-weight:600;background:var(--cheese);color:#4A3500;display:flex;justify-content:center;align-items:center;gap:6px}
+.item b{font-weight:600;overflow-wrap:anywhere}
+.buy{white-space:nowrap;font-size:14.5px;border:0;border-radius:12px;padding:8px 10px;font-weight:600;background:var(--cheese);color:#4A3500;display:flex;justify-content:center;align-items:center;gap:6px}
 .buy .coin{width:16px;height:16px}
 .buy:disabled{background:#EEEAF5;color:#9A92B0;cursor:default}
 .buy.own{background:#F1EEF8;color:var(--ink)}
@@ -235,6 +235,50 @@ kbd{font-family:inherit;font-size:12px;font-weight:600;min-width:24px;display:in
 .lform input{display:block;width:100%;height:46px;border-radius:14px;border:1.5px solid var(--line);padding:0 14px;margin-top:5px;background:#fff;font-size:16px}
 .lform .primary{width:100%;padding:13px;font-size:17px;margin-top:4px}
 .err{color:var(--bad);font-size:14px;min-height:20px;margin:0 0 6px}
+
+.chiprow{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.cchip{border:0;background:var(--paper);border-radius:99px;padding:8px 14px;font-weight:500;box-shadow:var(--shadow);display:inline-flex;gap:6px;align-items:center}
+.cchip small{color:var(--muted);font-size:12px}
+.cchip.on{background:var(--me);color:#fff}.cchip.on small{color:rgba(255,255,255,.85)}
+.item.owned .prev{background:var(--meSoft)}
+.settag{font-size:11.5px;color:#6C4BD8;background:#F1ECFF;border-radius:99px;padding:2px 8px;align-self:flex-start}
+.bgprev{width:100%;height:100%;min-height:40px;border-radius:12px}
+.lt{font-weight:400}
+.opt.rw{border-color:#E0A800;background:#FFF8E1}
+.colorpick{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:var(--muted)}
+.colorpick input{width:46px;height:34px;border:1.5px solid var(--line);border-radius:10px;padding:2px;background:#fff;cursor:pointer}
+.avstick{position:sticky;top:12px}
+.albhead{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;margin-top:16px}
+.albig{font-size:34px;font-weight:700;margin-top:4px}
+.bigbar{height:14px;border-radius:99px;background:var(--track);overflow:hidden;margin-top:6px}
+.bigbar i{display:block;height:100%;background:linear-gradient(90deg,var(--cheese),#FF8A3D);border-radius:99px}
+.streak{background:#FFF1E0;color:#C2410C;border-radius:20px;padding:12px 18px;text-align:center;font-weight:500;font-size:14px}
+.streak .sn{display:block;font-size:34px;font-weight:700;line-height:1}
+.nextgoal{display:flex;align-items:center;gap:16px}
+.ngprev{width:76px;height:76px;border-radius:16px;background:#F6F3FC;display:grid;place-items:center;flex:none;overflow:hidden}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.rcard{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:6px;text-align:center}
+.rcard .prev{height:100px;border-radius:14px;background:#F6F3FC;display:grid;place-items:center;position:relative;overflow:hidden}
+.rcard.lock .prev > :not(.lockic){filter:grayscale(1) opacity(.42)}
+.rcard.got{border-color:#E0A800;background:#FFFCF0}
+.rcard.got .prev{background:#FFF1BF}
+.lockic{position:absolute;right:8px;top:6px;font-size:15px}
+.rq{font-size:12.5px;color:var(--muted)}
+.rprog{height:7px;border-radius:99px;background:var(--track);overflow:hidden}
+.rprog i{display:block;height:100%;background:var(--me);border-radius:99px}
+.setgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.setcard{background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:14px;display:grid;gap:8px}
+.setcard.done{border-color:var(--ok);background:#F0FBF6}
+.sethead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sethead span{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.sethead .coin{width:15px;height:15px}
+.setitems{display:flex;flex-wrap:wrap;gap:6px}
+.si{width:48px;height:48px;border-radius:12px;background:#F6F3FC;display:grid;place-items:center;overflow:hidden}
+.si.miss > *{filter:grayscale(1) opacity(.32)}
+.rewardpop h2{text-align:center}
+.setdone{text-align:center;background:#F0FBF6;border-radius:14px;padding:10px;margin:12px 0 0}
+@media (max-width:900px){.avstick{position:static}}
+@media (max-width:600px){.albhead{grid-template-columns:1fr}.rgrid{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------- responsive ---------- */
 @media (max-width:900px){
@@ -316,34 +360,163 @@ const SHIRT = ['#3B82F6','#EC4899','#22B07D','#F5A524','#7C5CFF','#2B2541'];
 const HAIRS = ['Kurz','Lang','Locken','Dutt','Zopf','Wuschel'];
 
 const SHOP = [
+  // Seiten-Hintergründe
   {id:'bg_lavendel',cat:'bg',name:'Lavendel',price:0},
   {id:'bg_wiese',cat:'bg',name:'Mauswiese',price:30},
   {id:'bg_kirsch',cat:'bg',name:'Kirschblüte',price:60},
+  {id:'bg_herbst',cat:'bg',name:'Herbstlaub',price:70},
+  {id:'bg_schnee',cat:'bg',name:'Schneegestöber',price:70},
   {id:'bg_meer',cat:'bg',name:'Mittelmeer',price:90},
+  {id:'bg_konfetti',cat:'bg',name:'Konfetti',price:100},
+  {id:'bg_marmor',cat:'bg',name:'Marmorsaal',price:120},
+  {id:'bg_bibliothek',cat:'bg',name:'Bücherwand',price:140},
   {id:'bg_forum',cat:'bg',name:'Forum am Abend',price:150},
   {id:'bg_nacht',cat:'bg',name:'Sternennacht',price:200},
+  {id:'bg_aurora',cat:'bg',name:'Polarlicht',price:260},
   {id:'bg_kaese',cat:'bg',name:'Käseland',price:300},
-  {id:'hat_muetze',cat:'hat',name:'Wollmütze',price:25},
-  {id:'hat_blume',cat:'hat',name:'Blumenkranz',price:40},
-  {id:'hat_lorbeer',cat:'hat',name:'Lorbeerkranz',price:80},
-  {id:'hat_doktor',cat:'hat',name:'Doktorhut',price:120},
-  {id:'hat_krone',cat:'hat',name:'Krone',price:250},
-  {id:'gl_rund',cat:'glasses',name:'Runde Brille',price:20},
-  {id:'gl_sonne',cat:'glasses',name:'Sonnenbrille',price:45},
-  {id:'gl_herz',cat:'glasses',name:'Herzbrille',price:70},
+  // Selfie-Hintergründe
+  {id:'bd_wolken',cat:'bd',name:'Wolkenhimmel',price:15},
+  {id:'bd_wiese',cat:'bd',name:'Blumenwiese',price:20},
+  {id:'bd_kaese',cat:'bd',name:'Käseloch',price:25},
+  {id:'bd_herzen',cat:'bd',name:'Herzchen',price:30},
+  {id:'bd_schnee',cat:'bd',name:'Winterland',price:35},
+  {id:'bd_strand',cat:'bd',name:'Strand',price:40},
+  {id:'bd_sterne',cat:'bd',name:'Sternchen',price:45},
+  {id:'bd_unterwasser',cat:'bd',name:'Unterwasser',price:55},
+  {id:'bd_regenbogen',cat:'bd',name:'Regenbogen',price:65},
+  {id:'bd_sonnenuntergang',cat:'bd',name:'Sonnenuntergang',price:75},
+  {id:'bd_bibliothek',cat:'bd',name:'Bibliothek',price:85},
+  {id:'bd_kolosseum',cat:'bd',name:'Kolosseum',price:110},
+  {id:'bd_weltall',cat:'bd',name:'Weltall',price:130},
+  // Rahmen
+  {id:'fr_rot',cat:'frame',name:'Rot',price:15},
+  {id:'fr_orange',cat:'frame',name:'Orange',price:15},
+  {id:'fr_gelb',cat:'frame',name:'Gelb',price:15},
+  {id:'fr_mint',cat:'frame',name:'Mint',price:15},
+  {id:'fr_tuerkis',cat:'frame',name:'Türkis',price:15},
+  {id:'fr_lila',cat:'frame',name:'Lila',price:15},
+  {id:'fr_schwarz',cat:'frame',name:'Schwarz',price:20},
+  {id:'fr_punkte',cat:'frame',name:'Pünktchen',price:35},
+  {id:'fr_holz',cat:'frame',name:'Holzrahmen',price:40},
+  {id:'fr_silber',cat:'frame',name:'Silberrahmen',price:45},
+  {id:'fr_herz',cat:'frame',name:'Herzrahmen',price:55},
   {id:'fr_gold',cat:'frame',name:'Goldrahmen',price:60},
+  {id:'fr_blumen',cat:'frame',name:'Blumenrahmen',price:65},
+  {id:'fr_stern',cat:'frame',name:'Sternenrahmen',price:70},
+  {id:'fr_marmor',cat:'frame',name:'Marmorrahmen',price:90},
+  {id:'fr_neon',cat:'frame',name:'Neonrahmen',price:100},
   {id:'fr_regen',cat:'frame',name:'Regenbogenrahmen',price:110},
+  {id:'fr_custom',cat:'frame',name:'Wunschfarbe (jede Farbe)',price:150},
+  // Kopfbedeckungen
+  {id:'hat_muetze',cat:'hat',name:'Wollmütze',price:25},
+  {id:'hat_kopfhoerer',cat:'hat',name:'Kopfhörer',price:30},
+  {id:'hat_cap',cat:'hat',name:'Basecap',price:30},
+  {id:'hat_schleife',cat:'hat',name:'Haarschleife',price:35},
+  {id:'hat_blume',cat:'hat',name:'Blumenkranz',price:40},
+  {id:'hat_katzenohren',cat:'hat',name:'Katzenohren',price:40},
+  {id:'hat_hasenohren',cat:'hat',name:'Hasenohren',price:40},
+  {id:'hat_party',cat:'hat',name:'Partyhut',price:45},
+  {id:'hat_kaese',cat:'hat',name:'Käsehut',price:50},
+  {id:'hat_hoerner',cat:'hat',name:'Teufelshörner',price:55},
+  {id:'hat_heiligenschein',cat:'hat',name:'Heiligenschein',price:60},
+  {id:'hat_cowboy',cat:'hat',name:'Cowboyhut',price:70},
+  {id:'hat_lorbeer',cat:'hat',name:'Lorbeerkranz',price:80},
+  {id:'hat_pirat',cat:'hat',name:'Piratenhut',price:80},
+  {id:'hat_zylinder',cat:'hat',name:'Zylinder',price:90},
+  {id:'hat_zauber',cat:'hat',name:'Zauberhut',price:110},
+  {id:'hat_doktor',cat:'hat',name:'Doktorhut',price:120},
+  {id:'hat_roemerhelm',cat:'hat',name:'Römerhelm',price:140},
+  {id:'hat_astro',cat:'hat',name:'Astronautenhelm',price:180},
+  {id:'hat_krone',cat:'hat',name:'Krone',price:250},
+  // Brillen
+  {id:'gl_rund',cat:'glasses',name:'Runde Brille',price:20},
+  {id:'gl_augenklappe',cat:'glasses',name:'Augenklappe',price:25},
+  {id:'gl_3d',cat:'glasses',name:'3D-Brille',price:30},
+  {id:'gl_nerd',cat:'glasses',name:'Nerdbrille',price:35},
+  {id:'gl_sonne',cat:'glasses',name:'Sonnenbrille',price:45},
+  {id:'gl_stern',cat:'glasses',name:'Sternbrille',price:50},
+  {id:'gl_monokel',cat:'glasses',name:'Monokel',price:60},
+  {id:'gl_ski',cat:'glasses',name:'Skibrille',price:65},
+  {id:'gl_herz',cat:'glasses',name:'Herzbrille',price:70},
+  {id:'gl_pilot',cat:'glasses',name:'Pilotenbrille',price:85},
+  // Outfits
+  {id:'out_streifen',cat:'outfit',name:'Ringelshirt',price:40},
+  {id:'out_pulli',cat:'outfit',name:'Herzpulli',price:50},
+  {id:'out_hoodie',cat:'outfit',name:'Hoodie',price:60},
+  {id:'out_hawaii',cat:'outfit',name:'Hawaiihemd',price:70},
+  {id:'out_anzug',cat:'outfit',name:'Anzug mit Krawatte',price:120},
+  {id:'out_held',cat:'outfit',name:'Superheld',price:150},
+  {id:'out_toga',cat:'outfit',name:'Toga',price:160},
+  // Gesicht
+  {id:'fx_sommer',cat:'face',name:'Sommersprossen',price:15},
+  {id:'fx_pflaster',cat:'face',name:'Pflaster',price:15},
+  {id:'fx_herz',cat:'face',name:'Herzwange',price:20},
+  {id:'fx_stern',cat:'face',name:'Sternwange',price:20},
+  {id:'fx_bart',cat:'face',name:'Schnurrbart',price:35},
+  {id:'fx_glitzer',cat:'face',name:'Glitzer',price:45},
+  // Haustiere
   {id:'pet_fisch',cat:'pet',name:'Goldfisch',price:20},
+  {id:'pet_kueken',cat:'pet',name:'Küken',price:30},
   {id:'pet_hamster',cat:'pet',name:'Hamster',price:35},
+  {id:'pet_frosch',cat:'pet',name:'Frosch',price:45},
   {id:'pet_hase',cat:'pet',name:'Hase',price:50},
   {id:'pet_katze',cat:'pet',name:'Katze',price:60},
   {id:'pet_hund',cat:'pet',name:'Hund',price:60},
+  {id:'pet_pinguin',cat:'pet',name:'Pinguin',price:70},
+  {id:'pet_fuchs',cat:'pet',name:'Fuchs',price:75},
   {id:'pet_igel',cat:'pet',name:'Igel',price:80},
   {id:'pet_schildi',cat:'pet',name:'Schildkröte',price:90},
-  {id:'pet_papagei',cat:'pet',name:'Papagei',price:140}
+  {id:'pet_panda',cat:'pet',name:'Panda',price:100},
+  {id:'pet_axolotl',cat:'pet',name:'Axolotl',price:120},
+  {id:'pet_papagei',cat:'pet',name:'Papagei',price:140},
+  {id:'pet_einhorn',cat:'pet',name:'Einhorn',price:300}
 ];
-const CATS = [['bg','Hintergründe'],['hat','Kopfbedeckungen'],['glasses','Brillen'],['frame','Rahmen'],['pet','Haustiere']];
-const ITEM = Object.fromEntries(SHOP.map(i => [i.id, i]));
+/* Exklusive Belohnungen: nicht kaufbar, nur freischaltbar */
+const REWARDS = [
+  {id:'fr_klee',cat:'frame',name:'Kleeblattrahmen',req:{t:'learned',n:10}},
+  {id:'gl_streber',cat:'glasses',name:'Streberbrille',req:{t:'learned',n:25}},
+  {id:'bd_hoersaal',cat:'bd',name:'Hörsaal',req:{t:'learned',n:50}},
+  {id:'gl_67',cat:'glasses',name:'67-Brille',req:{t:'learned',n:67}},
+  {id:'hat_doktorgold',cat:'hat',name:'Goldener Doktorhut',req:{t:'learned',n:100}},
+  {id:'pet_eule',cat:'pet',name:'Eule der Minerva',req:{t:'learned',n:150}},
+  {id:'bg_goldbib',cat:'bg',name:'Goldene Bibliothek',req:{t:'learned',n:250}},
+  {id:'out_robe',cat:'outfit',name:'Richterrobe',req:{t:'learned',n:500}},
+  {id:'hat_kaiser',cat:'hat',name:'Kaiserkrone',req:{t:'learned',n:750}},
+  {id:'fr_diamant',cat:'frame',name:'Diamantrahmen',req:{t:'learned',n:1000}},
+  {id:'pet_woelfin',cat:'pet',name:'Lupa, die Wölfin',req:{t:'learned',n:VOCAB.length}},
+  {id:'fr_67',cat:'frame',name:'67-Rahmen',req:{t:'correct',n:67}},
+  {id:'out_67',cat:'outfit',name:'67-Trikot',req:{t:'correct',n:667}},
+  {id:'bd_mauseloch',cat:'bd',name:'Mauseloch',req:{t:'level',n:3}},
+  {id:'gl_ratatui',cat:'glasses',name:'Ratatui-Brille',req:{t:'level',n:5}},
+  {id:'hat_mausohren',cat:'hat',name:'Mausohren',req:{t:'level',n:10}},
+  {id:'out_praetexta',cat:'outfit',name:'Toga praetexta',req:{t:'level',n:15}},
+  {id:'fr_imperator',cat:'frame',name:'Imperatorrahmen',req:{t:'level',n:20}},
+  {id:'pet_maus',cat:'pet',name:'Maus-Kumpel',req:{t:'level',n:30}},
+  {id:'fx_goldstern',cat:'face',name:'Goldstern',req:{t:'mastered',n:1}},
+  {id:'bd_ruhmeshalle',cat:'bd',name:'Ruhmeshalle',req:{t:'mastered',n:25}},
+  {id:'hat_lorbeergold',cat:'hat',name:'Goldener Lorbeer',req:{t:'mastered',n:100}},
+  {id:'fr_flamme',cat:'frame',name:'Flammenrahmen',req:{t:'streak',n:3}},
+  {id:'bd_feuerwerk',cat:'bd',name:'Feuerwerk',req:{t:'streak',n:7}},
+  {id:'pet_phoenix',cat:'pet',name:'Phönix',req:{t:'streak',n:30}},
+  {id:'fr_duo',cat:'frame',name:'Wir zwei',req:{t:'duo',n:50}},
+  {id:'bd_paerchen',cat:'bd',name:'Pärchenabend',req:{t:'duo',n:300}}
+].map(r => Object.assign(r, {r: true, price: 0}));
+const SETS = [
+  {id:'set_farben',name:'Farbkasten',items:['fr_rot','fr_orange','fr_gelb','fr_mint','fr_tuerkis','fr_lila','fr_schwarz'],bonus:60},
+  {id:'set_strand',name:'Strandtag',items:['gl_sonne','out_hawaii','bd_strand','hat_cap'],bonus:80},
+  {id:'set_pirat',name:'Piratenkapitän',items:['hat_pirat','gl_augenklappe','fx_bart','bd_unterwasser'],bonus:80},
+  {id:'set_party',name:'Partynacht',items:['hat_party','fx_glitzer','bg_konfetti','gl_3d'],bonus:70},
+  {id:'set_regen',name:'Regenbogen',items:['fr_regen','bd_regenbogen','gl_herz','fx_herz'],bonus:100},
+  {id:'set_space',name:'Weltraum',items:['hat_astro','bd_weltall','gl_stern','fr_stern'],bonus:120},
+  {id:'set_rom',name:'Römisches Reich',items:['hat_lorbeer','hat_roemerhelm','out_toga','bd_kolosseum','fr_marmor'],bonus:150},
+  {id:'set_zoo',name:'Kleiner Zoo',items:['pet_fisch','pet_kueken','pet_hamster','pet_frosch','pet_hase','pet_katze','pet_hund','pet_pinguin','pet_fuchs','pet_igel','pet_schildi','pet_panda','pet_axolotl','pet_papagei','pet_einhorn'],bonus:400},
+  {id:'set_67',name:'Six Seven',items:['gl_67','fr_67','out_67'],bonus:67},
+  {id:'set_gelehrt',name:'Gelehrte',items:['gl_streber','bd_hoersaal','hat_doktorgold','out_robe'],bonus:200},
+  {id:'set_maus',name:'Mausfamilie',items:['bd_mauseloch','gl_ratatui','hat_mausohren','pet_maus'],bonus:250}
+];
+const CATS = [['bd','Selfie-Hintergründe'],['frame','Rahmen'],['hat','Kopfbedeckungen'],['glasses','Brillen'],['outfit','Outfits'],['face','Gesicht'],['pet','Haustiere'],['bg','Seiten-Hintergründe']];
+const ITEM = Object.fromEntries([...SHOP, ...REWARDS].map(i => [i.id, i]));
+
 
 /* ---------- helpers ---------- */
 const $ = (s, r = document) => r.querySelector(s);
@@ -369,9 +542,9 @@ function titleFor(l) { let t = TITLES[0][1]; for (const [lv, n] of TITLES) if (l
 
 /* ---------- data ---------- */
 function blank(uid) {
-  return {p:{}, xp:0, md:0, own:{}, bg:'bg_lavendel', dir:'ld', pack:0, upd:0, stats:{ok:0, bad:0},
-    av: uid === 'hanna' ? {skin:0, hair:1, hc:2, shirt:1, hat:'', glasses:'', frame:'', pets:[]}
-                        : {skin:1, hair:0, hc:1, shirt:0, hat:'', glasses:'', frame:'', pets:[]}};
+  return {p:{}, xp:0, md:0, own:{}, bg:'bg_lavendel', dir:'ld', pack:0, upd:0, stats:{ok:0, bad:0}, days:{}, sets:{},
+    av: uid === 'hanna' ? {skin:0, hair:1, hc:2, shirt:1, hat:'', glasses:'', frame:'', bd:'', outfit:'', face:'', frameColor:'#3B82F6', pets:[]}
+                        : {skin:1, hair:0, hc:1, shirt:0, hat:'', glasses:'', frame:'', bd:'', outfit:'', face:'', frameColor:'#3B82F6', pets:[]}};
 }
 function norm(d, uid) {
   const b = blank(uid);
@@ -381,6 +554,7 @@ function norm(d, uid) {
   o.av = Object.assign(blank(uid).av, d.av || {});
   o.av.pets = (d.av && Array.isArray(d.av.pets)) ? d.av.pets : [];
   o.stats = Object.assign({ok:0, bad:0}, d.stats || {});
+  o.days = d.days || {}; o.sets = d.sets || {};
   return o;
 }
 const LS = 'linguamuris_v1_';
@@ -428,6 +602,7 @@ function answer(i, ok) {
   u.p['c' + i] = [ns, ns >= 7 ? now : now + (WAIT[ns] || 0)];
   let gx = 0;
   if (ok) { gx = XP[s]; u.xp += gx; u.md += 1; u.stats.ok++; } else u.stats.bad++;
+  const dk = dayKey(); u.days[dk] = (u.days[dk] || 0) + 1;
   DB.save(me);
   return {s, ns, gx};
 }
@@ -485,39 +660,174 @@ function hairFront(h, c) {
   if (h === 5) return `<path d="M26 47 L27 31 L33 34 L35 21 L42 28 L48 16 L53 27 L61 18 L63 30 L71 24 L69 35 L75 37 L73 47 Q66 33 50 32 Q34 33 26 47Z" fill="${c}"/>`;
   return '';
 }
-function heart(x, y) { return `M${x} ${y + 5} C${x - 10} ${y - 1} ${x - 5} ${y - 9} ${x} ${y - 3.5} C${x + 5} ${y - 9} ${x + 10} ${y - 1} ${x} ${y + 5}Z`; }
-function glassesSVG(g) {
-  if (g === 'gl_rund') return `<g fill="rgba(255,255,255,.28)" stroke="#2B2541" stroke-width="1.8"><circle cx="42" cy="49" r="6.4"/><circle cx="58" cy="49" r="6.4"/></g><path d="M48.4 48.6 Q50 47 51.6 48.6" stroke="#2B2541" stroke-width="1.8" fill="none"/><path d="M35.6 48 L29 46.5 M64.4 48 L71 46.5" stroke="#2B2541" stroke-width="1.6"/>`;
-  if (g === 'gl_sonne') return `<rect x="34" y="44" width="14" height="10" rx="4" fill="#26213A"/><rect x="52" y="44" width="14" height="10" rx="4" fill="#26213A"/><path d="M48 47 L52 47 M34 47 L29 46 M66 47 L71 46" stroke="#26213A" stroke-width="2"/><path d="M37 46.6 L41 46.6 M55 46.6 L59 46.6" stroke="rgba(255,255,255,.65)" stroke-width="1.5" stroke-linecap="round"/>`;
-  if (g === 'gl_herz') return `<path d="${heart(42, 49)}" fill="#FF4F8B" stroke="#D6336C" stroke-width="1"/><path d="${heart(58, 49)}" fill="#FF4F8B" stroke="#D6336C" stroke-width="1"/><path d="M48 47.5 L52 47.5" stroke="#D6336C" stroke-width="1.6"/>`;
+function heart(x, y, s = 1) { return `M${x} ${y + 5 * s} C${x - 10 * s} ${y - 1 * s} ${x - 5 * s} ${y - 9 * s} ${x} ${y - 3.5 * s} C${x + 5 * s} ${y - 9 * s} ${x + 10 * s} ${y - 1 * s} ${x} ${y + 5 * s}Z`; }
+function star(x, y, r, n = 5, inner = .45) {
+  let d = '';
+  for (let k = 0; k < n * 2; k++) { const rr = k % 2 ? r * inner : r, a = -Math.PI / 2 + k * Math.PI / n; d += (k ? 'L' : 'M') + (x + rr * Math.cos(a)).toFixed(1) + ' ' + (y + rr * Math.sin(a)).toFixed(1) + ' '; }
+  return d + 'Z';
+}
+function flower(x, y, c, s = 1) {
+  let o = '';
+  for (let k = 0; k < 5; k++) { const a = k * 72 * Math.PI / 180; o += `<circle cx="${(x + 3.2 * s * Math.cos(a)).toFixed(1)}" cy="${(y + 3.2 * s * Math.sin(a)).toFixed(1)}" r="${2.7 * s}" fill="${c}"/>`; }
+  return o + `<circle cx="${x}" cy="${y}" r="${2.1 * s}" fill="#FFF3B0"/>`;
+}
+function clover(x, y) {
+  return [0, 120, 240].map(a => { const r = a * Math.PI / 180 - Math.PI / 2; return `<circle cx="${(x + 2.3 * Math.cos(r)).toFixed(1)}" cy="${(y + 2.3 * Math.sin(r)).toFixed(1)}" r="2.3" fill="#5DBB63"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="1.1" fill="#2E7D32"/>`;
+}
+const T67 = (x, y, s, fill) => `<text x="${x}" y="${y}" font-size="${s}" font-weight="800" text-anchor="middle" fill="${fill}" stroke="#2B2541" stroke-width="1.2" paint-order="stroke" font-family="Fredoka,Arial,sans-serif">`;
+
+/* ---------- Brillen ---------- */
+const GL = {};
+GL.gl_rund = `<g fill="rgba(255,255,255,.28)" stroke="#2B2541" stroke-width="1.8"><circle cx="42" cy="49" r="6.4"/><circle cx="58" cy="49" r="6.4"/></g><path d="M48.4 48.6 Q50 47 51.6 48.6" stroke="#2B2541" stroke-width="1.8" fill="none"/><path d="M35.6 48 L29 46.5 M64.4 48 L71 46.5" stroke="#2B2541" stroke-width="1.6"/>`;
+GL.gl_sonne = `<rect x="34" y="44" width="14" height="10" rx="4" fill="#26213A"/><rect x="52" y="44" width="14" height="10" rx="4" fill="#26213A"/><path d="M48 47 L52 47 M34 47 L29 46 M66 47 L71 46" stroke="#26213A" stroke-width="2"/><path d="M37 46.6 L41 46.6 M55 46.6 L59 46.6" stroke="rgba(255,255,255,.65)" stroke-width="1.5" stroke-linecap="round"/>`;
+GL.gl_herz = `<path d="${heart(42, 49)}" fill="#FF4F8B" stroke="#D6336C" stroke-width="1"/><path d="${heart(58, 49)}" fill="#FF4F8B" stroke="#D6336C" stroke-width="1"/><path d="M48 47.5 L52 47.5" stroke="#D6336C" stroke-width="1.6"/>`;
+GL.gl_stern = `<path d="${star(42, 49, 7.6)}" fill="#FFC83D" stroke="#D99A00" stroke-width="1"/><path d="${star(58, 49, 7.6)}" fill="#FFC83D" stroke="#D99A00" stroke-width="1"/><path d="M48.5 48 L51.5 48" stroke="#D99A00" stroke-width="1.6"/>`;
+GL.gl_nerd = `<g fill="rgba(255,255,255,.2)" stroke="#1F1B2E" stroke-width="2.8"><rect x="34.5" y="44" width="14" height="10.5" rx="2"/><rect x="51.5" y="44" width="14" height="10.5" rx="2"/></g><path d="M48.5 48 L51.5 48" stroke="#1F1B2E" stroke-width="2.4"/><path d="M34.5 47 L29 46 M65.5 47 L71 46" stroke="#1F1B2E" stroke-width="2"/>`;
+GL.gl_monokel = `<circle cx="58" cy="49" r="6.8" fill="rgba(255,255,255,.3)" stroke="#D99A00" stroke-width="1.8"/><path d="M63 53 Q69 62 64 74" stroke="#D99A00" stroke-width="1" fill="none"/>`;
+GL.gl_ski = `<path d="M26 48 L74 48" stroke="#2B2541" stroke-width="4.5"/><rect x="31" y="41.5" width="38" height="14" rx="7" fill="#FF8A3D" stroke="#fff" stroke-width="2"/><rect x="33.5" y="43.5" width="33" height="10" rx="5" fill="#7C5CFF" opacity=".6"/><path d="M36 46 L46 46" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".85"/>`;
+GL.gl_3d = `<rect x="34" y="44" width="14" height="10" rx="1.5" fill="#FF3B3B" opacity=".8" stroke="#fff" stroke-width="2"/><rect x="52" y="44" width="14" height="10" rx="1.5" fill="#2F8CFF" opacity=".8" stroke="#fff" stroke-width="2"/><path d="M48 48 L52 48 M34 47 L29 46 M66 47 L71 46" stroke="#fff" stroke-width="2"/>`;
+GL.gl_augenklappe = `<path d="M29 40 L71 56" stroke="#1F1B2E" stroke-width="1.6"/><ellipse cx="42" cy="49.5" rx="6.6" ry="6" fill="#1F1B2E"/>`;
+GL.gl_pilot = `<g fill="rgba(90,60,30,.55)" stroke="#D99A00" stroke-width="1.5"><path d="M35 45 Q42 43 48 45 Q48 54 42 55 Q35 54 35 45Z"/><path d="M52 45 Q58 43 65 45 Q65 54 58 55 Q52 54 52 45Z"/></g><path d="M48 45.5 Q50 44 52 45.5 M35 45.5 L29 45 M65 45.5 L71 45" stroke="#D99A00" stroke-width="1.5" fill="none"/>`;
+GL.gl_streber = GL.gl_rund + `<rect x="48" y="46.4" width="4" height="4.4" rx=".6" fill="#fff" stroke="#C9C2DB" stroke-width=".6"/><path d="M48.6 47.4 L51.4 49.8 M51.4 47.4 L48.6 49.8" stroke="#C9C2DB" stroke-width=".5"/>`;
+GL.gl_67 = `<path d="M48.5 47.5 L51.5 47.5 M31 47 L28 46 M69 47 L72 46" stroke="#2B2541" stroke-width="2"/>${T67(41.5, 57, 22, '#FFC83D')}6</text>${T67(58.5, 57, 22, '#FF4F8B')}7</text>`;
+GL.gl_ratatui = `<g fill="rgba(255,255,255,.25)" stroke="#D99A00" stroke-width="2.2"><circle cx="42" cy="49" r="5.6"/><circle cx="58" cy="49" r="5.6"/></g><path d="M47.6 48.4 Q50 46.6 52.4 48.4" stroke="#D99A00" stroke-width="2" fill="none"/>`;
+
+/* ---------- Kopfbedeckungen ---------- */
+const doktor = (board, base, tassel) => `<path d="M34 27 L34 35 Q50 41 66 35 L66 27Z" fill="${base}"/><path d="M21 24 L50 12 L79 24 L50 35Z" fill="${board}"/><circle cx="50" cy="23.5" r="2" fill="${tassel}"/><path d="M50 23.5 Q66 26 71 27 L71 38" stroke="${tassel}" stroke-width="1.8" fill="none"/><circle cx="71" cy="40" r="2.5" fill="${tassel}"/>`;
+const HATS = {
+  hat_muetze: `<path d="M26 36 Q27 11 50 10 Q73 11 74 36Z" fill="#F25757"/><path d="M34 15 L35 31 M42 12 L42 31 M50 11 L50 31 M58 12 L58 31 M66 15 L65 31" stroke="rgba(0,0,0,.09)" stroke-width="2.4"/><rect x="24" y="30" width="52" height="10" rx="5" fill="#FFE1E1"/><circle cx="50" cy="9" r="5.5" fill="#FFE1E1"/>`,
+  hat_blume: `<path d="M27 37 Q50 12 73 37" stroke="#5DBB63" stroke-width="2.2" fill="none"/>` + [[29,33,'#FF8FB1'],[37,25,'#FFC83D'],[50,21,'#B78CFF'],[63,25,'#FF8FB1'],[71,33,'#7BC4FF']].map(f => flower(...f)).join(''),
+  hat_lorbeer: laurel(50, 48, 26, '#4E9F3D', '#7BC943'),
+  hat_doktor: doktor('#3A3157', '#2B2541', '#FFC83D'),
+  hat_krone: `<path d="M30 32 L31 14 L40.5 23 L50 8 L59.5 23 L69 14 L70 32Z" fill="#FFC83D" stroke="#D99A00" stroke-width="1.5" stroke-linejoin="round"/><rect x="30" y="28" width="40" height="5.5" rx="2" fill="#F5B400"/><circle cx="50" cy="21" r="2.7" fill="#FF4F8B"/><circle cx="39" cy="27" r="1.8" fill="#3B82F6"/><circle cx="61" cy="27" r="1.8" fill="#22B07D"/>`,
+  hat_kopfhoerer: `<path d="M27 48 Q26 13 50 13 Q74 13 73 48" stroke="#2B2541" stroke-width="4" fill="none"/><rect x="21" y="41" width="10" height="17" rx="5" fill="#F25757"/><rect x="69" y="41" width="10" height="17" rx="5" fill="#F25757"/><rect x="23" y="44" width="3" height="11" rx="1.5" fill="#FF8F8F"/>`,
+  hat_cap: `<path d="M27 37 Q27 15 50 15 Q73 15 73 37Z" fill="#3B82F6"/><path d="M50 15 L50 36 M38 17 L36 36 M62 17 L64 36" stroke="rgba(0,0,0,.12)" stroke-width="1.4"/><circle cx="50" cy="15.5" r="2" fill="#2563EB"/><path d="M28 35 Q50 47 72 35 L72 38 Q50 49 28 38Z" fill="#2563EB"/>`,
+  hat_schleife: `<path d="M63 22 Q53 11 50 19 Q49 28 63 22Z" fill="#FF5FA2"/><path d="M63 22 Q73 11 76 19 Q77 28 63 22Z" fill="#FF5FA2"/><path d="M62 23 L58 32 M64 23 L68 32" stroke="#FF5FA2" stroke-width="2.4" stroke-linecap="round"/><circle cx="63" cy="22" r="3.2" fill="#E0408A"/>`,
+  hat_katzenohren: `<path d="M27 33 Q50 15 73 33" stroke="#2B2541" stroke-width="3" fill="none"/><path d="M30 28 L30 8 L43 20Z M70 28 L70 8 L57 20Z" fill="#2B2541"/><path d="M32.5 24 L32.5 14 L39 19.5Z M67.5 24 L67.5 14 L61 19.5Z" fill="#FF8FB1"/>`,
+  hat_hasenohren: `<path d="M27 33 Q50 15 73 33" stroke="#E2DAEE" stroke-width="3" fill="none"/><g transform="rotate(-12 40 12)"><ellipse cx="40" cy="12" rx="5.5" ry="14" fill="#F8F5FC" stroke="#E2DAEE"/><ellipse cx="40" cy="13" rx="2.6" ry="10" fill="#FFC2D3"/></g><g transform="rotate(12 60 12)"><ellipse cx="60" cy="12" rx="5.5" ry="14" fill="#F8F5FC" stroke="#E2DAEE"/><ellipse cx="60" cy="13" rx="2.6" ry="10" fill="#FFC2D3"/></g>`,
+  hat_party: `<path d="M38 30 L50 4 L62 30Z" fill="#FF8FB1"/><path d="M41.5 23 L58.5 23 M45 16 L55 16 M48 10 L52 10" stroke="#FFC83D" stroke-width="3"/><circle cx="50" cy="4" r="3.6" fill="#22B07D"/>`,
+  hat_kaese: `<path d="M26 33 L74 33 L74 21Z" fill="#FFC83D" stroke="#E0A800" stroke-width="1.2" stroke-linejoin="round"/><path d="M26 33 L74 21 L74 17Z" fill="#FFE08A" stroke="#E0A800" stroke-width="1.2" stroke-linejoin="round"/><circle cx="60" cy="29" r="2.5" fill="#E0A800"/><circle cx="68" cy="26.5" r="1.8" fill="#E0A800"/><circle cx="48" cy="31" r="1.5" fill="#E0A800"/>`,
+  hat_hoerner: `<path d="M33 28 Q25 16 29 6 Q34 18 41 24Z M67 28 Q75 16 71 6 Q66 18 59 24Z" fill="#E03131"/>`,
+  hat_heiligenschein: `<ellipse cx="50" cy="11" rx="17" ry="4.5" fill="none" stroke="#FFD34D" stroke-width="3.4"/><ellipse cx="50" cy="11" rx="17" ry="4.5" fill="none" stroke="#FFF6C8" stroke-width="1"/>`,
+  hat_cowboy: `<path d="M33 30 Q32 11 42 13 Q50 17 58 13 Q68 11 67 30Z" fill="#B5773E"/><path d="M33 25 L67 25 L67 30 L33 30Z" fill="#7A4A22"/><ellipse cx="50" cy="31" rx="30" ry="5.5" fill="#C8894A"/>`,
+  hat_pirat: `<path d="M21 32 Q30 11 50 13 Q70 11 79 32 Q64 25 50 27 Q36 25 21 32Z" fill="#26213A"/><path d="M21 32 Q36 25 50 27 Q64 25 79 32" stroke="#FFC83D" stroke-width="1.5" fill="none"/><circle cx="50" cy="20" r="3.8" fill="#fff"/><circle cx="48.6" cy="19.6" r=".9" fill="#26213A"/><circle cx="51.4" cy="19.6" r=".9" fill="#26213A"/><path d="M46 25 L54 23 M46 23 L54 25" stroke="#fff" stroke-width="1.4"/>`,
+  hat_zylinder: `<rect x="35" y="5" width="30" height="24" rx="2" fill="#26213A"/><rect x="35" y="21" width="30" height="5" fill="#F25757"/><ellipse cx="50" cy="29" rx="23" ry="4.5" fill="#26213A"/>`,
+  hat_zauber: `<path d="M30 30 L56 3 L72 30Z" fill="#6C4BD8"/><path d="M25 30 Q50 38 77 30 Q50 25 25 30Z" fill="#5A3CC0"/><path d="${star(52, 16, 3.6)}" fill="#FFC83D"/><path d="${star(62, 23, 2.4)}" fill="#FFC83D"/><circle cx="45" cy="23" r="1.4" fill="#FFE8A3"/>`,
+  hat_roemerhelm: `<path d="M36 20 Q50 -4 64 20 Q57 12 50 12 Q43 12 36 20Z" fill="#E03131"/><path d="M42 16 L44 8 M50 13 L50 4 M58 16 L56 8" stroke="#B71C1C" stroke-width="1.2"/><path d="M26 45 Q26 18 50 17 Q74 18 74 45 L70 45 Q68 28 50 27 Q32 28 30 45Z" fill="#E0A800"/><path d="M28 33 Q50 24 72 33" stroke="#B88400" stroke-width="2" fill="none"/>`,
+  hat_astro: `<circle cx="50" cy="47" r="31" fill="rgba(190,230,255,.24)" stroke="#E9F5FF" stroke-width="2.6"/><path d="M32 27 Q39 20 48 18.5" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".9"/><path d="M50 16 L50 8" stroke="#C9C2DB" stroke-width="1.5"/><circle cx="50" cy="7" r="2.4" fill="#F25757"/>`,
+  hat_doktorgold: doktor('#E0A800', '#B88400', '#F25757'),
+  hat_mausohren: `<path d="M27 34 Q50 17 73 34" stroke="#A69CC2" stroke-width="3" fill="none"/><circle cx="31" cy="20" r="10" fill="#BDB4D6"/><circle cx="31" cy="20" r="6" fill="#FFB3C7"/><circle cx="69" cy="20" r="10" fill="#BDB4D6"/><circle cx="69" cy="20" r="6" fill="#FFB3C7"/>`,
+  hat_lorbeergold: laurel(50, 48, 26, '#E0A800', '#FFD34D') + `<circle cx="50" cy="22" r="2" fill="#FFF3B0"/>`,
+  hat_kaiser: `<path d="M32 30 Q50 4 68 30Z" fill="#7C3AED"/><path d="M30 32 L31 12 L40.5 22 L50 6 L59.5 22 L69 12 L70 32Z" fill="none" stroke="#FFC83D" stroke-width="3" stroke-linejoin="round"/><rect x="29" y="28" width="42" height="6" rx="2.5" fill="#FFC83D"/><circle cx="50" cy="5" r="3" fill="#FFC83D"/><circle cx="40" cy="31" r="1.8" fill="#F25757"/><circle cx="50" cy="31" r="2.2" fill="#22B07D"/><circle cx="60" cy="31" r="1.8" fill="#3B82F6"/>`
+};
+function hatSVG(h) { return HATS[h] || ''; }
+
+/* ---------- Rahmen ---------- */
+const SOLID = {fr_rot:'#F25757', fr_orange:'#FF8A3D', fr_gelb:'#FFD23F', fr_mint:'#3DDC97', fr_tuerkis:'#22C1C3', fr_lila:'#9B5DE5', fr_schwarz:'#2B2541'};
+function frameSVG(f, id, uid, fc) {
+  const ring = (s, w = 5.5) => `<circle cx="50" cy="50" r="46" fill="none" stroke="${s}" stroke-width="${w}"/>`;
+  const around = (n, fn, r = 46, off = 0) => { let s = ''; for (let k = 0; k < n; k++) { const a = (off + k * 360 / n - 90) * Math.PI / 180; s += fn(+(50 + r * Math.cos(a)).toFixed(1), +(50 + r * Math.sin(a)).toFixed(1), k, a); } return s; };
+  const lg = stops => `<defs><linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="1">${stops.map((c, i) => `<stop offset="${i / (stops.length - 1)}" stop-color="${c}"/>`).join('')}</linearGradient></defs>`;
+  const G = `url(#${id}f)`;
+  if (!f) return ring(USERS[uid].color, 3);
+  if (SOLID[f]) return ring(SOLID[f]);
+  switch (f) {
+    case 'fr_custom': return ring(fc || '#3B82F6');
+    case 'fr_gold': return lg(['#FFE9A3', '#E0A800', '#FFF1B8']) + ring(G);
+    case 'fr_regen': return lg(['#F25757', '#FFC83D', '#22B07D', '#3B82F6', '#B05CFF']) + ring(G);
+    case 'fr_silber': return lg(['#FAFAFD', '#A9A9B8', '#FFFFFF', '#8E8EA0']) + ring(G);
+    case 'fr_marmor': return lg(['#FFFFFF', '#DAD6E2', '#F7F6FA', '#C4BFD0', '#FFFFFF']) + ring(G, 6.5) + `<path d="M8 38 Q12 30 18 24 M84 18 Q90 26 93 36 M10 66 Q14 74 20 80" stroke="#9E97B0" stroke-width=".8" fill="none"/>`;
+    case 'fr_neon': return ring('rgba(57,255,20,.3)', 10) + ring('#39FF14', 3.2) + ring('#EFFFE6', 1);
+    case 'fr_punkte': return ring('#FFE0EE', 6) + `<circle cx="50" cy="50" r="46" fill="none" stroke="#FF5FA2" stroke-width="5" stroke-dasharray="0.1 7.2" stroke-linecap="round"/>`;
+    case 'fr_holz': return ring('#A0693B', 6.5) + `<circle cx="50" cy="50" r="46" fill="none" stroke="#C98B55" stroke-width="2" stroke-dasharray="9 5"/>`;
+    case 'fr_herz': return ring('#FF8FB1', 5) + around(8, (x, y) => `<path d="${heart(x, y - 1, .75)}" fill="#FF4F8B" stroke="#fff" stroke-width=".9"/>`);
+    case 'fr_stern': return ring('#2B3A8C', 5) + around(8, (x, y, k) => `<path d="${star(x, y, k % 2 ? 4 : 5.6)}" fill="#FFD34D" stroke="#2B3A8C" stroke-width=".6"/>`);
+    case 'fr_blumen': return ring('#5DBB63', 4.5) + around(10, (x, y, k) => flower(x, y, ['#FF8FB1', '#FFC83D', '#B78CFF', '#7BC4FF'][k % 4], .95));
+    case 'fr_klee': return ring('#3FA34D', 5) + around(6, (x, y) => clover(x, y));
+    case 'fr_67': return ring('#FFC83D', 5.5) + `<circle cx="19" cy="83" r="10" fill="#2B2541"/><circle cx="81" cy="83" r="10" fill="#2B2541"/>${T67(19, 88.5, 15, '#FFC83D')}6</text>${T67(81, 88.5, 15, '#FF4F8B')}7</text>`;
+    case 'fr_flamme': return around(14, (x, y, k, a) => `<ellipse cx="${(50 + 49 * Math.cos(a)).toFixed(1)}" cy="${(50 + 49 * Math.sin(a)).toFixed(1)}" rx="2.8" ry="6" fill="${k % 2 ? '#FFC83D' : '#FF8A3D'}" transform="rotate(${(a * 180 / Math.PI + 90).toFixed(0)} ${(50 + 49 * Math.cos(a)).toFixed(1)} ${(50 + 49 * Math.sin(a)).toFixed(1)})"/>`) + lg(['#FFD34D', '#FF8A3D', '#F25757']) + ring(G, 6);
+    case 'fr_imperator': return ring('#7C3AED', 6) + laurel(50, 50, 46, '#E0A800', '#FFD34D', 170, 5.5);
+    case 'fr_diamant': return lg(['#E0F7FF', '#7FD3FF', '#FFFFFF', '#A78BFA']) + ring(G, 6.5) + around(4, (x, y) => `<path d="M${x} ${y - 6} L${x + 4.5} ${y} L${x} ${y + 6} L${x - 4.5} ${y}Z" fill="#fff" stroke="#7FD3FF" stroke-width="1.2"/>`, 46, 45);
+    case 'fr_duo': return `<path d="M50 4 A46 46 0 0 0 50 96" stroke="#3B82F6" stroke-width="6" fill="none"/><path d="M50 4 A46 46 0 0 1 50 96" stroke="#EC4899" stroke-width="6" fill="none"/><path d="${heart(50, 5, .85)}" fill="#FF4F8B" stroke="#fff" stroke-width="1"/><path d="${heart(50, 95, .6)}" fill="#FF4F8B" stroke="#fff" stroke-width="1"/>`;
+  }
+  return ring(USERS[uid].color, 3);
+}
+
+/* ---------- Selfie-Hintergründe ---------- */
+const BD = (() => {
+  const R = f => `<rect width="100" height="100" fill="${f}"/>`;
+  const dots = (pts, c, r = 1.2) => pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`).join('');
+  const cloud = (x, y, s = 1) => `<g fill="#fff"><circle cx="${x}" cy="${y}" r="${5 * s}"/><circle cx="${x + 6 * s}" cy="${y - 3 * s}" r="${6 * s}"/><circle cx="${x + 12 * s}" cy="${y}" r="${5 * s}"/><rect x="${x}" y="${y}" width="${12 * s}" height="${5 * s}"/></g>`;
+  const books = (cols, shelf) => { let s = ''; for (let row = 0; row < 4; row++) { const y = 4 + row * 24; let x = 0, k = row * 3; while (x < 100) { const w = 4 + (k * 7) % 4, h = 14 + (k * 5) % 6; s += `<rect x="${x}" y="${y + 20 - h}" width="${w}" height="${h}" fill="${cols[k % cols.length]}"/>`; x += w + 1; k++; } s += `<rect x="0" y="${y + 20}" width="100" height="4" fill="${shelf}"/>`; } return s; };
+  const arches = () => { let s = ''; for (const y of [46, 66]) for (let x = -2; x < 100; x += 12) s += `<path d="M${x} ${y + 14} L${x} ${y + 5} Q${x + 4} ${y} ${x + 8} ${y + 5} L${x + 8} ${y + 14}Z" fill="#8C5A35"/>`; return s; };
+  const burst = (x, y, c, r) => { let s = ''; for (let k = 0; k < 10; k++) { const a = k * Math.PI / 5; s += `<path d="M${(x + r * .35 * Math.cos(a)).toFixed(1)} ${(y + r * .35 * Math.sin(a)).toFixed(1)} L${(x + r * Math.cos(a)).toFixed(1)} ${(y + r * Math.sin(a)).toFixed(1)}" stroke="${c}" stroke-width="1.6" stroke-linecap="round"/>`; } return s + `<circle cx="${x}" cy="${y}" r="1.4" fill="${c}"/>`; };
+  const sunset = `<rect width="100" height="100" fill="#FFB37A"/><rect width="100" height="18" fill="#FFD29D"/><rect y="34" width="100" height="28" fill="#FF8FA3"/><circle cx="50" cy="64" r="16" fill="#FFD34D"/><rect y="64" width="100" height="36" fill="#6B4FA0"/><path d="M8 72 H30 M62 76 H92 M18 84 H44" stroke="#FFB37A" stroke-width="1.6" opacity=".6"/>`;
+  return {
+    bd_wolken: R('#9ED8F5') + cloud(6, 24) + cloud(70, 14, .9) + cloud(78, 42, .7) + cloud(2, 52, .7),
+    bd_wiese: R('#CFEFFF') + `<circle cx="80" cy="18" r="7" fill="#FFD34D"/><path d="M0 60 Q30 48 60 58 T100 54 V100 H0Z" fill="#7BC943"/>` + [[10,66,'#FF8FB1'],[20,74,'#FFC83D'],[86,64,'#B78CFF'],[92,76,'#FF8FB1'],[8,84,'#fff']].map(f => flower(...f, .8)).join(''),
+    bd_kaese: R('#FFD966') + dots([[14,22],[84,24],[10,60],[90,62],[32,9],[70,8]], '#F2B21F', 5) + dots([[22,40],[80,44]], '#F2B21F', 2.5),
+    bd_herzen: R('#FFD6E5') + [[14,22],[86,20],[9,52],[91,50],[32,10],[68,9],[14,80],[86,80]].map(([x, y]) => `<path d="${heart(x, y, .6)}" fill="#FF8FB1"/>`).join(''),
+    bd_schnee: R('#CFE3F5') + dots([[10,14],[24,26],[80,12],[90,30],[14,44],[86,50],[40,8],[62,16],[6,64],[94,68],[30,36],[72,34]], '#fff', 1.6) + `<path d="M0 78 Q50 70 100 78 V100 H0Z" fill="#fff"/>`,
+    bd_strand: R('#BDE7FF') + `<circle cx="80" cy="20" r="9" fill="#FFD34D"/>` + cloud(8, 22, .7) + `<rect y="54" width="100" height="18" fill="#3BA6E0"/><path d="M0 58 Q12 55 25 58 T50 58 T75 58 T100 58" stroke="#fff" stroke-width="1.5" fill="none" opacity=".7"/><rect y="70" width="100" height="30" fill="#F6D7A0"/><path d="M8 76 Q12 70 16 76" fill="#FF8FB1"/>`,
+    bd_sterne: R('#5B3FA8') + [[14,20,4],[84,22,3],[9,50,3],[91,52,4],[32,8,2.5],[68,9,2.5],[18,76,2.5],[84,76,3]].map(([x, y, r]) => `<path d="${star(x, y, r)}" fill="#FFD34D"/>`).join(''),
+    bd_unterwasser: R('#2E8FD1') + `<rect width="100" height="28" fill="#5AB8E8"/>` + [[16,30,2.2],[12,20,1.4],[86,40,2],[82,30,1.3],[22,50,1.2]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#DFF4FF" stroke-width=".9"/>`).join('') + `<path d="M6 100 Q2 86 9 76 Q14 66 7 56" stroke="#22B07D" stroke-width="3" fill="none"/><path d="M94 100 Q98 88 91 78 Q86 70 92 62" stroke="#3DDC97" stroke-width="3" fill="none"/><path d="M0 90 Q50 84 100 90 V100 H0Z" fill="#F6D7A0"/><ellipse cx="80" cy="16" rx="5" ry="3" fill="#FF9F43"/><path d="M85 16 L89 13 L89 19Z" fill="#FF9F43"/>`,
+    bd_regenbogen: R('#E8F6FF') + ['#F25757','#FF8A3D','#FFD23F','#3DDC97','#3B82F6','#9B5DE5'].map((c, k) => `<circle cx="50" cy="96" r="${82 - k * 6}" fill="none" stroke="${c}" stroke-width="6"/>`).join('') + cloud(2, 76, .9) + cloud(80, 76, .9),
+    bd_sonnenuntergang: sunset,
+    bd_bibliothek: R('#7A4A22') + books(['#F25757','#3B82F6','#22B07D','#FFC83D','#9B5DE5','#FF8A3D','#22C1C3'], '#5A3416'),
+    bd_kolosseum: R('#FFD9A8') + `<circle cx="18" cy="18" r="7" fill="#FFF1C2"/><rect y="42" width="100" height="58" fill="#D9A066"/>` + arches() + `<rect y="42" width="100" height="3" fill="#B5773E"/>`,
+    bd_weltall: R('#1B1640') + dots([[10,42],[30,8],[70,12],[88,36],[8,70],[92,74],[60,6],[20,58],[80,58]], '#fff', .9) + `<circle cx="22" cy="24" r="8" fill="#FF8A3D"/><ellipse cx="22" cy="24" rx="14" ry="3.5" fill="none" stroke="#FFD34D" stroke-width="1.6" transform="rotate(-20 22 24)"/><circle cx="82" cy="18" r="4" fill="#7FD3FF"/>`,
+    bd_hoersaal: R('#EFE6D6') + `<rect x="8" y="8" width="84" height="22" rx="2" fill="#2F4A3A" stroke="#8C5A35" stroke-width="2"/><text x="14" y="22" font-size="9" fill="#fff" font-family="Fraunces,Georgia,serif" font-style="italic" opacity=".85">ius</text><text x="72" y="24" font-size="7" fill="#fff" opacity=".7" font-family="Fraunces,Georgia,serif" font-style="italic">lex</text>` + [46, 60, 74, 88].map(y => `<rect x="0" y="${y}" width="100" height="5" fill="#B5773E"/>`).join(''),
+    bd_mauseloch: Array.from({length: 10}, (_, k) => `<rect x="${k * 10}" width="10" height="100" fill="${k % 2 ? '#BE7F49' : '#C98B55'}"/>`).join('') + `<rect y="70" width="100" height="30" fill="#8C5A35"/><rect y="70" width="100" height="3" fill="#6B4226"/><path d="M6 70 L6 60 Q12.5 49 19 60 L19 70Z" fill="#2B2541"/><circle cx="10.5" cy="63" r="1.1" fill="#fff"/><circle cx="14.5" cy="63" r="1.1" fill="#fff"/><path d="M81 70 L93 70 L93 63Z" fill="#FFC83D"/><circle cx="89" cy="68" r="1" fill="#E0A800"/>`,
+    bd_ruhmeshalle: R('#3A2A5A') + `<rect x="3" y="12" width="11" height="88" fill="#E0A800"/><rect x="1" y="8" width="15" height="5" fill="#FFD34D"/><rect x="86" y="12" width="11" height="88" fill="#E0A800"/><rect x="84" y="8" width="15" height="5" fill="#FFD34D"/><path d="M6 14 V98 M11 14 V98 M89 14 V98 M94 14 V98" stroke="#B88400" stroke-width="1"/>` + [[30,14],[70,12],[50,6],[22,30],[78,30]].map(([x, y]) => `<path d="${star(x, y, 2.6)}" fill="#FFD34D"/>`).join('') + `<path d="M34 100 L44 72 L56 72 L66 100Z" fill="#C62828"/>`,
+    bd_feuerwerk: R('#1B1640') + burst(18, 22, '#FF4F8B', 11) + burst(82, 18, '#FFD34D', 10) + burst(13, 60, '#7FD3FF', 8) + burst(88, 58, '#3DDC97', 9) + burst(50, 8, '#B78CFF', 7),
+    bd_paerchen: sunset + `<path d="${heart(20, 24, 1)}" fill="#3B82F6"/><path d="${heart(80, 24, 1)}" fill="#EC4899"/><path d="${heart(50, 10, .6)}" fill="#F25757"/>`
+  };
+})();
+
+/* ---------- Outfits ---------- */
+const BODY = 'M14 106 Q14 77 50 75 Q86 77 86 106Z';
+function outfitSVG(o, id, sh) {
+  const toga = `<path d="${BODY}" fill="#FBF8F1"/><path d="M24 82 Q46 80 70 106 L56 106 Q42 90 22 92Z" fill="#E9E1CF"/><path d="M26 86 Q48 84 66 106" stroke="#D8CCB2" stroke-width="1.2" fill="none"/><circle cx="30" cy="83" r="3" fill="#E0A800"/>`;
+  switch (o) {
+    case 'out_toga': return toga;
+    case 'out_praetexta': return toga + `<path d="M23 83 Q46 80 69 106" stroke="#7C3AED" stroke-width="4" fill="none"/><circle cx="30" cy="83" r="3" fill="#E0A800"/>`;
+    case 'out_hoodie': return `<path d="${BODY}" fill="#8E6BD8"/><path d="M32 79 Q50 93 68 79 Q62 73 50 73 Q38 73 32 79Z" fill="#7A57C8"/><path d="M46 84 L45 96 M54 84 L55 96" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><path d="M36 98 Q50 94 64 98 L64 106 L36 106Z" fill="#7A57C8"/>`;
+    case 'out_anzug': return `<path d="${BODY}" fill="#2B2541"/><path d="M41 76 L50 100 L59 76 Q50 74 41 76Z" fill="#fff"/><path d="M48 80 L52 80 L54 94 L50 99 L46 94Z" fill="#F25757"/><path d="M41 76 L47 91 L39 86Z M59 76 L53 91 L61 86Z" fill="#3E3660"/>`;
+    case 'out_streifen': return `<defs><pattern id="${id}s" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#FFFDF8"/><rect y="4" width="8" height="4" fill="#3B82F6"/></pattern></defs><path d="${BODY}" fill="url(#${id}s)"/>`;
+    case 'out_hawaii': return `<path d="${BODY}" fill="#22B07D"/>` + [[26,92],[40,101],[62,89],[75,99],[52,86]].map(([x, y]) => flower(x, y, '#FFC83D', .9)).join('') + `<path d="M43 76 L50 86 L57 76" fill="#1A8F65"/>`;
+    case 'out_held': return `<path d="M17 82 Q50 70 83 82 L94 106 L6 106Z" fill="#B71C1C"/><path d="${BODY}" fill="#3B82F6"/><path d="M50 84 L58 88 L56 97 L50 101 L44 97 L42 88Z" fill="#FFC83D"/><text x="50" y="96" font-size="9" font-weight="800" text-anchor="middle" fill="#F25757" font-family="Fredoka,Arial,sans-serif">M</text>`;
+    case 'out_pulli': return `<path d="${BODY}" fill="#F7A6C4"/><path d="M20 92 H80 M18 100 H82" stroke="#EE8DB3" stroke-width="1.5" stroke-dasharray="2 2"/><path d="${heart(50, 90, .9)}" fill="#F25757"/><path d="M38 77 Q50 83 62 77" stroke="#E57FA7" stroke-width="3" fill="none"/>`;
+    case 'out_robe': return `<path d="${BODY}" fill="#1F1B2E"/><path d="M44 76 L50 92 L56 76Z" fill="#fff"/><path d="M45 79 Q50 86 55 79 L54 91 Q50 95 46 91Z" fill="#fff" stroke="#E6E1F1" stroke-width=".6"/><path d="M24 90 L30 106 M76 90 L70 106" stroke="#3A3157" stroke-width="2"/>`;
+    case 'out_67': return `<path d="${BODY}" fill="#FFC83D"/><path d="M38 76 Q50 84 62 76" stroke="#2B2541" stroke-width="3" fill="none"/>${T67(50, 96, 13, '#fff')}67</text><path d="M15 94 L22 89 M85 94 L78 89" stroke="#2B2541" stroke-width="3"/>`;
+  }
+  return `<path d="${BODY}" fill="${sh}"/><path d="M41 76.5 Q50 86 59 76.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>`;
+}
+
+/* ---------- Gesicht ---------- */
+function faceSVG(f, hc) {
+  switch (f) {
+    case 'fx_sommer': return [[35,54],[38,56.5],[34.5,57.5],[65,54],[62,56.5],[65.5,57.5]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".75" fill="#B9724A"/>`).join('');
+    case 'fx_pflaster': return `<g transform="rotate(-25 36 56)"><rect x="30.5" y="54" width="11" height="4.2" rx="2.1" fill="#F3C9A0"/><rect x="34.5" y="54" width="3" height="4.2" fill="#E3B285"/></g>`;
+    case 'fx_herz': return `<path d="${heart(64, 56, .42)}" fill="#FF4F8B"/>`;
+    case 'fx_stern': return `<path d="${star(64, 56, 3.4)}" fill="#FFC83D"/>`;
+    case 'fx_bart': return `<path d="M41 56 Q45.5 52 50 55 Q54.5 52 59 56 Q55 58.5 50 56.6 Q45 58.5 41 56Z" fill="${hc}"/>`;
+    case 'fx_glitzer': return [[30,36,3.4],[71,38,2.8],[33,63,2.4],[69,64,2]].map(([x, y, r]) => `<path d="${star(x, y, r, 4, .3)}" fill="#FFE14D"/>`).join('');
+    case 'fx_goldstern': return `<circle cx="64" cy="56" r="5.5" fill="#FFE14D" opacity=".35"/><path d="${star(64, 56, 4.4)}" fill="#FFC83D" stroke="#D99A00" stroke-width=".7"/><path d="M62.4 54.4 L63.4 55" stroke="#fff" stroke-width=".8" stroke-linecap="round"/>`;
+  }
   return '';
 }
-function flower(x, y, c) {
-  let s = '';
-  for (let k = 0; k < 5; k++) { const a = k * 72 * Math.PI / 180; s += `<circle cx="${(x + 3.2 * Math.cos(a)).toFixed(1)}" cy="${(y + 3.2 * Math.sin(a)).toFixed(1)}" r="2.7" fill="${c}"/>`; }
-  return s + `<circle cx="${x}" cy="${y}" r="2.1" fill="#FFF3B0"/>`;
-}
-function hatSVG(h) {
-  if (h === 'hat_muetze') return `<path d="M26 36 Q27 11 50 10 Q73 11 74 36Z" fill="#F25757"/><path d="M34 15 L35 31 M42 12 L42 31 M50 11 L50 31 M58 12 L58 31 M66 15 L65 31" stroke="rgba(0,0,0,.09)" stroke-width="2.4"/><rect x="24" y="30" width="52" height="10" rx="5" fill="#FFE1E1"/><circle cx="50" cy="9" r="5.5" fill="#FFE1E1"/>`;
-  if (h === 'hat_blume') return `<path d="M27 37 Q50 12 73 37" stroke="#5DBB63" stroke-width="2.2" fill="none"/>` + [[29,33,'#FF8FB1'],[37,25,'#FFC83D'],[50,21,'#B78CFF'],[63,25,'#FF8FB1'],[71,33,'#7BC4FF']].map(f => flower(...f)).join('');
-  if (h === 'hat_lorbeer') return laurel(50, 48, 26, '#4E9F3D', '#7BC943');
-  if (h === 'hat_doktor') return `<path d="M34 27 L34 35 Q50 41 66 35 L66 27Z" fill="#2B2541"/><path d="M21 24 L50 12 L79 24 L50 35Z" fill="#3A3157"/><circle cx="50" cy="23.5" r="2" fill="#FFC83D"/><path d="M50 23.5 Q66 26 71 27 L71 38" stroke="#FFC83D" stroke-width="1.8" fill="none"/><circle cx="71" cy="40" r="2.5" fill="#FFC83D"/>`;
-  if (h === 'hat_krone') return `<path d="M30 32 L31 14 L40.5 23 L50 8 L59.5 23 L69 14 L70 32Z" fill="#FFC83D" stroke="#D99A00" stroke-width="1.5" stroke-linejoin="round"/><rect x="30" y="28" width="40" height="5.5" rx="2" fill="#F5B400"/><circle cx="50" cy="21" r="2.7" fill="#FF4F8B"/><circle cx="39" cy="27" r="1.8" fill="#3B82F6"/><circle cx="61" cy="27" r="1.8" fill="#22B07D"/>`;
-  return '';
-}
+
+function glassesSVG(g) { return GL[g] || ''; }
 function avatarSVG(av, uid, size) {
   const id = 'a' + (++gid);
   const skin = SKIN[av.skin] || SKIN[0], hc = HAIRC[av.hc] || HAIRC[0], sh = SHIRT[av.shirt] || SHIRT[0];
-  const ring = av.frame === 'fr_gold' ? `url(#${id}g)` : av.frame === 'fr_regen' ? `url(#${id}r)` : USERS[uid].color;
-  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true" style="display:block">
-<defs><clipPath id="${id}c"><circle cx="50" cy="50" r="45"/></clipPath>
-<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A3"/><stop offset=".5" stop-color="#E0A800"/><stop offset="1" stop-color="#FFF1B8"/></linearGradient>
-<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F25757"/><stop offset=".25" stop-color="#FFC83D"/><stop offset=".5" stop-color="#22B07D"/><stop offset=".75" stop-color="#3B82F6"/><stop offset="1" stop-color="#B05CFF"/></linearGradient></defs>
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true" style="display:block;overflow:visible">
+<defs><clipPath id="${id}c"><circle cx="50" cy="50" r="45"/></clipPath></defs>
 <circle cx="50" cy="50" r="45" fill="${USERS[uid].soft}"/>
 <g clip-path="url(#${id}c)">
+${BD[av.bd] || ''}
 ${hairBack(av.hair, hc)}
-<path d="M14 106 Q14 77 50 75 Q86 77 86 106Z" fill="${sh}"/>
-<path d="M41 76.5 Q50 86 59 76.5" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
+${outfitSVG(av.outfit, id, sh)}
 <rect x="43.5" y="62" width="13" height="15" rx="6" fill="${skin}"/><rect x="43.5" y="62" width="13" height="7" rx="3" fill="rgba(0,0,0,.08)"/>
 <circle cx="28.5" cy="50" r="5" fill="${skin}"/><circle cx="71.5" cy="50" r="5" fill="${skin}"/>
 <ellipse cx="50" cy="47" rx="22" ry="23" fill="${skin}"/>
@@ -527,11 +837,13 @@ ${hairFront(av.hair, hc)}
 <ellipse cx="58" cy="49" rx="2.7" ry="3.4" fill="#2B2541"/><circle cx="59" cy="47.7" r="1" fill="#fff"/>
 <ellipse cx="36.5" cy="56" rx="4.2" ry="2.6" fill="#FF8FA3" opacity=".45"/><ellipse cx="63.5" cy="56" rx="4.2" ry="2.6" fill="#FF8FA3" opacity=".45"/>
 <path d="M45 57.5 Q50 62.5 55 57.5" stroke="#2B2541" stroke-width="2" fill="none" stroke-linecap="round"/>
-${glassesSVG(av.glasses)}${hatSVG(av.hat)}
+${faceSVG(av.face, hc)}${glassesSVG(av.glasses)}
 </g>
-<circle cx="50" cy="50" r="46" fill="none" stroke="${ring}" stroke-width="${av.frame ? 5.5 : 3}"/>
+${frameSVG(av.frame, id, uid, av.frameColor)}
+${hatSVG(av.hat)}
 </svg>`;
 }
+
 const PETS = {
   pet_katze: `<path d="M44 53 Q61 51 56 36" stroke="#E8913C" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="47" rx="15" ry="12" fill="#F4A259"/><path d="M18 23 L20 8 L29 17Z M46 23 L44 8 L35 17Z" fill="#F4A259"/><path d="M21 18 L21.5 12 L25.5 16Z M43 18 L42.5 12 L38.5 16Z" fill="#FFB3C7"/><circle cx="32" cy="27" r="13" fill="#F4A259"/><path d="M27 17 L28.5 22 M32 15.5 L32 21 M37 17 L35.5 22" stroke="#E07B26" stroke-width="2" stroke-linecap="round"/><ellipse cx="27" cy="28" rx="1.9" ry="2.5" fill="#2B2541"/><ellipse cx="37" cy="28" rx="1.9" ry="2.5" fill="#2B2541"/><path d="M30.5 32 L33.5 32 L32 33.8Z" fill="#FF7FA0"/><path d="M22 32 L13 31 M22 34.5 L14 37 M42 32 L51 31 M42 34.5 L50 37" stroke="#8A7A70" stroke-width="1"/><ellipse cx="25" cy="57" rx="4.5" ry="2.6" fill="#FBD3A6"/><ellipse cx="39" cy="57" rx="4.5" ry="2.6" fill="#FBD3A6"/>`,
   pet_hund: `<path d="M46 50 Q57 44 55 35" stroke="#C8915A" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="47" rx="15" ry="11.5" fill="#D9A46C"/><circle cx="32" cy="27" r="13.5" fill="#D9A46C"/><circle cx="38" cy="21" r="4" fill="#B57B48" opacity=".55"/><path d="M19.5 19 Q11 25 14.5 39 Q20.5 37 22.5 28Z M44.5 19 Q53 25 49.5 39 Q43.5 37 41.5 28Z" fill="#8C5A35"/><ellipse cx="32" cy="33.5" rx="7.5" ry="5.5" fill="#F3DCC0"/><path d="M30 37 Q32 43 34 37Z" fill="#FF7FA0"/><ellipse cx="32" cy="31" rx="2.8" ry="2" fill="#2B2541"/><path d="M32 33 L32 35 M29 35.6 Q32 37.6 35 35.6" stroke="#2B2541" stroke-width="1.3" fill="none" stroke-linecap="round"/><ellipse cx="26.5" cy="25" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="37.5" cy="25" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="25" cy="57" rx="4.5" ry="2.6" fill="#F3DCC0"/><ellipse cx="39" cy="57" rx="4.5" ry="2.6" fill="#F3DCC0"/>`,
@@ -542,7 +854,22 @@ const PETS = {
   pet_schildi: `<ellipse cx="12" cy="42" rx="7.5" ry="6.5" fill="#8CD17D"/><circle cx="9.5" cy="40.5" r="1.5" fill="#2B2541"/><path d="M8 45 Q10.5 46.5 13 45" stroke="#2B2541" stroke-width="1" fill="none"/><ellipse cx="22" cy="51" rx="5" ry="4" fill="#8CD17D"/><ellipse cx="44" cy="51" rx="5" ry="4" fill="#8CD17D"/><path d="M53 47 L60 49 L53 50Z" fill="#8CD17D"/><path d="M16 47 Q17 21 34 21 Q51 21 53 47Z" fill="#3E9C5F"/><path d="M34 26 L41 31 L39 39 L29 39 L27 31Z" fill="#2E7D4A"/><path d="M20 40 L27 31 M41 31 L49 39 M29 39 L26 46 M39 39 L42 46 M34 26 L34 21" stroke="#2E7D4A" stroke-width="1.6"/><rect x="14" y="45" width="41" height="5" rx="2.5" fill="#5DBB63"/>`,
   pet_papagei: `<path d="M28 50 L22 62 L30 60 L34 50Z" fill="#3B82F6"/><rect x="10" y="55" width="44" height="4" rx="2" fill="#8C5A35"/><ellipse cx="32" cy="40" rx="11" ry="15" fill="#22B07D"/><ellipse cx="36" cy="42" rx="5.5" ry="10.5" fill="#178C62" transform="rotate(-12 36 42)"/><path d="M36 44 L40 54 L34 51Z" fill="#FFC83D"/><circle cx="31" cy="22" r="10.5" fill="#F25757"/><ellipse cx="35" cy="22" rx="4.2" ry="4.6" fill="#fff"/><circle cx="35.6" cy="21.6" r="2" fill="#2B2541"/><path d="M22 20 Q15 22 18 30 Q22 28 24.5 25Z" fill="#FFC83D"/><path d="M19 27 Q21 26.5 23 25" stroke="#D99A00" stroke-width="1" fill="none"/><path d="M29 54.5 L29 57 M35 54.5 L35 57" stroke="#7A7A7A" stroke-width="2" stroke-linecap="round"/>`
 };
-const petSVG = (id, size) => `<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true" style="display:block;overflow:visible">${PETS[id] || ''}</svg>`;
+Object.assign(PETS, {
+  pet_pinguin: `<ellipse cx="18" cy="40" rx="4" ry="10" fill="#2B2541" transform="rotate(20 18 40)"/><ellipse cx="46" cy="40" rx="4" ry="10" fill="#2B2541" transform="rotate(-20 46 40)"/><ellipse cx="32" cy="36" rx="15" ry="21" fill="#2B2541"/><ellipse cx="32" cy="42" rx="10.5" ry="14.5" fill="#fff"/><ellipse cx="32" cy="25" rx="10" ry="8" fill="#fff"/><circle cx="28" cy="24" r="1.9" fill="#2B2541"/><circle cx="36" cy="24" r="1.9" fill="#2B2541"/><path d="M29.5 28 L34.5 28 L32 31.5Z" fill="#FF9F43"/><ellipse cx="24.5" cy="29" rx="2.4" ry="1.5" fill="#FFB3C7"/><ellipse cx="39.5" cy="29" rx="2.4" ry="1.5" fill="#FFB3C7"/><ellipse cx="26" cy="57.5" rx="5" ry="2.4" fill="#FF9F43"/><ellipse cx="38" cy="57.5" rx="5" ry="2.4" fill="#FF9F43"/>`,
+  pet_fuchs: `<path d="M44 54 Q63 52 58 30 Q53 42 44 46Z" fill="#FF8A3D"/><ellipse cx="57" cy="32" rx="3" ry="4" fill="#fff" transform="rotate(20 57 32)"/><ellipse cx="32" cy="48" rx="13" ry="11" fill="#FF8A3D"/><ellipse cx="32" cy="51" rx="7" ry="7" fill="#FFF1DE"/><path d="M17 24 L19 6 L30 17Z M47 24 L45 6 L34 17Z" fill="#FF8A3D"/><path d="M20 19 L20.5 10 L26 16Z M44 19 L43.5 10 L38 16Z" fill="#2B2541"/><path d="M16 22 Q32 13 48 22 Q47 36 32 42 Q17 36 16 22Z" fill="#FF8A3D"/><path d="M19 27 Q25 34 32 42 Q22 38 19 27Z M45 27 Q39 34 32 42 Q42 38 45 27Z" fill="#fff"/><ellipse cx="26" cy="27" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="38" cy="27" rx="1.9" ry="2.4" fill="#2B2541"/><ellipse cx="32" cy="38.5" rx="2.4" ry="1.8" fill="#2B2541"/><ellipse cx="26" cy="58" rx="4" ry="2.4" fill="#2B2541"/><ellipse cx="38" cy="58" rx="4" ry="2.4" fill="#2B2541"/>`,
+  pet_panda: `<circle cx="20" cy="15" r="6" fill="#2B2541"/><circle cx="44" cy="15" r="6" fill="#2B2541"/><ellipse cx="32" cy="48" rx="15" ry="12" fill="#fff" stroke="#E2DAEE"/><ellipse cx="18.5" cy="46" rx="4.5" ry="7" fill="#2B2541" transform="rotate(20 18.5 46)"/><ellipse cx="45.5" cy="46" rx="4.5" ry="7" fill="#2B2541" transform="rotate(-20 45.5 46)"/><circle cx="32" cy="28" r="14" fill="#fff" stroke="#E2DAEE"/><ellipse cx="25.5" cy="28" rx="4" ry="5.2" fill="#2B2541" transform="rotate(-25 25.5 28)"/><ellipse cx="38.5" cy="28" rx="4" ry="5.2" fill="#2B2541" transform="rotate(25 38.5 28)"/><circle cx="26" cy="27.5" r="1.4" fill="#fff"/><circle cx="38" cy="27.5" r="1.4" fill="#fff"/><ellipse cx="32" cy="34" rx="2.4" ry="1.7" fill="#2B2541"/><path d="M29.5 36.5 Q32 38.5 34.5 36.5" stroke="#2B2541" stroke-width="1.2" fill="none"/><ellipse cx="25" cy="58" rx="5" ry="3" fill="#2B2541"/><ellipse cx="39" cy="58" rx="5" ry="3" fill="#2B2541"/>`,
+  pet_frosch: `<ellipse cx="32" cy="47" rx="17" ry="12" fill="#7BC943"/><ellipse cx="32" cy="50" rx="10" ry="7" fill="#C8EB9E"/><circle cx="22" cy="24" r="7.5" fill="#7BC943"/><circle cx="42" cy="24" r="7.5" fill="#7BC943"/><ellipse cx="32" cy="34" rx="18" ry="11" fill="#7BC943"/><circle cx="22" cy="23" r="4.6" fill="#fff"/><circle cx="42" cy="23" r="4.6" fill="#fff"/><circle cx="23" cy="23.5" r="2.4" fill="#2B2541"/><circle cx="41" cy="23.5" r="2.4" fill="#2B2541"/><path d="M22 37 Q32 44 42 37" stroke="#2B2541" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="19" cy="36" rx="3" ry="1.8" fill="#FF9FB5" opacity=".7"/><ellipse cx="45" cy="36" rx="3" ry="1.8" fill="#FF9FB5" opacity=".7"/><ellipse cx="20" cy="58" rx="6" ry="2.6" fill="#5FAE34"/><ellipse cx="44" cy="58" rx="6" ry="2.6" fill="#5FAE34"/>`,
+  pet_einhorn: `<ellipse cx="32" cy="51" rx="14" ry="9.5" fill="#fff" stroke="#E2DAEE"/><circle cx="21" cy="16" r="5" fill="#FF8FB1"/><circle cx="18" cy="24" r="5" fill="#B78CFF"/><circle cx="18" cy="32" r="5" fill="#7BC4FF"/><circle cx="20" cy="40" r="4.5" fill="#FFC83D"/><path d="M26 17 L27 7 L32 14Z" fill="#fff" stroke="#E2DAEE"/><ellipse cx="34" cy="30" rx="13" ry="15" fill="#fff" stroke="#E2DAEE"/><path d="M33 16 L37 1 L41 16Z" fill="#FFC83D"/><path d="M34 12 L40 11 M35 7 L39 6" stroke="#E0A800" stroke-width="1"/><ellipse cx="36" cy="40" rx="9" ry="6" fill="#FFE8F1"/><circle cx="33" cy="40" r="1" fill="#C98BA6"/><circle cx="39" cy="40" r="1" fill="#C98BA6"/><path d="M28 28 Q30.5 30.5 33 28 M37 28 Q39.5 30.5 42 28" stroke="#2B2541" stroke-width="1.4" fill="none" stroke-linecap="round"/><ellipse cx="27" cy="33" rx="2.6" ry="1.6" fill="#FFB3C7"/><ellipse cx="43" cy="33" rx="2.6" ry="1.6" fill="#FFB3C7"/>`,
+  pet_axolotl: `<path d="M44 52 Q58 54 56 44" stroke="#FFB3C7" stroke-width="5" fill="none" stroke-linecap="round"/><g fill="#FF6FA5"><ellipse cx="16" cy="22" rx="6" ry="2.6" transform="rotate(-30 16 22)"/><ellipse cx="13" cy="30" rx="6" ry="2.6"/><ellipse cx="16" cy="38" rx="6" ry="2.6" transform="rotate(30 16 38)"/><ellipse cx="48" cy="22" rx="6" ry="2.6" transform="rotate(30 48 22)"/><ellipse cx="51" cy="30" rx="6" ry="2.6"/><ellipse cx="48" cy="38" rx="6" ry="2.6" transform="rotate(-30 48 38)"/></g><ellipse cx="32" cy="48" rx="14" ry="10" fill="#FFB3C7"/><circle cx="27" cy="50" r="1.4" fill="#FF8FB1"/><circle cx="37" cy="47" r="1.2" fill="#FF8FB1"/><ellipse cx="32" cy="30" rx="16" ry="12" fill="#FFC6D6"/><circle cx="25" cy="29" r="2" fill="#2B2541"/><circle cx="39" cy="29" r="2" fill="#2B2541"/><path d="M28 34.5 Q32 37.5 36 34.5" stroke="#2B2541" stroke-width="1.3" fill="none" stroke-linecap="round"/><ellipse cx="21.5" cy="33" rx="2.6" ry="1.6" fill="#FF8FB1" opacity=".8"/><ellipse cx="42.5" cy="33" rx="2.6" ry="1.6" fill="#FF8FB1" opacity=".8"/>`,
+  pet_kueken: `<path d="M30 21 Q30 13 33 20 M34 21 Q38 15 36 22" stroke="#F5C400" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="32" cy="38" r="17" fill="#FFD93D"/><ellipse cx="42" cy="42" rx="5.5" ry="8" fill="#F5C400" transform="rotate(-20 42 42)"/><circle cx="26" cy="33" r="1.9" fill="#2B2541"/><circle cx="36" cy="33" r="1.9" fill="#2B2541"/><path d="M28.5 37 L33.5 37 L31 41Z" fill="#FF9F43"/><ellipse cx="22.5" cy="38" rx="2.6" ry="1.6" fill="#FFB3C7"/><path d="M27 55 L27 59 M24.5 59 L29.5 59 M37 55 L37 59 M34.5 59 L39.5 59" stroke="#FF9F43" stroke-width="1.6" stroke-linecap="round"/>`,
+  pet_eule: `<path d="M19 17 L22 5 L28 14Z M45 17 L42 5 L36 14Z" fill="#8C6A4A"/><ellipse cx="32" cy="36" rx="16" ry="21" fill="#8C6A4A"/><ellipse cx="32" cy="44" rx="10" ry="12" fill="#E9D5B5"/><path d="M27 41 L29 43 L31 41 M33 41 L35 43 L37 41 M30 47 L32 49 L34 47" stroke="#B89A72" stroke-width="1" fill="none"/><circle cx="25" cy="27" r="7" fill="#F7EBD6"/><circle cx="39" cy="27" r="7" fill="#F7EBD6"/><circle cx="25" cy="27" r="4.2" fill="#FF9F43"/><circle cx="39" cy="27" r="4.2" fill="#FF9F43"/><circle cx="25" cy="27" r="2.2" fill="#2B2541"/><circle cx="39" cy="27" r="2.2" fill="#2B2541"/><circle cx="25.8" cy="26" r=".8" fill="#fff"/><circle cx="39.8" cy="26" r=".8" fill="#fff"/><path d="M30 32 L34 32 L32 36.5Z" fill="#FFC83D"/><path d="M16 58 Q32 54 48 58" stroke="#6B8E23" stroke-width="2" fill="none"/><ellipse cx="22" cy="56" rx="3" ry="1.4" fill="#7BC943" transform="rotate(-20 22 56)"/><ellipse cx="42" cy="56" rx="3" ry="1.4" fill="#7BC943" transform="rotate(20 42 56)"/><ellipse cx="27" cy="56.5" rx="3" ry="2" fill="#FFC83D"/><ellipse cx="37" cy="56.5" rx="3" ry="2" fill="#FFC83D"/>`,
+  pet_phoenix: `<path d="M30 48 Q20 62 11 58 Q22 54 26 46Z" fill="#FF8A3D"/><path d="M34 48 Q34 65 26 64 Q32 56 30 48Z" fill="#F25757"/><path d="M36 48 Q48 62 55 56 Q44 54 38 46Z" fill="#FFC83D"/><path d="M22 36 Q4 28 8 12 Q14 24 26 30Z" fill="#F25757"/><path d="M42 36 Q60 28 56 12 Q50 24 38 30Z" fill="#F25757"/><path d="M22 34 Q10 28 12 18 Q16 26 26 30Z" fill="#FFC83D"/><path d="M42 34 Q54 28 52 18 Q48 26 38 30Z" fill="#FFC83D"/><ellipse cx="32" cy="38" rx="10" ry="13" fill="#FF6B3D"/><ellipse cx="32" cy="41" rx="6" ry="8" fill="#FFB36B"/><circle cx="32" cy="22" r="8" fill="#FF8A3D"/><path d="M30 15 Q27 6 32 3 Q31 10 35 14Z" fill="#FFC83D"/><circle cx="34.5" cy="21" r="1.6" fill="#2B2541"/><path d="M39 22 L45 24 L39 26Z" fill="#FFC83D"/>`,
+  pet_woelfin: `<path d="M44 53 Q59 51 56 34" stroke="#9B8F83" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="47" rx="14" ry="11" fill="#A89C90"/><ellipse cx="32" cy="45" rx="7" ry="8" fill="#E8E2DA"/><path d="M19 22 L20 6 L29 16Z M45 22 L44 6 L35 16Z" fill="#A89C90"/><path d="M21.5 17 L22 10 L26 15Z M42.5 17 L42 10 L38 15Z" fill="#E8B8B8"/><ellipse cx="32" cy="27" rx="13" ry="12" fill="#A89C90"/><ellipse cx="32" cy="34" rx="6.5" ry="5" fill="#E8E2DA"/><ellipse cx="32" cy="31.5" rx="2.4" ry="1.7" fill="#2B2541"/><path d="M29.5 35.5 Q32 37.5 34.5 35.5" stroke="#2B2541" stroke-width="1.1" fill="none"/><ellipse cx="26.5" cy="25" rx="1.8" ry="2.3" fill="#2B2541"/><ellipse cx="37.5" cy="25" rx="1.8" ry="2.3" fill="#2B2541"/>${laurel(32, 27, 13, '#E0A800', '#FFD34D', 80, 3.2)}<ellipse cx="25" cy="57.5" rx="4.5" ry="2.5" fill="#8E8378"/><ellipse cx="39" cy="57.5" rx="4.5" ry="2.5" fill="#8E8378"/>`
+});
+const petSVG = (id, size) => id === 'pet_maus'
+  ? `<div style="width:${size * .85}px;margin:0 auto">${mouseSVG(4)}</div>`
+  : `<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true" style="display:block;overflow:visible">${PETS[id] || ''}</svg>`;
+
 
 function mouseSVG(lv) {
   const fur = '#BDB4D6', furD = '#A69CC2', belly = '#EEE9F7', pink = '#FFB3C7', ink = '#2B2541';
@@ -579,10 +906,19 @@ const BGS = {
   bg_nacht: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><g fill='#fff'><circle cx='20' cy='30' r='1.3'/><circle cx='90' cy='15' r='.9'/><circle cx='150' cy='60' r='1.5'/><circle cx='60' cy='100' r='1'/><circle cx='120' cy='140' r='1.2'/><circle cx='30' cy='160' r='.8'/><circle cx='170' cy='170' r='1'/></g><path d='M120 100 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z' fill='#FFE8A3'/></svg>")}, radial-gradient(circle at 80% 10%,#4B3C8A,transparent 50%), linear-gradient(180deg,#2A2350,#141128)`,
   bg_kaese: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><g fill='#F2B21F'><ellipse cx='30' cy='35' rx='14' ry='11'/><ellipse cx='105' cy='25' rx='8' ry='6'/><ellipse cx='90' cy='95' rx='18' ry='14'/><ellipse cx='25' cy='115' rx='7' ry='6'/><ellipse cx='135' cy='135' rx='10' ry='8'/></g><g fill='#FFE48A'><ellipse cx='28' cy='32' rx='9' ry='6'/><ellipse cx='87' cy='91' rx='12' ry='8'/></g></svg>")}, linear-gradient(160deg,#FFE79A,#FFC83D)`
 };
+Object.assign(BGS, {
+  bg_herbst: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='170' height='170'><ellipse cx='30' cy='30' rx='10' ry='5' fill='#F28C28' transform='rotate(35 30 30)'/><ellipse cx='125' cy='55' rx='9' ry='4.5' fill='#D9480F' transform='rotate(-25 125 55)'/><ellipse cx='70' cy='130' rx='10' ry='5' fill='#F5B400' transform='rotate(70 70 130)'/><ellipse cx='150' cy='145' rx='7' ry='3.5' fill='#C2410C' transform='rotate(15 150 145)'/><ellipse cx='85' cy='80' rx='6' ry='3' fill='#E8590C' transform='rotate(-50 85 80)'/></svg>")}, linear-gradient(165deg,#FFF4E2,#FFD5A8)`,
+  bg_schnee: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><g fill='#fff'><circle cx='20' cy='20' r='3'/><circle cx='90' cy='40' r='2'/><circle cx='130' cy='100' r='3.5'/><circle cx='50' cy='110' r='2.4'/><circle cx='110' cy='10' r='1.6'/><circle cx='15' cy='140' r='2'/><circle cx='70' cy='70' r='1.4'/></g></svg>")}, linear-gradient(180deg,#EEF6FF,#C2DCF3)`,
+  bg_konfetti: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><rect x='20' y='20' width='10' height='4' rx='1' fill='#F25757' transform='rotate(30 25 22)'/><rect x='110' y='30' width='10' height='4' rx='1' fill='#3B82F6' transform='rotate(-40 115 32)'/><rect x='60' y='90' width='10' height='4' rx='1' fill='#22B07D' transform='rotate(60 65 92)'/><rect x='130' y='120' width='10' height='4' rx='1' fill='#FFC83D' transform='rotate(10 135 122)'/><circle cx='40' cy='140' r='3' fill='#9B5DE5'/><circle cx='90' cy='20' r='2.5' fill='#FF8FB1'/><circle cx='150' cy='70' r='2.5' fill='#22C1C3'/><rect x='15' y='80' width='8' height='3' rx='1' fill='#FF8A3D' transform='rotate(-20 19 81)'/></svg>")}, #FFF9F0`,
+  bg_marmor: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><g fill='none' stroke='#CFC9DA' stroke-width='1.2'><path d='M0 60 Q60 40 100 80 T220 90 T300 60'/><path d='M0 200 Q80 170 140 210 T300 190'/><path d='M120 0 Q140 60 110 120 T150 300' stroke='#DDD8E6'/></g></svg>")}, linear-gradient(160deg,#FFFFFF,#ECE9F2)`,
+  bg_bibliothek: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='120' height='70'><rect width='120' height='70' fill='#8C5A35'/><g><rect x='4' y='14' width='9' height='50' fill='#B5452F'/><rect x='14' y='20' width='7' height='44' fill='#2F5D8A'/><rect x='22' y='10' width='10' height='54' fill='#3E7D4E'/><rect x='33' y='18' width='8' height='46' fill='#C9962E'/><rect x='42' y='24' width='6' height='40' fill='#6A4C93'/><rect x='52' y='12' width='9' height='52' fill='#2F5D8A'/><rect x='62' y='22' width='8' height='42' fill='#B5452F'/><rect x='71' y='16' width='11' height='48' fill='#C9962E'/><rect x='84' y='20' width='7' height='44' fill='#3E7D4E'/><rect x='92' y='12' width='9' height='52' fill='#6A4C93'/><rect x='103' y='18' width='8' height='46' fill='#B5452F'/></g><rect y='64' width='120' height='6' fill='#5A3416'/></svg>")}, #8C5A35`,
+  bg_aurora: `radial-gradient(ellipse at 15% 0%,rgba(61,220,151,.55),transparent 55%), radial-gradient(ellipse at 85% 10%,rgba(155,93,229,.6),transparent 55%), radial-gradient(ellipse at 50% 30%,rgba(34,193,195,.35),transparent 60%), linear-gradient(180deg,#1B2A4A,#0E1326)`,
+  bg_goldbib: `${svgU("<svg xmlns='http://www.w3.org/2000/svg' width='120' height='70'><rect width='120' height='70' fill='#3A2416'/><g fill='#E0A800'><rect x='4' y='14' width='9' height='50'/><rect x='22' y='10' width='10' height='54'/><rect x='52' y='12' width='9' height='52'/><rect x='71' y='16' width='11' height='48'/><rect x='92' y='12' width='9' height='52'/></g><g fill='#8C5A35'><rect x='14' y='20' width='7' height='44'/><rect x='33' y='18' width='8' height='46'/><rect x='42' y='24' width='6' height='40'/><rect x='62' y='22' width='8' height='42'/><rect x='84' y='20' width='7' height='44'/><rect x='103' y='18' width='8' height='46'/></g><g fill='#FFE38A'><rect x='4' y='20' width='9' height='2'/><rect x='22' y='16' width='10' height='2'/><rect x='52' y='18' width='9' height='2'/><rect x='71' y='22' width='11' height='2'/><rect x='92' y='18' width='9' height='2'/></g><rect y='64' width='120' height='6' fill='#E0A800'/></svg>")}, #3A2416`
+});
 function applyBg(id) { $('#bg').style.background = BGS[id] || BGS.bg_lavendel; }
 
 /* ---------- UI: shell ---------- */
-const TABS = [['quiz','Abfragen'],['learn','Lernen'],['progress','Fortschritt'],['avatar','Avatar'],['shop','Shop']];
+const TABS = [['quiz','Abfragen'],['learn','Lernen'],['progress','Fortschritt'],['album','Sammlung'],['avatar','Avatar'],['shop','Shop']];
 function renderApp() {
   const c = USERS[me];
   document.documentElement.style.setProperty('--me', c.color);
@@ -593,7 +929,9 @@ function renderApp() {
     <main id="view"></main>
   </div>
   <aside class="buddy" id="buddy"></aside>`;
+  const rw = checkRewards();
   applyBg(U().bg); renderTop(); renderTabs(); renderView(); renderBuddy();
+  if (rw) setTimeout(() => modal(rw + CLOSE_BTN), 250);
 }
 function raceRow(s) {
   const v = atLeast(DB.data.vlad, s), h = atLeast(DB.data.hanna, s), t = v + h, pv = t ? v / t * 100 : 0;
@@ -631,7 +969,7 @@ function renderTabs() {
 }
 function go(v) { view = v; renderTabs(); renderView(); window.scrollTo({top: 0, behavior: 'smooth'}); }
 function renderView() {
-  ({quiz: renderQuiz, learn: renderLearn, progress: renderProgress, avatar: renderAvatar, shop: renderShop})[view]();
+  ({quiz: renderQuiz, learn: renderLearn, progress: renderProgress, avatar: renderAvatar, shop: renderShop, album: renderAlbum})[view]();
 }
 
 /* ---------- pack bar ---------- */
@@ -751,9 +1089,10 @@ function grade(ok) {
   if (r.ns === 7) toast('Gemeistert: ' + esc(VOCAB[i][0].split('\n')[0]));
   setTimeout(() => {
     Q.pos++; Q.flipped = false; busy = false;
+    const rw = checkRewards();
     renderQuizCard(); renderTop();
     const after = levelOf(U().xp);
-    if (after > before) levelUp(before, after); else renderBuddy(true);
+    if (after > before) levelUp(before, after, rw); else { renderBuddy(true); if (rw) modal(rw + CLOSE_BTN); }
   }, 230);
 }
 function showFloat(ok, r) {
@@ -838,74 +1177,148 @@ function vrow(i) {
 }
 
 /* ---------- avatar ---------- */
+const CLOSE_BTN = '<div class="btnrow mt"><button class="primary" data-close>Weiter</button></div>';
+const has = (u, id) => { const it = ITEM[id]; return !!it && (it.price === 0 && !it.r || !!(u.own || {})[id]); };
+function isEq(u, it) { if (it.cat === 'bg') return u.bg === it.id; if (it.cat === 'pet') return u.av.pets.includes(it.id); return u.av[it.cat] === it.id; }
+function equip(it) {
+  const u = U(), av = u.av;
+  if (it.cat === 'bg') { u.bg = it.id; applyBg(it.id); }
+  else if (it.cat === 'pet') { const k = av.pets.indexOf(it.id); if (k >= 0) av.pets.splice(k, 1); else { if (av.pets.length >= 3) av.pets.shift(); av.pets.push(it.id); } }
+  else av[it.cat] = av[it.cat] === it.id ? '' : it.id;
+}
+function itemPrev(it, size) {
+  if (it.cat === 'bg') return `<div class="bgprev" style="background:${esc(BGS[it.id])}"></div>`;
+  if (it.cat === 'pet') return petSVG(it.id, Math.round(size * .82));
+  return avatarSVG(Object.assign({}, U().av, {[it.cat]: it.id}), me, size);
+}
 function sceneHTML(av, uid) {
   return `<div class="scene"><div class="main">${avatarSVG(av, uid, 220)}</div>${(av.pets || []).slice(0, 3).map((p, k) => `<div class="pet p${k}">${petSVG(p, k === 2 ? 70 : 84)}</div>`).join('')}</div>`;
 }
+function saveAv() { const y = window.scrollY; DB.save(me); const rw = checkRewards(); renderTop(); renderView(); window.scrollTo(0, y); if (rw) modal(rw + CLOSE_BTN); }
 function renderAvatar() {
   const u = U(), av = u.av;
-  const owned = cat => SHOP.filter(i => i.cat === cat && (u.own[i.id] || i.price === 0));
   const sw = (key, arr) => `<div class="swatches">${arr.map((c, k) => `<button class="sw ${av[key] === k ? 'on' : ''}" style="background:${c}" data-av="${key}" data-v="${k}" aria-label="Farbe ${k + 1}"></button>`).join('')}</div>`;
-  const itemOpts = (cat, key) => {
-    const list = owned(cat);
-    if (!list.length) return `<p class="muted" style="margin:0;font-size:14px">Noch nichts gekauft. <button class="ghost" data-go="shop" style="padding:5px 12px;margin-left:4px">Zum Shop</button></p>`;
-    return `<div class="opts"><button class="opt txt ${!av[key] ? 'on' : ''}" data-item="${cat}" data-v="">Ohne</button>${list.map(it => `<button class="opt ${av[key] === it.id ? 'on' : ''}" data-item="${cat}" data-v="${it.id}" title="${it.name}">${avatarSVG(Object.assign({}, av, {[key]: it.id}), me, 56)}</button>`).join('')}</div>`;
+  const toShop = `<p class="muted" style="margin:0;font-size:14px">Noch nichts davon. <button class="ghost" data-go="shop" style="padding:5px 12px;margin-left:4px">Zum Shop</button></p>`;
+  const slot = (cat, title) => {
+    const list = [...SHOP, ...REWARDS].filter(i => i.cat === cat && has(u, i.id));
+    return `<h3>${title}</h3>` + (list.length ? `<div class="opts"><button class="opt txt ${!av[cat] ? 'on' : ''}" data-slot="${cat}" data-v="">Ohne</button>${list.map(it => `<button class="opt ${av[cat] === it.id ? 'on' : ''} ${it.r ? 'rw' : ''}" data-slot="${cat}" data-v="${it.id}" title="${esc(it.name)}">${avatarSVG(Object.assign({}, av, {[cat]: it.id}), me, 56)}</button>`).join('')}</div>` : toShop);
   };
-  const pets = owned('pet');
+  const pets = [...SHOP, ...REWARDS].filter(i => i.cat === 'pet' && has(u, i.id));
   $('#view').innerHTML = `<div class="avgrid">
-    <section class="panel pad" style="text-align:center"><h2>${USERS[me].name}</h2>${sceneHTML(av, me)}<p class="muted" style="font-size:13px">Haustiere sind Deko. Bis zu drei dürfen mit aufs Bild.</p></section>
+    <section class="panel pad avstick" style="text-align:center"><h2>${USERS[me].name}</h2>${sceneHTML(av, me)}<p class="muted" style="font-size:13px">Goldene Kästchen sind exklusive Belohnungen. Bis zu drei Haustiere dürfen mit aufs Bild.</p></section>
     <section class="panel pad">
       <h3 style="margin-top:0">Hautton</h3>${sw('skin', SKIN)}
       <h3>Frisur</h3><div class="opts">${HAIRS.map((n, k) => `<button class="opt ${av.hair === k ? 'on' : ''}" data-av="hair" data-v="${k}" title="${n}">${avatarSVG(Object.assign({}, av, {hair: k, hat: ''}), me, 56)}</button>`).join('')}</div>
       <h3>Haarfarbe</h3>${sw('hc', HAIRC)}
-      <h3>Shirt</h3>${sw('shirt', SHIRT)}
-      <h3>Kopfbedeckung</h3>${itemOpts('hat', 'hat')}
-      <h3>Brille</h3>${itemOpts('glasses', 'glasses')}
-      <h3>Rahmen</h3>${itemOpts('frame', 'frame')}
-      <h3>Haustiere</h3>${pets.length ? `<div class="opts">${pets.map(p => `<button class="opt ${av.pets.includes(p.id) ? 'on' : ''}" data-pet="${p.id}" title="${p.name}">${petSVG(p.id, 56)}</button>`).join('')}</div>` : `<p class="muted" style="margin:0;font-size:14px">Noch kein Haustier. <button class="ghost" data-go="shop" style="padding:5px 12px;margin-left:4px">Zum Shop</button></p>`}
+      <h3>Shirtfarbe</h3>${sw('shirt', SHIRT)}
+      ${slot('bd', 'Selfie-Hintergrund')}
+      ${slot('frame', 'Rahmen')}
+      ${has(u, 'fr_custom') ? `<label class="colorpick">Wunschfarbe für den Rahmen <input type="color" id="frc" value="${esc(av.frameColor || '#3B82F6')}"></label>` : ''}
+      ${slot('hat', 'Kopfbedeckung')}
+      ${slot('glasses', 'Brille')}
+      ${slot('outfit', 'Outfit')}
+      ${slot('face', 'Gesicht')}
+      <h3>Haustiere</h3>${pets.length ? `<div class="opts">${pets.map(p => `<button class="opt ${av.pets.includes(p.id) ? 'on' : ''} ${p.r ? 'rw' : ''}" data-pet="${p.id}" title="${esc(p.name)}">${petSVG(p.id, 56)}</button>`).join('')}</div>` : toShop}
     </section></div>`;
   $$('[data-av]').forEach(b => b.onclick = () => { av[b.dataset.av] = +b.dataset.v; saveAv(); });
-  $$('[data-item]').forEach(b => b.onclick = () => { const key = b.dataset.item; av[key] = b.dataset.v; saveAv(); });
-  $$('[data-pet]').forEach(b => b.onclick = () => togglePet(b.dataset.pet));
+  $$('[data-slot]').forEach(b => b.onclick = () => { av[b.dataset.slot] = b.dataset.v; saveAv(); });
+  $$('[data-pet]').forEach(b => b.onclick = () => { equip(ITEM[b.dataset.pet]); saveAv(); });
   $$('[data-go]', $('#view')).forEach(b => b.onclick = () => go(b.dataset.go));
+  const fc = $('#frc'); if (fc) fc.onchange = () => { av.frameColor = fc.value; av.frame = 'fr_custom'; saveAv(); };
 }
-function togglePet(id) {
-  const av = U().av, k = av.pets.indexOf(id);
-  if (k >= 0) av.pets.splice(k, 1);
-  else { if (av.pets.length >= 3) { av.pets.shift(); } av.pets.push(id); }
-  saveAv();
-}
-function saveAv() { const y = window.scrollY; DB.save(me); renderTop(); renderView(); window.scrollTo(0, y); }
 
 /* ---------- shop ---------- */
+let shopCat = 'bd';
+const setsOf = id => SETS.filter(s => s.items.includes(id));
 function renderShop() {
   const u = U();
-  const state = it => {
-    const has = it.price === 0 || u.own[it.id];
-    const eq = it.cat === 'bg' ? u.bg === it.id : it.cat === 'pet' ? u.av.pets.includes(it.id) : u.av[it.cat] === it.id;
+  const btn = it => {
+    const h = has(u, it.id), eq = isEq(u, it);
     if (eq) return `<button class="buy eq" data-buy="${it.id}">${it.cat === 'bg' ? 'Aktiv' : 'Angelegt'}</button>`;
-    if (has) return `<button class="buy own" data-buy="${it.id}">${it.cat === 'bg' ? 'Verwenden' : 'Anlegen'}</button>`;
-    if (u.md < it.price) return `<button class="buy" disabled>${coin()} ${it.price}<span style="font-weight:400">, noch ${it.price - u.md}</span></button>`;
+    if (h) return `<button class="buy own" data-buy="${it.id}">${it.cat === 'bg' ? 'Verwenden' : 'Anlegen'}</button>`;
+    if (u.md < it.price) return `<button class="buy" disabled>${coin()} ${it.price}<span class="lt">, noch ${it.price - u.md}</span></button>`;
     return `<button class="buy" data-buy="${it.id}">${coin()} ${it.price} kaufen</button>`;
   };
-  const prev = it => {
-    if (it.cat === 'bg') return `<div class="prev bgp" style="background:${esc(BGS[it.id])}"></div>`;
-    if (it.cat === 'pet') return `<div class="prev">${petSVG(it.id, 80)}</div>`;
-    return `<div class="prev">${avatarSVG(Object.assign({}, u.av, {[it.cat]: it.id}), me, 86)}</div>`;
-  };
-  $('#view').innerHTML = `<section class="panel pad shophead"><span class="big">${coin()}${u.md}</span><span class="muted">Maus-Dollar. Jede richtige Antwort bringt einen.</span></section>
-    ${CATS.map(([cat, name]) => `<section class="panel pad mt"><h2>${name}</h2><div class="items">${SHOP.filter(i => i.cat === cat).map(it => `<div class="item">${prev(it)}<b>${it.name}</b>${state(it)}</div>`).join('')}</div></section>`).join('')}`;
+  const list = SHOP.filter(i => i.cat === shopCat).sort((a, b) => a.price - b.price);
+  const owned = SHOP.filter(i => i.price > 0 && has(u, i.id)).length, total = SHOP.filter(i => i.price > 0).length;
+  $('#view').innerHTML = `<section class="panel pad shophead"><span class="big">${coin()}${u.md}</span><span class="muted">Maus-Dollar. Jede richtige Antwort bringt einen. Du hast ${owned} von ${total} Shop-Sachen. Komplette Sets bringen Bonus-Dollar, schau in die Sammlung.</span></section>
+    <div class="chiprow">${CATS.map(([c, n]) => { const all = SHOP.filter(i => i.cat === c && i.price > 0); return `<button class="cchip ${c === shopCat ? 'on' : ''}" data-cat="${c}">${n}<small>${all.filter(i => has(u, i.id)).length}/${all.length}</small></button>`; }).join('')}</div>
+    <section class="panel pad"><div class="items">${list.map(it => `<div class="item ${has(u, it.id) ? 'owned' : ''}"><div class="prev">${itemPrev(it, 100)}</div><b>${esc(it.name)}</b>${setsOf(it.id).map(s => `<span class="settag">Set: ${esc(s.name)}</span>`).join('')}${btn(it)}</div>`).join('')}</div></section>`;
+  $$('[data-cat]').forEach(b => b.onclick = () => { shopCat = b.dataset.cat; renderShop(); });
   $$('[data-buy]').forEach(b => b.onclick = () => buy(b.dataset.buy));
 }
 function buy(id) {
-  const u = U(), it = ITEM[id], has = it.price === 0 || u.own[id];
-  if (!has) {
-    if (u.md < it.price) return;
+  const u = U(), it = ITEM[id];
+  if (!has(u, id)) {
+    if (it.r || u.md < it.price) return;
     u.md -= it.price; u.own[id] = 1; toast(esc(it.name) + ' gekauft');
-  }
-  if (it.cat === 'bg') { u.bg = id; applyBg(id); }
-  else if (it.cat === 'pet') { if (has) { togglePet(id); return; } if (u.av.pets.length >= 3) u.av.pets.shift(); u.av.pets.push(id); }
-  else u.av[it.cat] = (has && u.av[it.cat] === id) ? '' : id;
+    if (!isEq(u, it)) equip(it);
+  } else equip(it);
   saveAv();
+}
+
+/* ---------- Belohnungen, Serien, Sets ---------- */
+function dayKey(d = new Date()) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function streakOf(u) {
+  const days = u.days || {}, d = new Date(); let n = 0;
+  if (!days[dayKey(d)]) d.setDate(d.getDate() - 1);
+  while (days[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function reqVal(u, q) {
+  switch (q.t) {
+    case 'learned': return atLeast(u, 4);
+    case 'correct': return u.stats.ok;
+    case 'level': return levelOf(u.xp);
+    case 'mastered': return atLeast(u, 7);
+    case 'streak': return streakOf(u);
+    case 'duo': return Math.min(atLeast(DB.data.vlad, 4), atLeast(DB.data.hanna, 4));
+  }
+  return 0;
+}
+function reqText(q) {
+  switch (q.t) {
+    case 'learned': return q.n >= N ? 'Alle Vokabeln gelernt' : q.n + ' gelernte Vokabeln';
+    case 'correct': return q.n + ' richtige Antworten';
+    case 'level': return 'Level ' + q.n;
+    case 'mastered': return q.n === 1 ? 'Erste gemeisterte Vokabel' : q.n + ' gemeisterte Vokabeln';
+    case 'streak': return q.n + ' Tage am Stück gelernt';
+    case 'duo': return 'Hanna und Vlad je ' + q.n + ' gelernt';
+  }
+  return '';
+}
+function checkRewards() {
+  const u = U(); if (!u) return '';
+  const got = [], sets = [];
+  for (const r of REWARDS) if (!u.own[r.id] && reqVal(u, r.req) >= r.req.n) { u.own[r.id] = 1; got.push(r); }
+  for (const s of SETS) if (!u.sets[s.id] && s.items.every(id => has(u, id))) { u.sets[s.id] = 1; u.md += s.bonus; sets.push(s); }
+  if (!got.length && !sets.length) return '';
+  DB.save(me);
+  return `<div class="rewardpop">${got.length ? `<h2>${got.length > 1 ? 'Neue Belohnungen!' : 'Neue Belohnung!'}</h2><p class="muted" style="text-align:center;margin:4px 0 12px">Exklusiv, gibt es nicht im Shop.</p><div class="rgrid">${got.map(r => `<div class="rcard got"><div class="prev">${itemPrev(r, 88)}</div><b>${esc(r.name)}</b><span class="rq">${reqText(r.req)}</span><button class="buy own" data-equip="${r.id}">Anlegen</button></div>`).join('')}</div>` : ''}${sets.map(s => `<p class="setdone">Set komplett: <b>${esc(s.name)}</b>, +${s.bonus} Maus-Dollar</p>`).join('')}</div>`;
+}
+function renderAlbum() {
+  const u = U(), other = me === 'vlad' ? 'hanna' : 'vlad', ou = DB.data[other] || blank(other);
+  const all = [...SHOP.filter(i => i.price > 0), ...REWARDS];
+  const mine = all.filter(i => has(u, i.id)).length, theirs = all.filter(i => has(ou, i.id)).length;
+  const open = REWARDS.filter(r => !has(u, r.id)).map(r => ({r, p: Math.min(1, reqVal(u, r.req) / r.req.n)})).sort((a, b) => b.p - a.p);
+  const next = open[0];
+  const rcard = r => {
+    const got = has(u, r.id), v = Math.min(reqVal(u, r.req), r.req.n);
+    return `<div class="rcard ${got ? 'got' : 'lock'}"><div class="prev">${itemPrev(r, 80)}${got ? '' : '<span class="lockic" aria-hidden="true">🔒</span>'}</div><b>${esc(r.name)}</b><span class="rq">${reqText(r.req)}</span>${got ? `<button class="buy ${isEq(u, r) ? 'eq' : 'own'}" data-equip="${r.id}">${isEq(u, r) ? 'Angelegt' : 'Anlegen'}</button>` : `<div class="rprog"><i style="width:${v / r.req.n * 100}%"></i></div><span class="rq">${v} / ${r.req.n}</span>`}</div>`;
+  };
+  const si = id => { const it = ITEM[id]; return `<div class="si ${has(u, id) ? '' : 'miss'}" title="${esc(it.name)}${it.r ? ' (Belohnung)' : ''}">${it.cat === 'pet' ? petSVG(id, 40) : it.cat === 'bg' ? `<div class="bgprev" style="background:${esc(BGS[id])}"></div>` : avatarSVG(Object.assign({}, u.av, {[it.cat]: id}), me, 42)}</div>`; };
+  $('#view').innerHTML = `
+  <section class="panel pad albhead">
+    <div><h2 style="margin:0">Deine Sammlung</h2><div class="albig">${mine} <span class="muted" style="font-size:18px;font-weight:500">von ${all.length}</span></div>
+      <div class="bigbar"><i style="width:${mine / all.length * 100}%"></i></div>
+      <p class="muted" style="font-size:13px;margin:8px 0 0">${USERS[other].name} hat ${theirs}. Gelernt heißt: mindestens Stufe 4 (2× richtig). Du hast ${atLeast(u, 4)} gelernt.</p></div>
+    <div class="streak"><span class="sn">${streakOf(u)}</span>Tage am Stück</div>
+  </section>
+  ${next ? `<section class="panel pad mt nextgoal"><div class="ngprev">${itemPrev(next.r, 70)}</div><div style="flex:1"><span class="muted" style="font-size:13px">Nächste Belohnung</span><b style="display:block;font-size:18px">${esc(next.r.name)}</b><span class="rq">${reqText(next.r.req)}: noch ${next.r.req.n - Math.min(reqVal(u, next.r.req), next.r.req.n)}</span><div class="rprog" style="margin-top:6px"><i style="width:${next.p * 100}%"></i></div></div></section>` : ''}
+  <section class="panel pad mt"><h2>Exklusive Belohnungen (${REWARDS.filter(r => has(u, r.id)).length}/${REWARDS.length})</h2><div class="rgrid">${REWARDS.map(rcard).join('')}</div></section>
+  <section class="panel pad mt"><h2>Sets (${SETS.filter(s => u.sets[s.id]).length}/${SETS.length})</h2><p class="muted" style="font-size:13px;margin:-6px 0 12px">Sammle alle Teile eines Sets und du bekommst einmalig Bonus-Dollar.</p>
+    <div class="setgrid">${SETS.map(s => { const n = s.items.filter(id => has(u, id)).length; return `<div class="setcard ${u.sets[s.id] ? 'done' : ''}"><div class="sethead"><b>${esc(s.name)}</b><span>${u.sets[s.id] ? 'Bonus erhalten' : `${coin()} +${s.bonus}`}</span></div><div class="setitems">${s.items.map(si).join('')}</div><div class="rprog"><i style="width:${n / s.items.length * 100}%"></i></div><span class="rq">${n} / ${s.items.length}</span></div>`; }).join('')}</div></section>`;
+  $$('[data-equip]', $('#view')).forEach(b => b.onclick = () => { equip(ITEM[b.dataset.equip]); saveAv(); });
 }
 
 /* ---------- buddy, level, toast ---------- */
@@ -923,12 +1336,12 @@ function buddySay(ok) {
   m.classList.remove('hop', 'sad'); void m.offsetWidth; m.classList.add(ok ? 'hop' : 'sad');
   clearTimeout(sayT); sayT = setTimeout(() => renderBuddy(), 1800);
 }
-function levelUp(from, to) {
+function levelUp(from, to, extra = '') {
   renderBuddy();
   const newTitle = titleFor(to) !== titleFor(from);
   modal(`<div style="text-align:center"><div style="width:150px;margin:0 auto">${mouseSVG(to)}</div><h2>Level ${to}!</h2>
     <p class="muted">${newTitle ? `Deine Maus heißt jetzt <b style="color:var(--ink)">${titleFor(to)}</b>. ${TITLE_INFO[TITLES.find(t => t[1] === titleFor(to))[0]]}.` : 'Deine Maus ist wieder ein Stück gewachsen.'}</p>
-    <div class="btnrow mt"><button class="primary" data-close>Weiterlernen</button></div></div>`);
+    </div>${extra}<div class="btnrow mt"><button class="primary" data-close>Weiterlernen</button></div>`);
 }
 function showLadder() {
   const lv = levelOf(U().xp), cur = titleFor(lv);
@@ -941,6 +1354,7 @@ function modal(html) {
   const bg = document.createElement('div'); bg.className = 'modalbg'; bg.id = 'modal';
   bg.innerHTML = `<div class="panel modal" role="dialog" aria-modal="true">${html}</div>`;
   bg.onclick = e => { if (e.target === bg || e.target.hasAttribute('data-close')) closeModal(); };
+  bg.querySelectorAll('[data-equip]').forEach(b => b.onclick = () => { equip(ITEM[b.dataset.equip]); DB.save(me); renderTop(); renderView(); b.textContent = 'Angelegt'; b.className = 'buy eq'; });
   document.body.appendChild(bg);
   const f = bg.querySelector('[data-close]'); if (f) f.focus();
 }
